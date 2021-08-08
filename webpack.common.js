@@ -1,5 +1,6 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const CopyPlugin = require('copy-webpack-plugin');
 
 module.exports = {
   entry: {
@@ -14,27 +15,29 @@ module.exports = {
         test: /\.(ts|tsx)$/,
         exclude: /node_modules/,
         resolve: {
-          extensions: [".ts", ".tsx", ".js", ".json"],
+          extensions: [".ts", ".tsx", ".js"],
         },
         use: ["ts-loader", "babel-loader"],
       },
       {
         test: /\.css$/,
+        exclude: /node_modules/,
         use: [MiniCssExtractPlugin.loader, "css-loader", "postcss-loader"],
       },
       {
         test: /\.html$/,
+        exclude: /node_modules/,
         use: ["html-loader"],
       },
       {
         test: /\.(svg|png|jpg|gif)$/,
-        use: {
-          loader: "file-loader",
-          options: {
-            name: "[name].[hash].[ext]",
-            outputPath: "imgs",
-          },
-        },
+        exclude: /node_modules/,
+        type: "asset/resource",
+      },
+      {
+        test: /\.json$/,
+        exclude: /node_modules/,
+        type: "asset/resource",
       },
     ],
   },
@@ -64,7 +67,24 @@ module.exports = {
       chunks: ["background"],
     }),
     new MiniCssExtractPlugin({
-      filename: "css/[name].css"
+      filename: "css/[name].css",
+    }),
+    new CopyPlugin({
+      patterns: [
+        {
+          from: "src/manifest.json",
+          transform: function (content, path) {
+            // generates the manifest file using the package.json information
+            return Buffer.from(
+              JSON.stringify({
+                description: process.env.npm_package_description,
+                version: process.env.npm_package_version,
+                ...JSON.parse(content.toString()),
+              })
+            );
+          },
+        },
+      ],
     }),
   ],
 };

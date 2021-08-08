@@ -1,7 +1,7 @@
 {
   "name": "chrome-extension-new-tab",
   "version": "1.0.0",
-  "description": "",
+  "description": "New Tab chrome extension",
   "main": "index.js",
   "dependencies": {
     "react": "^17.0.2",
@@ -17,6 +17,7 @@
     "autoprefixer": "^10.3.1",
     "babel-loader": "^8.2.2",
     "clean-webpack-plugin": "^4.0.0-alpha.0",
+    "copy-webpack-plugin": "^9.0.1",
     "cross-env": "^7.0.3",
     "css-loader": "^6.2.0",
     "file-loader": "^6.2.0",

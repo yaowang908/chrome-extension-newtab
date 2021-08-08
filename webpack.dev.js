@@ -8,6 +8,7 @@ module.exports = merge(common, {
   output: {
     path: path.resolve(__dirname, "dist"),
     filename: "js/[name].bundle.js",
+    assetModuleFilename: "assets/[hash][ext][query]",
   },
   devtool: "inline-source-map",
   plugins: [new CleanWebpackPlugin()],
