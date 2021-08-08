@@ -2,7 +2,12 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 module.exports = {
-  entry: __dirname + "/src/app/index.tsx",
+  entry: {
+    newtab: __dirname + "/src/app/newtab.tsx",
+    popup: __dirname + "/src/app/popup.tsx",
+    options: __dirname + "/src/app/options.tsx",
+    background: __dirname + "/src/app/background.tsx",
+  },
   module: {
     rules: [
       {
@@ -35,10 +40,31 @@ module.exports = {
   },
   plugins: [
     new HtmlWebpackPlugin({
-      filename: 'new-tab.html',
+      filename: "./new-tab.html",
       template: __dirname + "/index.html",
       inject: "body",
+      chunks: ["newtab"],
     }),
-    new MiniCssExtractPlugin(),
+    new HtmlWebpackPlugin({
+      filename: "popup.html",
+      template: __dirname + "/index.html",
+      inject: "body",
+      chunks: ["popup"],
+    }),
+    new HtmlWebpackPlugin({
+      filename: "options.html",
+      template: __dirname + "/index.html",
+      inject: "body",
+      chunks: ["options"],
+    }),
+    new HtmlWebpackPlugin({
+      filename: "background.html",
+      template: __dirname + "/index.html",
+      inject: "body",
+      chunks: ["background"],
+    }),
+    new MiniCssExtractPlugin({
+      filename: "css/[name].css"
+    }),
   ],
 };
