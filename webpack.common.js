@@ -60,12 +60,6 @@ module.exports = {
       inject: "body",
       chunks: ["options"],
     }),
-    new HtmlWebpackPlugin({
-      filename: "background.html",
-      template: __dirname + "/index.html",
-      inject: "body",
-      chunks: ["background"],
-    }),
     new MiniCssExtractPlugin({
       filename: "css/[name].css",
     }),
@@ -75,15 +69,20 @@ module.exports = {
           from: "src/manifest.json",
           transform: function (content, path) {
             // generates the manifest file using the package.json information
-            return Buffer.from(
+            const manifest = Buffer.from(
               JSON.stringify({
                 description: process.env.npm_package_description,
                 version: process.env.npm_package_version,
                 ...JSON.parse(content.toString()),
-              })
-            );
+              }));
+            // return JSON.parse(manifest);
+            return manifest;
           },
         },
+        {
+          from: "src/assets/",
+          to: "assets/"
+        }
       ],
     }),
   ],
