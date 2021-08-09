@@ -66,23 +66,13 @@ module.exports = {
     new CopyPlugin({
       patterns: [
         {
-          from: "src/manifest.json",
-          transform: function (content, path) {
-            // generates the manifest file using the package.json information
-            const manifest = Buffer.from(
-              JSON.stringify({
-                description: process.env.npm_package_description,
-                version: process.env.npm_package_version,
-                ...JSON.parse(content.toString()),
-              }));
-            // return JSON.parse(manifest);
-            return manifest;
-          },
+          from: "src/assets/",
+          to: "assets/",
         },
         {
-          from: "src/assets/",
-          to: "assets/"
-        }
+          from: "buffer",
+          // to: "./",
+        },
       ],
     }),
   ],
