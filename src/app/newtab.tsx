@@ -9,7 +9,7 @@ const App = () => {
   
   return (
     <>
-      <h1 className="w-full h-screen bg-blue-300">
+      <h1 className="w-full h-screen bg-blue-900 text-white">
         Hello React! from new tab
       </h1>
       <Header />

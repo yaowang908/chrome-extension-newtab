@@ -3,9 +3,9 @@
   "manifest_version": 3,
   "options_page": "options.html",
   "background": {
-    "service_worker": "js/background.bundle.js"
+    "service_worker": "background.bundle.js"
   },
-  "browser_action": {
+  "action": {
     "default_popup": "popup.html",
     "default_icon": "assets/icon.png"
   },

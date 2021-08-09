@@ -7,7 +7,7 @@ module.exports = merge(common, {
   mode: "development",
   output: {
     path: path.resolve(__dirname, "dist"),
-    filename: "js/[name].bundle.js",
+    filename: "[name].bundle.js",
     assetModuleFilename: "assets/[hash][ext][query]",
   },
   devtool: "inline-source-map",
