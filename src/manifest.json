@@ -5,7 +5,7 @@
   "background": {
     "service_worker": "background.bundle.js"
   },
-  "browser_action": {
+  "action": {
     "default_popup": "popup.html",
     "default_icon": "assets/icon.png"
   },
