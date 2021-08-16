@@ -15,5 +15,5 @@
   "chrome_url_overrides": {
     "newtab": "new-tab.html"
   },
-  "permissions": ["tabs", "storage"]
+  "permissions": ["tabs", "storage", "topSites"]
 }
