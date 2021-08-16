@@ -1,5 +1,11 @@
 module.exports = {
-  purge: ["./src/**/*.html", "./src/**/*.js", "./src/**/*.tsx", "./index.html"],
+  purge: {
+    content: ["./src/**/*.html", "./src/**/*.js", "./src/**/*.tsx", "./index.html"],
+    safelist: [
+      ...Array.from({ length: 12}).fill('').map((_, i) => `col-span-${i + 1}`),
+      ...Array.from({ length: 12}).fill('').map((_, i) => `grid-cols-${i + 1}`),
+    ]
+  },
   darkMode: false, // or 'media' or 'class'
   theme: {
     extend: {},

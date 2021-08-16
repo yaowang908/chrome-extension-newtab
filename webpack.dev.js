@@ -12,4 +12,7 @@ module.exports = merge(common, {
   },
   devtool: "inline-source-map",
   plugins: [new CleanWebpackPlugin()],
+  stats: {
+    errorDetails: true,
+  }
 });
