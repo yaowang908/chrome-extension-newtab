@@ -9,8 +9,8 @@ const Row: React.FC<RowProps> = ({contentArr}: RowProps) => {
   return (
     <div className={
         `w-full grid 
-        grid-cols-${contentArr?.length ? contentArr?.length : 1} 
-        gap-2 overflow-hidden lg:h-36`
+        grid-rows-auto
+        gap-2 overflow-hidden`
       }>
       {
         contentArr?.length ?
