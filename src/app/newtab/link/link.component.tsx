@@ -9,7 +9,7 @@ const Link: React.FC<LinkProps> = ({link, imageUrl, title}: LinkProps) => {
 
   return (
     <div className="w-full h-full">
-      <div className="w-full h-4/6 bg-center cursor-pointer" style={{backgroundImage: `url(${imageUrl})`}} onClick={() => window.open(link, '_blank')?.focus()}></div>
+      <div className="w-full h-4/6 bg-center bg-contain bg-no-repeat cursor-pointer" style={{backgroundImage: `url(${imageUrl})`}} onClick={() => window.open(link, '_blank')?.focus()}></div>
       <div className="text-white text-center cursor-pointer">
         <a href={link} className="inline-block lg:mt-3 mx-auto">
           {title}  

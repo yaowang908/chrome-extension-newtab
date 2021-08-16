@@ -10,7 +10,7 @@ const Row: React.FC<RowProps> = ({contentArr}: RowProps) => {
     <div className={
         `w-full grid 
         grid-cols-${contentArr?.length ? contentArr?.length : 1} 
-        gap-2 overflow-hidden lg:h-64`
+        gap-2 overflow-hidden lg:h-36`
       }>
       {
         contentArr?.length ?
