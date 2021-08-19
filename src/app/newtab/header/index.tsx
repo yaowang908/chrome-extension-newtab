@@ -67,7 +67,7 @@ export const Header = () => {
   }
 
   const closeClickHandler = () => {
-
+    //TODO: close other tabs
   }
 
   const resetClickHandler = () => {

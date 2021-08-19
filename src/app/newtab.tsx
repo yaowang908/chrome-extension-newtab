@@ -11,7 +11,7 @@ import TabsSection from "./newtab/tabs";
 import "../style/styles.css";
 
 const App: React.FC = () => {
-  
+  // TODO: one of the three columns can be used a container for important links to preserve
 
   return (
     <RecoilRoot>
