@@ -1,4 +1,5 @@
 import React from 'react';
+import { nanoid } from "nanoid";
 
 import { RowProps } from './row.interfaces';
 import Link from '../link/link.component';
@@ -15,7 +16,7 @@ const Row: React.FC<RowProps> = ({contentArr}: RowProps) => {
       {
         contentArr?.length ?
         contentArr?.map((ele: LinkProps) => {
-          return <Link key={ele?.title} {...ele}/>
+          return <Link key={nanoid()} {...ele}/>
         }) :
         "Empty!"
       }

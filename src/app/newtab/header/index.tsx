@@ -26,7 +26,7 @@ export const Header = () => {
     chrome.tabs.query(queryOptions).then((res) => {
       console.log(res);
       const formatData = res.filter(x => x?.url && !(x?.url.includes('chrome://'))).map((x, index) => ({
-          id: index + '' + nanoid(),
+          id: index + '_' + nanoid(),
           imageUrl: x?.favIconUrl,
           link: x?.url,
           title: x?.title,
