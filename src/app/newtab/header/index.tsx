@@ -33,7 +33,11 @@ export const Header = () => {
           priority: 0,
         })
       );
-      setDataArr(formatData);
+      if(dataArr) {
+        setDataArr([...dataArr, ...formatData]);
+      } else {
+        setDataArr(formatData);
+      }
     });
     // chrome.runtime.sendMessage({
     //   method: "allTabs"
