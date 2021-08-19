@@ -1,12 +1,11 @@
 import React from "react";
-import ReactDOM from "react-dom";
-import { useSetRecoilState } from 'recoil';
+import { useRecoilState } from 'recoil';
+import { nanoid } from "nanoid";
 
 import { links } from '../Recoil/newtab.atom';
-import { LinkProps } from '../tabs/link/link.interfaces';
 
 export const Header = () => {
-  const setDataArr = useSetRecoilState(links);
+  const [dataArr, setDataArr] = useRecoilState(links);
 
   React.useEffect(() => {
     chrome.storage.local.get(['tabs'], function(result) {
@@ -14,21 +13,26 @@ export const Header = () => {
         setDataArr(result.tabs);
       }
     });
-  }, [])
+  }, []);
+
+  React.useEffect(() => {
+    chrome.storage.local.set({tabs: dataArr}, function() {
+      console.log('Tabs are saved locally ');
+    });
+  }, [dataArr])
 
   const collectClickHandler = () => {
     let queryOptions = {};
     chrome.tabs.query(queryOptions).then((res) => {
       console.log(res);
-      const formatData = res.filter(x => x?.url && !(x?.url.includes('chrome://'))).map((x) => ({
+      const formatData = res.filter(x => x?.url && !(x?.url.includes('chrome://'))).map((x, index) => ({
+          id: index + '' + nanoid(),
           imageUrl: x?.favIconUrl,
           link: x?.url,
-          title: x?.title
+          title: x?.title,
+          priority: 0,
         })
       );
-      chrome.storage.local.set({tabs: formatData}, function() {
-        console.log('Tabs are saved locally ');
-      });
       setDataArr(formatData);
     });
     // chrome.runtime.sendMessage({

@@ -15,7 +15,7 @@ const Row: React.FC<RowProps> = ({contentArr}: RowProps) => {
       {
         contentArr?.length ?
         contentArr?.map((ele: LinkProps) => {
-          return <Link key={ele?.title} link={ele?.link} imageUrl={ele?.imageUrl} title={ele?.title}/>
+          return <Link key={ele?.title} {...ele}/>
         }) :
         "Empty!"
       }
