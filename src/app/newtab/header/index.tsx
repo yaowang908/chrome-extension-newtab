@@ -3,6 +3,7 @@ import { useRecoilState } from 'recoil';
 import { nanoid } from "nanoid";
 
 import { links } from '../Recoil/newtab.atom';
+import { LinkProps } from "../tabs/link/link.interfaces";
 
 export const Header = () => {
   const [dataArr, setDataArr] = useRecoilState(links);
@@ -24,7 +25,7 @@ export const Header = () => {
   const collectClickHandler = () => {
     let queryOptions = {};
     chrome.tabs.query(queryOptions).then((res) => {
-      console.log(res);
+      // console.log(res);
       const formatData = res.filter(x => x?.url && !(x?.url.includes('chrome://'))).map((x, index) => ({
           id: index + '_' + nanoid(),
           imageUrl: x?.favIconUrl,
@@ -34,7 +35,14 @@ export const Header = () => {
         })
       );
       if(dataArr) {
-        setDataArr([...dataArr, ...formatData]);
+        const newState = [...dataArr, ...formatData];
+        if(hasDuplicates(newState)) {
+          console.log("Removed duplicates!")
+          setDataArr(removeDuplicates(newState));
+        } else {
+          setDataArr(newState);
+        }
+        // setDataArr([...dataArr, ...formatData]);
       } else {
         setDataArr(formatData);
       }
@@ -44,7 +52,18 @@ export const Header = () => {
     // }, (response) => {
     //   console.log(response)
     // });
-    console.log("clicked")
+  }
+
+  const removeDuplicates = (arr:LinkProps[]) => {
+    return arr.filter((value, index, array) => array.findIndex(t => (t.link === value.link)) === index);
+  }
+
+  const hasDuplicates = (arr:LinkProps[]) => {
+    const uniqueUrls = new Set(arr.map(x => x.link));
+    if (uniqueUrls.size < arr.length) {
+      return true;
+    }
+    return false;
   }
 
   const closeClickHandler = () => {

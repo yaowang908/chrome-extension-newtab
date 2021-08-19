@@ -13,7 +13,7 @@ const links = selector<LinkProps[] | undefined>({
     if (method instanceof DefaultValue) {
       set(linksAtom, method);
     }
-    console.log("Recoil atom gets: ", method);
+    // console.log("Recoil atom gets: ", method);
     set(linksAtom, method);
     // console.error("Unrecognized Status");
   }
