@@ -15,9 +15,9 @@ const App: React.FC = () => {
 
   return (
     <RecoilRoot>
-      <div className="w-full h-screen bg-blue-900 p-12">
+      <div className="w-full h-screen bg-blue-900 p-12 flex flex-col">
         <Header />
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 mt-4">
+        <div className="flex-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 mt-4">
           <TabsSection />
           <TopSites />
           <Section>Column 3</Section>

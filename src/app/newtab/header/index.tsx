@@ -62,7 +62,7 @@ export const Header = () => {
   }
 
   return (
-    <div className="w-full border-b-2 border-white flex flex-row justify-between">
+    <div className="flex-initial w-full border-b-2 border-white flex flex-row justify-between">
       <div className="text-4xl text-white">Life is too short!</div>
 
       <div className="w-96 grid grid-cols-3 gap-2 mb-4">
