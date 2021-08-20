@@ -6,7 +6,7 @@ const linksAtom = atom<LinkProps[] | undefined>({
   default: undefined,
 });
 
-const links = selector<LinkProps[] | undefined>({
+const linksSelector = selector<LinkProps[] | undefined>({
   key: "targetMonth",
   get: ({get}) => get(linksAtom),
   set: ({set, get}, method) => {
@@ -19,4 +19,4 @@ const links = selector<LinkProps[] | undefined>({
   }
 })
 
-export { links };
+export { linksSelector };

@@ -1,12 +1,15 @@
 import React from "react";
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import { nanoid } from "nanoid";
 
-import { links } from '../Recoil/newtab.atom';
+import { linksSelector } from '../Recoil/links_selector.atom';
 import { LinkProps } from "../tabs/link/link.interfaces";
+import { colorThemeSelector } from "../Recoil/color_theme.atom";
+import setting from '../setting/setting';
 
 export const Header = () => {
-  const [dataArr, setDataArr] = useRecoilState(links);
+  const [dataArr, setDataArr] = useRecoilState(linksSelector);
+  const colorTheme = useRecoilValue(colorThemeSelector);
 
   React.useEffect(() => {
     chrome.storage.local.get(['tabs'], function(result) {
@@ -85,13 +88,13 @@ export const Header = () => {
   }
 
   return (
-    <div className="flex-initial w-full border-b-2 border-white flex flex-row justify-between">
-      <div className="text-4xl text-white">Life is too short!</div>
+    <div className={`flex-initial w-full border-b-2 ${setting.headBorder[colorTheme]} flex flex-row justify-between`}>
+      <div className={`text-4xl ${setting.text[colorTheme]}`}>Life is too short!</div>
 
-      <div className="w-96 grid grid-cols-3 gap-2 mb-4">
-        <button onClick={collectClickHandler} >Collect all tabs!</button>
-        <button onClick={closeClickHandler} >Close all tabs!</button>
-        <button onClick={resetClickHandler} className='text-white cols-span-2 hover:text-red-900 hover:border-red-900'>Reset all</button>
+      <div className={`w-96 grid grid-cols-3 gap-2 mb-4 ${setting.text[colorTheme]}`}>
+        <button onClick={collectClickHandler} className={`${setting.text[colorTheme]} ${setting.headBorder[colorTheme]}`}>Collect all tabs!</button>
+        <button onClick={closeClickHandler} className={`${setting.text[colorTheme]} ${setting.headBorder[colorTheme]}`}>Close all tabs!</button>
+        <button onClick={resetClickHandler} className={`${setting.text[colorTheme]} ${setting.headBorder[colorTheme]} cols-span-2 hover:text-red-900 hover:border-red-900`}>Reset all</button>
       </div>
     </div>
   )

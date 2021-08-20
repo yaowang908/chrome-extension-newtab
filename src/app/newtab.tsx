@@ -2,29 +2,17 @@ import React from "react";
 import ReactDOM from "react-dom";
 import { RecoilRoot } from "recoil";
 
-import { Header } from "./newtab/header";
-import Section from "./newtab/section/section.component";
-import TopSites from "./newtab/topsites/topsites.component";
-import TabsSection from "./newtab/tabs";
-
-
+import App from './newtab/app.component';
 import "../style/styles.css";
 
-const App: React.FC = () => {
+const Newtab: React.FC = () => {
   // TODO: one of the three columns can be used a container for important links to preserve
 
   return (
     <RecoilRoot>
-      <div className="w-full h-screen bg-blue-900 p-12 flex flex-col">
-        <Header />
-        <div className="flex-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 mt-4">
-          <TabsSection />
-          <Section>Column 3</Section>
-          <TopSites />
-        </div>
-      </div>
+      <App />
     </RecoilRoot>
   );
 };
 
-ReactDOM.render(<App />, document.getElementById("app-root"));
+ReactDOM.render(<Newtab />, document.getElementById("app-root"));
