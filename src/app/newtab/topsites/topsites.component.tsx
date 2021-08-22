@@ -2,7 +2,7 @@ import { nanoid } from 'nanoid';
 import React from 'react'
 import { useRecoilValue } from 'recoil';
 
-import Row from '../tabs/row/row.component';
+import List from '../tabs/list/list.component';
 import Section from '../section/section.component';
 import { LinkProps } from '../tabs/link/link.interfaces';
 import { colorThemeSelector } from "../Recoil/color_theme.atom";
@@ -47,7 +47,7 @@ const TopSites:React.FC = () => {
       {/* <button onClick={clickHandler}>get top sites</button>    */}
       {
         topSites ?
-        <Row contentArr={topSites}/> :
+        <List contentArr={topSites}/> :
         ''
       }
     </Section>

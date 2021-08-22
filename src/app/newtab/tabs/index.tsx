@@ -4,14 +4,14 @@ import { useRecoilValue } from 'recoil';
 import { LinkProps } from '../tabs/link/link.interfaces';
 import { linksSelector } from '../Recoil/links_selector.atom';
 import Section from '../section/section.component';
-import Row from "./row/row.component";
+import List from "./list/list.component";
 
 const TabsSection: React.FC = () => {
   const dataArr = useRecoilValue(linksSelector);
 
   return (
     <Section>      
-      <Row contentArr={dataArr}/>
+      <List contentArr={dataArr}/>
     </Section>
   )
 }

@@ -19,12 +19,6 @@ export const Header = () => {
     });
   }, []);
 
-  React.useEffect(() => {
-    chrome.storage.local.set({tabs: dataArr}, function() {
-      console.log('Tabs are saved locally ');
-    });
-  }, [dataArr])
-
   const collectClickHandler = () => {
     let queryOptions = {};
     chrome.tabs.query(queryOptions).then((res) => {

@@ -1,11 +1,11 @@
 import React from 'react';
 import { nanoid } from "nanoid";
 
-import { RowProps } from './row.interfaces';
+import { RowProps } from './list.interfaces';
 import Link from '../link/link.component';
 import { LinkProps } from '../link/link.interfaces';
 
-const Row: React.FC<RowProps> = ({contentArr}: RowProps) => {
+const List: React.FC<RowProps> = ({contentArr}: RowProps) => {
 
   return (
     <div className={
@@ -24,4 +24,4 @@ const Row: React.FC<RowProps> = ({contentArr}: RowProps) => {
   )
 }
 
-export default Row;
+export default List;
