@@ -6,7 +6,7 @@ import { linksSelector } from '../../Recoil/links_selector.atom';
 import { colorThemeSelector } from "../../Recoil/color_theme.atom";
 import setting from '../../setting/setting';
 
-const Link: React.FC<LinkProps> = ({id, link, imageUrl, title}: LinkProps) => {
+const Link: React.FC<LinkProps> = ({id, link, imageUrl, title, preview = false}: LinkProps) => {
   const [dataArr, setDataArr] = useRecoilState(linksSelector);
   const colorTheme = useRecoilValue(colorThemeSelector);
   // link: string;
@@ -29,7 +29,7 @@ const Link: React.FC<LinkProps> = ({id, link, imageUrl, title}: LinkProps) => {
   }
 
   return (
-    <div className="w-full grid grid-cols-12 group" >
+    <div className= {`w-full grid grid-cols-12 group ${preview ? 'bg-gray-700': ''}`} >
       <div className="col-span-1 w-6 h-6 bg-center bg-contain bg-no-repeat cursor-pointer mr-2" style={{backgroundImage: `url(${imageUrl})`}} ></div>
       <div className={`col-span-11 relative grid grid-cols-12 gap-1 ${setting.text[colorTheme]} cursor-pointer`}>
         <div className="col-span-12 group-hover:col-span-8 block whitespace-nowrap truncate">
