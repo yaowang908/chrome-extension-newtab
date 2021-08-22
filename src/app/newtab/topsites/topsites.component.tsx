@@ -7,6 +7,7 @@ import Section from '../section/section.component';
 import { LinkProps } from '../tabs/link/link.interfaces';
 import { colorThemeSelector } from "../Recoil/color_theme.atom";
 import setting from '../setting/setting';
+import { ItemTypes } from '../dnd/ItemTypes';
 
 const TopSites:React.FC = () => {
   const [topSites, setTopSites] = React.useState<LinkProps[] | undefined>(undefined);
@@ -47,7 +48,7 @@ const TopSites:React.FC = () => {
       {/* <button onClick={clickHandler}>get top sites</button>    */}
       {
         topSites ?
-        <List contentArr={topSites}/> :
+        <List contentArr={topSites} itemType={ItemTypes.TOPSITE}/> :
         ''
       }
     </Section>

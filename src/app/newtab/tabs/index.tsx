@@ -6,13 +6,14 @@ import { linksSelector } from '../Recoil/links_selector.atom';
 import Section from '../section/section.component';
 import List from "./list/list.component";
 import { CustomDragLayer } from '../dnd/CustomDragLayer';
+import { ItemTypes } from '../dnd/ItemTypes';
 
 const TabsSection: React.FC = () => {
   const dataArr = useRecoilValue(linksSelector);
 
   return (
     <Section>      
-      <List contentArr={dataArr}/>
+      <List contentArr={dataArr} itemType={ItemTypes.LINK}/>
       <CustomDragLayer />
     </Section>
   )

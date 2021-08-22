@@ -6,10 +6,10 @@ import { getEmptyImage } from 'react-dnd-html5-backend';
 import Link from './link.component';
 import { LinkProps } from "./link.interfaces";
 
-export const DraggableLink:React.FC<LinkProps> = (props:LinkProps) => {
+export const DraggableLink:React.FC<LinkProps> = ({itemType = ItemTypes.LINK, ...props}:LinkProps) => {
   const [{ isDragging }, drag, preview] = useDrag(
     () => ({
-      type: ItemTypes.LINK,
+      type: itemType,
       item: {...props},
       collect: (monitor: DragSourceMonitor) => ({
         isDragging: monitor.isDragging(),

@@ -5,4 +5,5 @@ export interface LinkProps {
   imageUrl?: string | undefined;
   title: string | undefined;
   preview?: boolean;
+  itemType?: string;
 }

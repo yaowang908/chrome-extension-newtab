@@ -48,6 +48,7 @@ export const CustomDragLayer: React.FC = () => {
 
   function renderItem() {
     // console.log('Preview fired! item: ', item)
+    // add new case if other column need to be draggable
     switch (itemType) {
       case ItemTypes.LINK:
         return <LinkDragPreview {...item} />

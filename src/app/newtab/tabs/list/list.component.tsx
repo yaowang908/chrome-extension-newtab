@@ -2,17 +2,17 @@ import React from 'react';
 import { nanoid } from "nanoid";
 import { useDrop } from 'react-dnd';
 
-import { ItemTypes } from '../../dnd/ItemTypes';
-import { RowProps } from './list.interfaces';
+import { ListProps } from './list.interfaces';
 import { DraggableLink } from '../link/draggableLink.component';
 import Link from '../link/link.component';
 import { LinkProps } from '../link/link.interfaces';
 
-const List: React.FC<RowProps> = ({contentArr}: RowProps) => {
+
+const List:React.FC<ListProps> = ({contentArr, itemType}) => {
 
   const [, drop] = useDrop(
     () => ({
-      accept: ItemTypes.LINK,
+      accept: itemType,
       drop(item, monitor) {
         const delta = monitor.getDifferenceFromInitialOffset() as {
           x: number
@@ -29,7 +29,7 @@ const List: React.FC<RowProps> = ({contentArr}: RowProps) => {
       {
         contentArr?.length ?
         contentArr?.map((ele: LinkProps) => {
-          return <DraggableLink key={nanoid()} {...ele}/>
+          return <DraggableLink key={nanoid()} {...ele} itemType={itemType}/>
         }) :
         "Empty!"
       }
