@@ -15,16 +15,26 @@ export const Header = () => {
     chrome.storage.local.get(['tabs'], function(result) {
       if(result.tabs) {
         setDataArr(result.tabs);
+        console.log(result.tabs);
       }
     });
   }, []);
 
   const collectClickHandler = () => {
     let queryOptions = {};
+
+    const getOrder = (prevArr: (LinkProps[] | undefined), currentIndex:number) => {
+      if(prevArr) {
+        return prevArr.length + currentIndex;
+      } 
+      return currentIndex;
+    }
+
     chrome.tabs.query(queryOptions).then((res) => {
       // console.log(res);
       const formatData = res.filter(x => x?.url && !(x?.url.includes('chrome://'))).map((x, index) => ({
           id: index + '_' + nanoid(),
+          order: getOrder(dataArr, index),
           imageUrl: x?.favIconUrl,
           link: x?.url,
           title: x?.title,
