@@ -94,9 +94,9 @@ export const DraggableLink:React.FC<DraggableLinkPropsInterface> = ( { itemType 
         delta: monitor.getDifferenceFromInitialOffset(),
       }),
       end: (item, monitor: DragSourceMonitor) => {
-        const delta = monitor.getDropResult();
-        console.log("DRAGEND", item, delta);
-        console.log(delta);
+        // const delta = monitor.getDropResult();
+        // console.log("DRAGEND", item, delta);
+        // console.log(delta);
         return undefined;
       }
     })
