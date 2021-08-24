@@ -88,17 +88,27 @@ export const DraggableLink:React.FC<DraggableLinkPropsInterface> = ( { itemType 
 
   const [{ isDragging }, drag, preview] = useDrag({
       type: itemType,
-      item: () => ({...props, index: props.index}),
+      item: () => ({...props}),
       collect: (monitor: DragSourceMonitor) => ({
         isDragging: monitor.isDragging(),
-      })
+        delta: monitor.getDifferenceFromInitialOffset(),
+      }),
+      end: (item, monitor: DragSourceMonitor) => {
+        const delta = monitor.getDropResult();
+        console.log("DRAGEND", item, delta);
+        console.log(delta);
+        return undefined;
+      }
     })
 
   React.useEffect(() => {
     preview(getEmptyImage(), {captureDraggingState: true})
   }, [])
+  
+  drag(drop(ref));
 
-  drag(drop(ref))
+  console.log(isDragging);
+
   return (
     <div ref={ref} role="DraggableLink" className={`my-1 ${isDragging ? 'opacity-0': ''}`} data-handler-id={handlerId}>
       <Link {...props}></Link>

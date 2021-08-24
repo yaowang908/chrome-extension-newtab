@@ -10,28 +10,22 @@ import { LinkProps } from '../link/link.interfaces';
 
 const List:React.FC<ListProps> = ({contentArr, itemType}) => {
 
-  const [, drop] = useDrop(
-    () => ({
-      accept: itemType,
-      drop(item, monitor) {
-        const delta = monitor.getDifferenceFromInitialOffset() as {
-          x: number
-          y: number
-        }
-        console.log('list component clg: delta: ', delta);
-        console.log('list component clg: item: ', item);
-        return undefined;
-      }
-    })
-  )
+  // const [, drop] = useDrop({
+  //     accept: itemType,
+  //     drop: (item, monitor) => {
+  //       const delta = monitor.getDifferenceFromInitialOffset() as {
+  //         x: number
+  //         y: number
+  //       }
+  //       console.log('list component clg: delta: ', delta);
+  //       console.log('list component clg: item: ', item);
+  //       return undefined;
+  //     }
+  //   })
 
-  // dragStart: redraw a view subtract the dragged one
-  // dragging: dynamic add preview to the pointer place
-  // dragEnd: create a new dataArr to redraw
-  
   
   return (
-    <div ref={drop} className={ `w-full h-full flex flex-col overflow-hidden` }>
+    <div className={ `w-full h-full flex flex-col overflow-hidden` }>
       {
         contentArr?.length ?
         contentArr?.map((ele: LinkProps, index) => {
