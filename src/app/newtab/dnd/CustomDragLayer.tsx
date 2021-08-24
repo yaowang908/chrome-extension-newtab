@@ -58,7 +58,7 @@ export const CustomDragLayer: React.FC = () => {
   }
 
   return (
-    <div className="fixed pointer-events-none z-50 left-0 top-0 w-full h-full">
+    <div className={`fixed pointer-events-none z-50 left-0 top-0 w-full h-full`}>
       <div style={getItemStyles(initialOffset, currentOffset)}>
         {renderItem()}
       </div>

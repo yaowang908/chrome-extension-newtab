@@ -34,7 +34,7 @@ export const Header = () => {
       // console.log(res);
       const formatData = res.filter(x => x?.url && !(x?.url.includes('chrome://'))).map((x, index) => ({
           id: index + '_' + nanoid(),
-          order: getOrder(dataArr, index),
+          index: getOrder(dataArr, index),
           imageUrl: x?.favIconUrl,
           link: x?.url,
           title: x?.title,

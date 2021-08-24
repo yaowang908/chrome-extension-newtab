@@ -18,18 +18,25 @@ const List:React.FC<ListProps> = ({contentArr, itemType}) => {
           x: number
           y: number
         }
-        console.log(delta, item);
+        console.log('list component clg: delta: ', delta);
+        console.log('list component clg: item: ', item);
         return undefined;
       }
     })
   )
 
+  // dragStart: redraw a view subtract the dragged one
+  // dragging: dynamic add preview to the pointer place
+  // dragEnd: create a new dataArr to redraw
+  
+  
   return (
     <div ref={drop} className={ `w-full h-full flex flex-col overflow-hidden` }>
       {
         contentArr?.length ?
-        contentArr?.map((ele: LinkProps) => {
-          return <DraggableLink key={nanoid()} {...ele} itemType={itemType}/>
+        contentArr?.map((ele: LinkProps, index) => {
+          const draggableLinkProps =  Object.assign({}, {...ele}, {itemType: itemType, index: index});
+          return <DraggableLink key={nanoid()} {...draggableLinkProps}/>
         }) :
         "Empty!"
       }

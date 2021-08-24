@@ -27,11 +27,11 @@ const TopSites:React.FC = () => {
     if(chrome.topSites) {
       chrome.topSites.get((url_list) => {
         const formatData: LinkProps[] = [];
-        url_list.map((x) => {
+        url_list.map((x, index) => {
           formatData.push({
             id: nanoid(),
             link: x.url,
-            title: x.title
+            title: x.title,
           })
         })
         setTopSites(formatData)
