@@ -17,7 +17,7 @@ export const DraggableLink:React.FC<DraggableLinkPropsInterface> = ( { itemType 
   const ref = React.useRef<HTMLDivElement>(null);
   // const dataArrPreserve = dataArr ? [...dataArr] : [];
 
-  interface DropObject extends LinkProps {
+  interface MyDropObject extends LinkProps {
     type: string;
     index: number;
   }
@@ -37,14 +37,15 @@ export const DraggableLink:React.FC<DraggableLinkPropsInterface> = ( { itemType 
   }, [dataArr])
 
 
-  const [{ handlerId }, drop] = useDrop({
+  const [{ handlerId, isOver }, drop] = useDrop({
     accept: itemType,
     collect(monitor) {
       return {
         handlerId: monitor.getHandlerId(),
+        isOver: monitor.isOver({ shallow: true })
       }
     },
-    hover(item:DropObject, monitor:DropTargetMonitor) {
+    hover(item:MyDropObject, monitor:DropTargetMonitor) {
       if(!ref.current) {
         return;
       }
@@ -74,7 +75,9 @@ export const DraggableLink:React.FC<DraggableLinkPropsInterface> = ( { itemType 
           return;
       }
       // Time to actually perform the action
+      
       moveLinkPreview(dragIndex, hoverIndex);
+
       // Note: we're mutating the monitor item here!
       // Generally it's better to avoid mutations,
       // but it's good here for the sake of performance
@@ -86,18 +89,27 @@ export const DraggableLink:React.FC<DraggableLinkPropsInterface> = ( { itemType 
     },
   });
 
+  interface MyDragObject extends MyDropObject {
+    originalIndex: number;
+    type: string;
+  }
+
   const [{ isDragging }, drag, preview] = useDrag({
       type: itemType,
-      item: () => ({...props}),
+      item: {originalIndex: props.index, type: itemType,...props},
       collect: (monitor: DragSourceMonitor) => ({
         isDragging: monitor.isDragging(),
-        delta: monitor.getDifferenceFromInitialOffset(),
       }),
-      end: (item, monitor: DragSourceMonitor) => {
-        // const delta = monitor.getDropResult();
-        // console.log("DRAGEND", item, delta);
-        // console.log(delta);
-        return undefined;
+      end: (item:MyDragObject, monitor: DragSourceMonitor) => {
+        console.log("DRAGEND", item);
+        const { index: index, originalIndex } = item;
+        const didDrop = monitor.didDrop();
+        if(!didDrop) {
+          moveLinkPreview(originalIndex, index);
+        }
+        return {
+          isDragging: monitor.isDragging(),
+        };
       }
     })
 
@@ -107,10 +119,8 @@ export const DraggableLink:React.FC<DraggableLinkPropsInterface> = ( { itemType 
   
   drag(drop(ref));
 
-  console.log(isDragging);
-
   return (
-    <div ref={ref} role="DraggableLink" className={`my-1 ${isDragging ? 'opacity-0': ''}`} data-handler-id={handlerId}>
+    <div ref={ref} role="DraggableLink" id={props.id} className={`my-1 ${isDragging ? 'opacity-0': ''}`} data-handler-id={handlerId}>
       <Link {...props}></Link>
     </div>
   )

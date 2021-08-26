@@ -24,10 +24,11 @@ const App: React.FC = () => {
     <DndProvider backend={HTML5Backend}>
       <div className={`w-full h-screen ${setting.bg[colorTheme]} p-12 flex flex-col`}>
         <Header />
-        <div className="flex-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 mt-4">
+        <div className="flex-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 mt-4">
           <TabsSection />
+          <Section>Column 2</Section>
           <Section>Column 3</Section>
-          <TopSites />
+          {/* <TopSites /> */}
         </div>
       </div>
     </DndProvider>

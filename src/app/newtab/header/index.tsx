@@ -15,7 +15,7 @@ export const Header = () => {
     chrome.storage.local.get(['tabs'], function(result) {
       if(result.tabs) {
         setDataArr(result.tabs);
-        console.log(result.tabs);
+        console.log('header index: ', result.tabs);
       }
     });
   }, []);

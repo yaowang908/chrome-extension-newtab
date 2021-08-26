@@ -12,8 +12,12 @@ const TabsSection: React.FC = () => {
   const dataArr = useRecoilValue(linksSelector);
 
   return (
-    <Section>      
-      <List contentArr={dataArr} itemType={ItemTypes.LINK}/>
+    <Section>
+      {
+        dataArr ? 
+        <List contentArr={dataArr} itemType={ItemTypes.LINK}/> :
+        ''
+      }      
       <CustomDragLayer />
     </Section>
   )

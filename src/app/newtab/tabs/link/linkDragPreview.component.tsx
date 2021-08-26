@@ -6,7 +6,7 @@ import { LinkProps } from './link.interfaces';
 export const LinkDragPreview:React.FC<LinkProps> = (props:LinkProps) => {
 
   return (
-    <div className="inline-block w-24 overflow-hidden">
+    <div style={{'maxWidth':'30%'}}  className="inline-block w-full opacity-50 border-2 border-yellow-200 overflow-hidden">
       <Link {...props} preview={true}/>
     </div>
   )
