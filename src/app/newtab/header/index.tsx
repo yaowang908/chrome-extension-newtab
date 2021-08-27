@@ -59,6 +59,7 @@ export const Header = () => {
     // }, (response) => {
     //   console.log(response)
     // });
+    closeClickHandler()
   }
 
   const removeDuplicates = (arr:LinkProps[]) => {
@@ -86,6 +87,21 @@ export const Header = () => {
     })
   }
 
+  const openAllClickHandler = () => {
+    dataArr?.map((link, index) => {
+      if(!index) {
+        chrome.tabs.create({
+          active: true,
+          url: link.link
+        });
+      }
+      chrome.tabs.create({
+        active: false,
+        url: link.link
+      });
+    });
+  }
+
   const resetClickHandler = () => {
     if(window.confirm("Are you sure about delete all saved tabs?")) {
       chrome.storage.local.remove(["tabs"], function() {
@@ -106,7 +122,7 @@ export const Header = () => {
 
       <div className={`w-96 grid grid-cols-3 gap-2 mb-4 ${setting.text[colorTheme]}`}>
         <button onClick={collectClickHandler} className={`${setting.text[colorTheme]} ${setting.headBorder[colorTheme]}`}>Collect all tabs!</button>
-        <button onClick={closeClickHandler} className={`${setting.text[colorTheme]} ${setting.headBorder[colorTheme]}`}>Close all tabs!</button>
+        <button onClick={openAllClickHandler} className={`${setting.text[colorTheme]} ${setting.headBorder[colorTheme]}`}>Open all tabs!</button>
         <button onClick={resetClickHandler} className={`${setting.text[colorTheme]} ${setting.headBorder[colorTheme]} cols-span-2 hover:text-red-900 hover:border-red-900`}>Reset all</button>
       </div>
     </div>
