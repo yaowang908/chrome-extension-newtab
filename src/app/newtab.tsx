@@ -16,9 +16,9 @@ const Newtab: React.FC = () => {
   // }, [])
 
   React.useEffect(() => {
-    console.log(chrome.sessions)
+    // console.log(chrome.sessions)
     chrome?.sessions?.getRecentlyClosed((res) => {
-      console.log(res);
+      // console.log(res);
     })
   }, [])
 

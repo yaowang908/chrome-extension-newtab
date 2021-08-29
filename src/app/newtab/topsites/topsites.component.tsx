@@ -2,11 +2,12 @@ import { nanoid } from 'nanoid';
 import React from 'react'
 import { useRecoilValue } from 'recoil';
 
-import Row from '../tabs/row/row.component';
+import List from '../tabs/list/list.component';
 import Section from '../section/section.component';
 import { LinkProps } from '../tabs/link/link.interfaces';
 import { colorThemeSelector } from "../Recoil/color_theme.atom";
 import setting from '../setting/setting';
+import { ItemTypes } from '../dnd/ItemTypes';
 
 const TopSites:React.FC = () => {
   const [topSites, setTopSites] = React.useState<LinkProps[] | undefined>(undefined);
@@ -26,11 +27,11 @@ const TopSites:React.FC = () => {
     if(chrome.topSites) {
       chrome.topSites.get((url_list) => {
         const formatData: LinkProps[] = [];
-        url_list.map((x) => {
+        url_list.map((x, index) => {
           formatData.push({
             id: nanoid(),
             link: x.url,
-            title: x.title
+            title: x.title,
           })
         })
         setTopSites(formatData)
@@ -47,7 +48,7 @@ const TopSites:React.FC = () => {
       {/* <button onClick={clickHandler}>get top sites</button>    */}
       {
         topSites ?
-        <Row contentArr={topSites}/> :
+        <List contentArr={topSites} itemType={ItemTypes.TOPSITE}/> :
         ''
       }
     </Section>

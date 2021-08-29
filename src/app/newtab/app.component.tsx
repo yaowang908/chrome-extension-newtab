@@ -1,5 +1,7 @@
 import React from "react";
 import { useRecoilState } from "recoil";
+import { HTML5Backend } from "react-dnd-html5-backend";
+import { DndProvider } from "react-dnd";
 
 import { Header } from "./header";
 import Section from "./section/section.component";
@@ -19,14 +21,17 @@ const App: React.FC = () => {
   }, [])
 
   return (
+    <DndProvider backend={HTML5Backend}>
       <div className={`w-full h-screen ${setting.bg[colorTheme]} p-12 flex flex-col`}>
         <Header />
-        <div className="flex-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 mt-4">
+        <div className="flex-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
           <TabsSection />
+          <Section>Column 2</Section>
           <Section>Column 3</Section>
-          <TopSites />
+          {/* <TopSites /> */}
         </div>
       </div>
+    </DndProvider>
   );
 };
 
