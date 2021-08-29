@@ -18,7 +18,7 @@ export const DropContainer:React.FC<DropContainerProps> = (
         isOver: monitor.isOver(),
         canDrop: monitor.canDrop(),
       }),
-      drop: (item: unknown) => onDrop(item),
+      drop: (item: unknown) => onDrop(item)      
     }),
     [accept],
   );
@@ -32,7 +32,7 @@ export const DropContainer:React.FC<DropContainerProps> = (
   }
 
   return (
-    <div ref={drop} className={`w-full h-auto relative ${bgClass}`}>
+    <div ref={drop} className={`w-full h-full relative ${bgClass}`}>
       {children}
     </div>
   )

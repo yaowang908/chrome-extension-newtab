@@ -100,15 +100,16 @@ export const DraggableLink:React.FC<DraggableLinkPropsInterface> = ( { itemType 
       end: (item:MyDragObject, monitor: DragSourceMonitor) => {
         // console.log("DRAGEND", item);
         const getDropResult= monitor.getDropResult() as {dropTarget: string};
+        console.log('getDropResult: ', getDropResult);
         const dropTarget = getDropResult?.dropTarget || undefined;
         // DONE: if dropTarget is not list, ask user to confirm to remove link
         // TODO: when dropTarget is group, it's also ok to remove without ask
         const { index: index, originalIndex } = item;
-        // console.log('dropTarget: ', dropTarget);
+        console.log('dropTarget: ', dropTarget);
         const didDrop = monitor.didDrop();
         // didDrop will return false when drop outside of this component
         // console.log('didDrop: ', didDrop);
-        if(!didDrop) {
+        if(!dropTarget) {
           removeLink(originalIndex);
           // console.log('Dropped outside!')
         }

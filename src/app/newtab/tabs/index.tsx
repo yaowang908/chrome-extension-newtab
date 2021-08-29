@@ -7,7 +7,7 @@ import List from "./list/list.component";
 import { CustomDragLayer } from '../dnd/CustomDragLayer';
 import { ItemTypes } from '../dnd/ItemTypes';
 import { useDrop } from 'react-dnd';
-import { DropContainer } from './DropContainer/DropContainer.component';
+import { DropContainer } from '../DropContainer/DropContainer.component';
 
 const TabsSection: React.FC = () => {
   const dataArr = useRecoilValue(linksSelector);

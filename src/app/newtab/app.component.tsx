@@ -11,6 +11,7 @@ import { colorThemeSelector } from "./Recoil/color_theme.atom";
 import setting from './setting/setting';
 
 import "../../style/styles.css";
+import { Group } from "./Group/Group.component";
 
 const App: React.FC = () => {
   const [colorTheme, setColorTheme] = useRecoilState(colorThemeSelector);
@@ -26,7 +27,7 @@ const App: React.FC = () => {
         <Header />
         <div className="flex-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
           <TabsSection />
-          <Section>Column 2</Section>
+          <Group />
           <Section>Column 3</Section>
           {/* <TopSites /> */}
         </div>
