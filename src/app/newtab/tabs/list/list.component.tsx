@@ -12,9 +12,9 @@ const List:React.FC<ListProps> = ({contentArr, itemType}) => {
   const [, drop] = useDrop({
       accept: itemType,
       drop: (item, monitor) => {
-
-        console.log('drops');
-        return undefined;
+        return {
+          dropTarget: 'list'
+        }
       }
     })
 

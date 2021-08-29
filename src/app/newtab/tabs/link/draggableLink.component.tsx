@@ -22,7 +22,7 @@ export const DraggableLink:React.FC<DraggableLinkPropsInterface> = ( { itemType 
     index: number;
   }
 
-  const moveLinkPreview = React.useCallback((dragIndex, hoverIndex) => {
+  const moveLink = React.useCallback((dragIndex, hoverIndex) => {
     if(!dataArr) return;
     // console.log('dragIndex, hoverIndex: ', dragIndex, hoverIndex);
     const draggedItem = dataArr[dragIndex];
@@ -36,13 +36,25 @@ export const DraggableLink:React.FC<DraggableLinkPropsInterface> = ( { itemType 
     setDataArr(result);
   }, [dataArr])
 
+  const removeLink = React.useCallback((dragIndex) => {
+    if(!dataArr) return;
+    const result = [...dataArr];
+    result.splice(dragIndex, 1);
+    if(window.confirm("Are you sure to remove this link?")) {
+      setDataArr(result);
+    } else {
+      console.log('Abort link removal!')
+    }
+  }, [dataArr])
 
-  const [{ handlerId, isOver }, drop] = useDrop({
+
+  const [{ handlerId, canDrop }, drop] = useDrop({
     accept: itemType,
     collect(monitor) {
       return {
         handlerId: monitor.getHandlerId(),
-        isOver: monitor.isOver({ shallow: true })
+        isOver: monitor.isOver({ shallow: true }),
+        canDrop: monitor.canDrop()
       }
     },
     hover(item:MyDropObject, monitor:DropTargetMonitor) {
@@ -55,28 +67,8 @@ export const DraggableLink:React.FC<DraggableLinkPropsInterface> = ( { itemType 
       if (dragIndex === hoverIndex) {
           return;
       }
-      // Determine rectangle on screen
-      const hoverBoundingRect = ref.current?.getBoundingClientRect();
-      // Get vertical middle
-      const hoverMiddleY = (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2;
-      // Determine mouse position
-      const clientOffset = monitor.getClientOffset();
-      // Get pixels to the top
-      const hoverClientY = (clientOffset?.y? clientOffset.y : 0) - hoverBoundingRect.top;
-      // Only perform the move when the mouse has crossed half of the items height
-      // When dragging downwards, only move when the cursor is below 50%
-      // When dragging upwards, only move when the cursor is above 50%
-      // Dragging downwards
-      if (dragIndex < hoverIndex && hoverClientY < hoverMiddleY) {
-          return;
-      }
-      // Dragging upwards
-      if (dragIndex > hoverIndex && hoverClientY > hoverMiddleY) {
-          return;
-      }
-      // Time to actually perform the action
-      
-      moveLinkPreview(dragIndex, hoverIndex);
+
+      moveLink(dragIndex, hoverIndex);
 
       // Note: we're mutating the monitor item here!
       // Generally it's better to avoid mutations,
@@ -87,6 +79,11 @@ export const DraggableLink:React.FC<DraggableLinkPropsInterface> = ( { itemType 
       // when you hover, the preview will actually updated the array,
       // when you release, DnD simply remove the preview, then the result is ready, no extra move needed! 
     },
+    drop(item, monitor) {
+      return {
+        dropTarget: 'link'
+      }
+    }
   });
 
   interface MyDragObject extends MyDropObject {
@@ -101,11 +98,19 @@ export const DraggableLink:React.FC<DraggableLinkPropsInterface> = ( { itemType 
         isDragging: monitor.isDragging(),
       }),
       end: (item:MyDragObject, monitor: DragSourceMonitor) => {
-        console.log("DRAGEND", item);
+        // console.log("DRAGEND", item);
+        const getDropResult= monitor.getDropResult() as {dropTarget: string};
+        const dropTarget = getDropResult?.dropTarget || undefined;
+        // DONE: if dropTarget is not list, ask user to confirm to remove link
+        // TODO: when dropTarget is group, it's also ok to remove without ask
         const { index: index, originalIndex } = item;
+        // console.log('dropTarget: ', dropTarget);
         const didDrop = monitor.didDrop();
+        // didDrop will return false when drop outside of this component
+        // console.log('didDrop: ', didDrop);
         if(!didDrop) {
-          moveLinkPreview(originalIndex, index);
+          removeLink(originalIndex);
+          // console.log('Dropped outside!')
         }
         return {
           isDragging: monitor.isDragging(),
@@ -118,6 +123,11 @@ export const DraggableLink:React.FC<DraggableLinkPropsInterface> = ( { itemType 
   }, [])
   
   drag(drop(ref));
+
+  // const attachRef = (el: HTMLDivElement) => {
+  //   drag(el);
+  //   drop(el);
+  // }
 
   return (
     <div ref={ref} role="DraggableLink" id={props.id} className={`my-1 ${isDragging ? 'opacity-0': ''}`} data-handler-id={handlerId}>
