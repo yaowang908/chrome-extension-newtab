@@ -1,21 +1,24 @@
 import React from "react";
-import { useRecoilState, useRecoilValue } from 'recoil';
+import { useRecoilState, useRecoilValue, useResetRecoilState } from 'recoil';
 import { nanoid } from "nanoid";
 
 import { linksSelector } from '../Recoil/links_selector.atom';
 import { LinkProps } from "../tabs/link/link.interfaces";
 import { colorThemeSelector } from "../Recoil/color_theme.atom";
+import { groupSelector } from '../Recoil/group_selector.atom';
 import setting from '../setting/setting';
 
 export const Header = () => {
   const [dataArr, setDataArr] = useRecoilState(linksSelector);
+  const resetLinks = useResetRecoilState(linksSelector);
+  const resetGroups = useResetRecoilState(groupSelector);
   const colorTheme = useRecoilValue(colorThemeSelector);
 
   React.useEffect(() => {
     chrome.storage.local.get(['tabs'], function(result) {
       if(result.tabs) {
         setDataArr(result.tabs);
-        console.log('header index: ', result.tabs);
+        // console.log('header index: ', result.tabs);
       }
     });
   }, []);
@@ -104,13 +107,14 @@ export const Header = () => {
 
   const resetClickHandler = () => {
     if(window.confirm("Are you sure about delete all saved tabs?")) {
-      chrome.storage.local.remove(["tabs"], function() {
+      chrome.storage.local.remove(["tabs", "groups"], function() {
         let error = chrome.runtime.lastError;
         if(error) {
           console.error(error)
         }
       });
-      setDataArr(undefined);
+      resetLinks();
+      resetGroups();
     } else {
       console.log("Abort!")
     }
