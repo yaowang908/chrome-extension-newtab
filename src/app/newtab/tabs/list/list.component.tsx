@@ -1,13 +1,16 @@
 import React from 'react';
 import { nanoid } from "nanoid";
 import { useDrop } from 'react-dnd';
+import { useRecoilState } from 'recoil';
 
+import { linksSelector } from '../../Recoil/links_selector.atom';
 import { ListProps } from './list.interfaces';
 import { DraggableLink } from '../link/draggableLink.component';
 import { LinkProps } from '../link/link.interfaces';
 
 
 const List:React.FC<ListProps> = ({contentArr, itemType}) => {
+  const [linksDataArr, setLinksDataArr] = useRecoilState(linksSelector);
 
   const [, drop] = useDrop({
       accept: itemType,
@@ -27,7 +30,7 @@ const List:React.FC<ListProps> = ({contentArr, itemType}) => {
       {
         contentArr?.length ?
         contentArr?.map((ele: LinkProps, index) => {
-          const draggableLinkProps =  Object.assign({}, {...ele}, {itemType: itemType, index: index});
+          const draggableLinkProps =  Object.assign({}, {...ele}, {itemType: itemType, index: index, dataArr: linksDataArr, setDataArr: setLinksDataArr});
           return <DraggableLink key={ele.id} {...draggableLinkProps}/>
         }) :
         "Empty!"

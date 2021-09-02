@@ -2,18 +2,21 @@ import React from 'react';
 import { useDrag, DragSourceMonitor, useDrop, DropTargetMonitor } from 'react-dnd';
 import { ItemTypes } from '../../dnd/ItemTypes';
 import { getEmptyImage } from 'react-dnd-html5-backend';
-import { useRecoilState } from 'recoil';
+import { useRecoilState, SetterOrUpdater } from "recoil";
 
 import Link from './link.component';
 import { LinkProps } from "./link.interfaces";
 import { linksSelector } from '../../Recoil/links_selector.atom';
 
-interface DraggableLinkPropsInterface extends LinkProps {
-    index: number;
-  }
+export interface DraggableLinkPropsInterface extends LinkProps {
+  index: number;
+  dataArr: LinkProps[] | undefined;
+  setDataArr: SetterOrUpdater<LinkProps[] | undefined>;
+}
 
-export const DraggableLink:React.FC<DraggableLinkPropsInterface> = ( { itemType = ItemTypes.LINK, ...props}:DraggableLinkPropsInterface) => {
-  const [dataArr, setDataArr] = useRecoilState(linksSelector);
+export const DraggableLink:React.FC<DraggableLinkPropsInterface> = ( { itemType = ItemTypes.LINK, dataArr, setDataArr, ...props}:DraggableLinkPropsInterface) => {
+  // const [dataArr, setDataArr] = useRecoilState(linksSelector);
+  // DONE: make component accept generic type
   const ref = React.useRef<HTMLDivElement>(null);
   // const dataArrPreserve = dataArr ? [...dataArr] : [];
 
@@ -139,7 +142,7 @@ export const DraggableLink:React.FC<DraggableLinkPropsInterface> = ( { itemType 
 
   return (
     <div ref={ref} role="DraggableLink" id={props.id} className={`my-1 ${isDragging ? 'opacity-0': ''}`} data-handler-id={handlerId}>
-      <Link {...props}></Link>
+      <Link dataArr={dataArr} setDataArr={setDataArr} {...props}></Link>
     </div>
   )
 }

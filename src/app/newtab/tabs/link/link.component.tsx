@@ -5,29 +5,39 @@ import { LinkProps } from "./link.interfaces";
 import { linksSelector } from '../../Recoil/links_selector.atom';
 import { colorThemeSelector } from "../../Recoil/color_theme.atom";
 import setting from '../../setting/setting';
+import { DraggableLinkPropsInterface } from './draggableLink.component';
 
-const Link: React.FC<LinkProps> = ({id, link, imageUrl, title, preview = false}: LinkProps) => {
-  const [dataArr, setDataArr] = useRecoilState(linksSelector);
+const Link: React.FC<DraggableLinkPropsInterface> = ({
+  id,
+  link,
+  imageUrl,
+  title,
+  dataArr,
+  setDataArr,
+  preview = false,
+}: DraggableLinkPropsInterface) => {
+  // const [dataArr, setDataArr] = useRecoilState(linksSelector);
+  // DONE: make component accept generic type
+
   const colorTheme = useRecoilValue(colorThemeSelector);
   const linkTitle = React.useRef<HTMLDivElement>(null);
-  // link: string;
-  // imageUrl: string;
-  // title: string;
 
-  const removeCurrentLink = () => { setDataArr(dataArr?.filter(x => (x?.id !== id))) }
+  const removeCurrentLink = () => {
+    setDataArr(dataArr?.filter((x) => x?.id !== id));
+  };
 
   const removeRecordClickHandler = () => {
-    removeCurrentLink()
-  }
+    removeCurrentLink();
+  };
 
-  const openClickHandler = (e:React.MouseEvent<HTMLElement>) => {
+  const openClickHandler = (e: React.MouseEvent<HTMLElement>) => {
     e.preventDefault();
     chrome.tabs.create({
       active: true,
-      url: link
+      url: link,
     });
-    removeCurrentLink()
-  }
+    removeCurrentLink();
+  };
 
   const editClickHandler = (e: React.MouseEvent<HTMLElement>) => {
     e.preventDefault();
@@ -37,20 +47,20 @@ const Link: React.FC<LinkProps> = ({id, link, imageUrl, title, preview = false}:
       linkTitle.current.contentEditable = "true";
       linkTitle.current.focus();
       // highlight all current content
-      window.getSelection()?.selectAllChildren( linkTitle.current );
+      window.getSelection()?.selectAllChildren(linkTitle.current);
     }
   };
 
   const renameCurrentLink = (newName: string) => {
-    const newDataArr = dataArr ? 
-                        [...dataArr].map(x => {
-                          if(x.id === id) {
-                            return Object.assign({}, x, { title: newName });
-                          } else {
-                            return x;
-                          }
-                        }) : 
-                        undefined;
+    const newDataArr = dataArr
+      ? [...dataArr].map((x) => {
+          if (x.id === id) {
+            return Object.assign({}, x, { title: newName });
+          } else {
+            return x;
+          }
+        })
+      : undefined;
     // console.log('Save new name?', newDataArr)
     setDataArr(newDataArr);
   };
@@ -63,10 +73,11 @@ const Link: React.FC<LinkProps> = ({id, link, imageUrl, title, preview = false}:
       linkTitle.current.contentEditable = "false";
       renameCurrentLink(newName);
     }
-
   };
 
-  const linkTitleOnKeyDownHandler = (el: React.KeyboardEvent<HTMLDivElement>) => {
+  const linkTitleOnKeyDownHandler = (
+    el: React.KeyboardEvent<HTMLDivElement>
+  ) => {
     if (el.keyCode === 13 || el.keyCode === 27) {
       // console.log("Enter! Or Escape!");
       el.currentTarget.blur();
@@ -162,6 +173,6 @@ const Link: React.FC<LinkProps> = ({id, link, imageUrl, title, preview = false}:
       </div>
     </div>
   );
-}
+};
 
 export default Link;
