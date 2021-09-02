@@ -125,7 +125,7 @@ export const Box: React.FC<BoxProps> = ({
     // console.log("openALL: ", allLinks);
   }
   const editClickHandler = () => {
-    // TODO:
+    // TODO: open a new edit module to edit the links in this group
     
   }
   
