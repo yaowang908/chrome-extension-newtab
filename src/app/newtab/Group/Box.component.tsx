@@ -55,31 +55,33 @@ export const Box: React.FC<BoxProps> = ({
     }),
   });
 
+  const data = groupDataArr.filter((x) => x.id === boxID)[0]?.content;
+  // console.log('render data', data)
+  const removeCurrentLink = (linkID: string) => {
+    const newContentArray = data?.filter(x => x.id !== linkID);
+    const newGroupData = [...groupDataArr].map(d => {
+      if (d.id === boxID) {
+        return Object.assign({}, d, { content: newContentArray });
+      }
+      return d;
+    })
+    setGroupDataArr(newGroupData);
+  };
+
+  const groupLinkClickHandler = (el: LinkProps) => {
+    return (e: React.MouseEvent<HTMLImageElement>) => {
+      e.preventDefault();
+      chrome.tabs.create({
+        active: true,
+        url: el.link,
+      });
+      // removeCurrentLink(el.id);
+      // DONT change urls in group unless edited through the edit module
+    };
+  };
+
+  // Generate group component
   const createGroupList = () => {
-    const data = groupDataArr.filter((x) => x.id === boxID)[0]?.content;
-    // console.log('render data', data)
-    const removeCurrentLink = (linkID: string) => {
-      const newContentArray = data?.filter(x => x.id !== linkID);
-      const newGroupData = [...groupDataArr].map(d => {
-        if (d.id === boxID) {
-          return Object.assign({}, d, { content: newContentArray });
-        }
-        return d;
-      })
-      setGroupDataArr(newGroupData);
-    };
-
-    const clickHandler = (el: LinkProps) => {
-      return (e: React.MouseEvent<HTMLImageElement>) => {
-        e.preventDefault();
-        chrome.tabs.create({
-          active: true,
-          url: el.link,
-        });
-        removeCurrentLink(el.id);
-      };
-    };
-
     return (
       <>
         {data
@@ -91,7 +93,7 @@ export const Box: React.FC<BoxProps> = ({
                   src={
                     el.imageUrl ? el.imageUrl : "https://via.placeholder.com/32"
                   }
-                  onClick={clickHandler(el)}
+                  onClick={groupLinkClickHandler(el)}
                 />
               );
             })
@@ -103,6 +105,62 @@ export const Box: React.FC<BoxProps> = ({
   // React.useEffect(() => {
   //   console.log('Box -> isOver & didDrop: ', groupName, isOver, didDrop);
   // }, [isOver, didDrop])
+  const openAllClickHandler = () => {
+    // DONE:
+    const allLinks = data?.map(x => x.link) || [];
+    if(allLinks) {
+      allLinks?.map((l, index) => {
+        if (!index) {
+          chrome.tabs.create({
+            active: true,
+            url: l,
+          });
+        }
+        chrome.tabs.create({
+          active: false,
+          url: l,
+        });
+      });
+    }
+    // console.log("openALL: ", allLinks);
+  }
+  const editClickHandler = () => {
+    // TODO:
+    
+  }
+  
+  const saveNewGroupName = (newName: string) => {
+    const newGroupData = [...groupDataArr].map((x) => {
+      if (x.id === boxID) {
+        return Object.assign({}, x, { name: newName.substring(0,15) });
+      }
+      return x;
+    });
+    setGroupDataArr(newGroupData);
+    console.log("Save name here!");
+  }
+  const renameClickHandler = (el: React.MouseEvent<HTMLDivElement>) => {
+    // DONE:
+    el.currentTarget.contentEditable = 'true';
+  };
+  const renameOnBlurHandler = (el: React.FocusEvent<HTMLDivElement>) => {
+    // DONE:
+    let newName = el.currentTarget.innerText || 'Group';
+    saveNewGroupName(newName);
+  }
+
+  const renameOnKeyDownHandler = (el: React.KeyboardEvent<HTMLDivElement>) => {
+    // TODO: display a caveat when tap more than 15 characters
+    if (el.keyCode === 13 || el.keyCode === 27) {
+      // console.log("Enter! Or Escape!");
+      el.currentTarget.blur();
+    }
+    // Tab will fire the onBlur handler
+    // if(el.keyCode === 9) {
+    //   console.log('Tab!')
+    // }
+    // console.log('KeyUp: ', el.keyCode);
+  };
 
   return (
     <div
@@ -111,7 +169,39 @@ export const Box: React.FC<BoxProps> = ({
       data-id={boxID}
     >
       <DropContainer accepts={["LINK"]} onDrop={onDropHandler}>
-        <div className="absolute h-12">{groupName}</div>
+        <div className="absolute h-auto w-full flex flex-row justify-between">
+          <div
+            className="whitespace-nowrap overflow-hidden"
+            onClick={renameClickHandler}
+            onBlur={renameOnBlurHandler}
+            onKeyDown={renameOnKeyDownHandler}
+            style={{ maxWidth: "17ch", minWidth:"2ch" }}
+          >
+            {groupName}
+          </div>
+          <div className="group relative cursor-pointer">
+            ...
+            <div
+              className={`
+              group-hover:grid hidden absolute w-24 h-24 right-0 z-50 grid-cols-1 gap-1
+              ${setting.bg[colorTheme]}
+              `}
+            >
+              <button
+                onClick={openAllClickHandler}
+                className={`${setting.text[colorTheme]} ${setting.headBorder[colorTheme]}`}
+              >
+                Open all
+              </button>
+              <button
+                onClick={editClickHandler}
+                className={`${setting.text[colorTheme]} ${setting.headBorder[colorTheme]}`}
+              >
+                Edit
+              </button>
+            </div>
+          </div>
+        </div>
         <div
           className={`pt-8 grid grid-cols-6 sm:grid-cols-12 md:grid-cols-5 gap-1 overflow-hidden`}
         >
