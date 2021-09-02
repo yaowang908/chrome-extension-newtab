@@ -121,15 +121,34 @@ export const Header = () => {
   }
 
   return (
-    <div className={`flex-initial w-full border-b-2 ${setting.headBorder[colorTheme]} flex flex-row justify-between`}>
+    <div
+      className={`flex-initial w-full border-b-2 ${setting.headBorder[colorTheme]} flex flex-row justify-between`}
+    >
       <div className={`text-4xl ${setting.text[colorTheme]}`}>Dashboard</div>
 
-      <div className={`w-96 grid grid-cols-3 gap-2 mb-4 ${setting.text[colorTheme]}`}>
-        <button onClick={collectClickHandler} className={`${setting.text[colorTheme]} ${setting.headBorder[colorTheme]}`}>Collect all tabs!</button>
-        <button onClick={openAllClickHandler} className={`${setting.text[colorTheme]} ${setting.headBorder[colorTheme]}`}>Open all tabs!</button>
-        <button onClick={resetClickHandler} className={`${setting.text[colorTheme]} ${setting.headBorder[colorTheme]} cols-span-2 hover:text-red-900 hover:border-red-900`}>Reset all</button>
+      <div
+        className={`w-96 grid grid-cols-3 gap-2 mb-4 ${setting.text[colorTheme]}`}
+      >
+        <button
+          onClick={collectClickHandler}
+          className={`${setting.text[colorTheme]} ${setting.headBorder[colorTheme]} text-lg`}
+        >
+          Collect
+        </button>
+        <button
+          onClick={openAllClickHandler}
+          className={`${setting.text[colorTheme]} ${setting.headBorder[colorTheme]} text-lg`}
+        >
+          Open all
+        </button>
+        <button
+          onClick={resetClickHandler}
+          className={`${setting.text[colorTheme]} ${setting.headBorder[colorTheme]} text-lg cols-span-2 hover:text-red-900 hover:border-red-900`}
+        >
+          Reset
+        </button>
       </div>
     </div>
-  )
+  );
 };
 
