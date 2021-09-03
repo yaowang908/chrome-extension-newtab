@@ -87,7 +87,9 @@ const Link: React.FC<DraggableLinkPropsInterface> = ({
   return (
     <div
       className={`grid grid-cols-12 items-center group ${
-        preview ? "border-2 border-yellow-200 bg-gray-300 w-64" : "w-full"
+        preview
+          ? "border-2 border-yellow-200 bg-gray-300 w-96"
+          : "w-full  md:w-4/5 lg:w-3/5"
       }`}
     >
       <div

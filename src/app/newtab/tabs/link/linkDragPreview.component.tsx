@@ -1,13 +1,17 @@
 import React from 'react';
 import Link from './link.component';
 
-import { LinkProps } from './link.interfaces';
+import { DraggableLinkPropsInterface } from "./draggableLink.component";
 
-export const LinkDragPreview:React.FC<LinkProps> = (props:LinkProps) => {
-
+export const LinkDragPreview: React.FC<DraggableLinkPropsInterface> = (
+  props: DraggableLinkPropsInterface
+) => {
   return (
-    <div style={{'maxWidth':'30%'}}  className="inline-block w-full opacity-50 border-2 border-yellow-200 overflow-hidden">
-      <Link {...props} preview={true}/>
+    <div
+      style={{ maxWidth: "23rem" }}
+      className="inline-block w-full opacity-50 border-2 border-yellow-200 overflow-hidden"
+    >
+      <Link {...props} preview={true} />
     </div>
-  )
-}
+  );
+};
