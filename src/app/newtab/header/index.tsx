@@ -122,7 +122,7 @@ export const Header = () => {
 
   return (
     <div
-      className={`flex-initial w-full border-b-2 ${setting.headBorder[colorTheme]} flex flex-row justify-between`}
+    className={`flex-initial w-full border-b-2 ${setting.headBorder[colorTheme]} flex flex-row justify-between`}
     >
       <div className={`text-4xl ${setting.text[colorTheme]}`}>Dashboard</div>
 

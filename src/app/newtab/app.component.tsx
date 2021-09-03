@@ -18,7 +18,7 @@ const App: React.FC = () => {
   // TODO: one of the three columns can be used a container for important links to preserve
 
   React.useEffect(() => {
-    // setColorTheme('blueTheme');
+    setColorTheme('blackTheme');
   }, [])
 
   return (
