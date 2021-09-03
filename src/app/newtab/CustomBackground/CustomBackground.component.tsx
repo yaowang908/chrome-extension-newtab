@@ -1,8 +1,9 @@
 import React from 'react'
 import { useRecoilState } from 'recoil'
+import parse from 'html-react-parser'
 
-import { visibleSelector } from '../Recoil/visible.atom';
-import images from '../../../assets/images';
+import { visibleSelector } from '../Recoil/visible.atom'
+import images from '../../../assets/images'
 
 const CustomBackground = () => {
   const [visible, setVisible] = useRecoilState(visibleSelector);
@@ -16,7 +17,8 @@ const CustomBackground = () => {
     console.log("Double Click!");
     setVisible(!visible);
   };
-
+  // TODO: add credits
+  
   return (
     <div
       className={`w-full h-full absolute top-0 left-0 overflow-hidden z-10 bg-cover ${visible ? 'filter blur-lg' : ''}`}
@@ -25,6 +27,9 @@ const CustomBackground = () => {
       onDoubleClick={customBgDoubleClickHandler}
     >
       {/* <img className="w-full h-full" src={images[0].url} alt={images[0].name} /> */}
+      <div className={`absolute bottom-5 left-5 text-lg text-gray-500`}>
+        {parse(images[0].credit)}
+      </div>
     </div>
   );
 }
