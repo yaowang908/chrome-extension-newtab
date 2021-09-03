@@ -26,7 +26,7 @@ const List:React.FC<ListProps> = ({contentArr, itemType}) => {
   // thus the logic is broken.
   
   return (
-    <div className={ `w-full h-full flex flex-col overflow-hidden` }>
+    <div className={ `w-full h-full flex flex-col overflow-hidden` } ref={drop}>
       {
         contentArr?.length ?
         contentArr?.map((ele: LinkProps, index) => {
