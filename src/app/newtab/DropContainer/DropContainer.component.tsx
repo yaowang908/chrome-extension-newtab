@@ -18,7 +18,7 @@ export const DropContainer:React.FC<DropContainerProps> = (
         isOver: monitor.isOver(),
         canDrop: monitor.canDrop(),
       }),
-      drop: (item: unknown) => onDrop(item),
+      drop: (item: unknown) => onDrop(item)      
     }),
     [accept],
   );
@@ -26,13 +26,13 @@ export const DropContainer:React.FC<DropContainerProps> = (
   const isActive = isOver && canDrop;
   let bgClass = 'bg-transparent';
   if (isActive) {
-    // bgClass = 'bg-green-300'
+    bgClass = 'bg-blue-500'
   } else if (canDrop) {
-    bgClass = 'bg-green-300';
+    bgClass = 'bg-green-800';
   }
 
   return (
-    <div ref={drop} className={`w-full h-auto relative ${bgClass}`}>
+    <div ref={drop} className={`w-full h-full relative ${bgClass}`}>
       {children}
     </div>
   )

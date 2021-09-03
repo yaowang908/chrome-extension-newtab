@@ -2,18 +2,21 @@ import React from 'react';
 import { useDrag, DragSourceMonitor, useDrop, DropTargetMonitor } from 'react-dnd';
 import { ItemTypes } from '../../dnd/ItemTypes';
 import { getEmptyImage } from 'react-dnd-html5-backend';
-import { useRecoilState } from 'recoil';
+import { useRecoilState, SetterOrUpdater } from "recoil";
 
 import Link from './link.component';
 import { LinkProps } from "./link.interfaces";
 import { linksSelector } from '../../Recoil/links_selector.atom';
 
-interface DraggableLinkPropsInterface extends LinkProps {
-    index: number;
-  }
+export interface DraggableLinkPropsInterface extends LinkProps {
+  index: number;
+  dataArr: LinkProps[] | undefined;
+  setDataArr: SetterOrUpdater<LinkProps[] | undefined>;
+}
 
-export const DraggableLink:React.FC<DraggableLinkPropsInterface> = ( { itemType = ItemTypes.LINK, ...props}:DraggableLinkPropsInterface) => {
-  const [dataArr, setDataArr] = useRecoilState(linksSelector);
+export const DraggableLink:React.FC<DraggableLinkPropsInterface> = ( { itemType = ItemTypes.LINK, dataArr, setDataArr, ...props}:DraggableLinkPropsInterface) => {
+  // const [dataArr, setDataArr] = useRecoilState(linksSelector);
+  // DONE: make component accept generic type
   const ref = React.useRef<HTMLDivElement>(null);
   // const dataArrPreserve = dataArr ? [...dataArr] : [];
 
@@ -36,10 +39,13 @@ export const DraggableLink:React.FC<DraggableLinkPropsInterface> = ( { itemType 
     setDataArr(result);
   }, [dataArr])
 
-  const removeLink = React.useCallback((dragIndex) => {
+  const removeLink = React.useCallback((dragIndex, silent = false) => {
     if(!dataArr) return;
     const result = [...dataArr];
     result.splice(dragIndex, 1);
+    if(silent) {
+      setDataArr(result);
+    }
     if(window.confirm("Are you sure to remove this link?")) {
       setDataArr(result);
     } else {
@@ -99,18 +105,23 @@ export const DraggableLink:React.FC<DraggableLinkPropsInterface> = ( { itemType 
       }),
       end: (item:MyDragObject, monitor: DragSourceMonitor) => {
         // console.log("DRAGEND", item);
-        const getDropResult= monitor.getDropResult() as {dropTarget: string};
+        const getDropResult= monitor.getDropResult() as {boxID?: string, dropEffect?: string; dropTarget: string};
+        console.log('getDropResult: ', getDropResult);
         const dropTarget = getDropResult?.dropTarget || undefined;
         // DONE: if dropTarget is not list, ask user to confirm to remove link
         // TODO: when dropTarget is group, it's also ok to remove without ask
         const { index: index, originalIndex } = item;
-        // console.log('dropTarget: ', dropTarget);
-        const didDrop = monitor.didDrop();
+        console.log('dropTarget: ', dropTarget);
         // didDrop will return false when drop outside of this component
-        // console.log('didDrop: ', didDrop);
-        if(!didDrop) {
+        const didDrop = monitor.didDrop();
+        if(!dropTarget) {
+          //when drop outside all of the droppable area, prompt to remove link
           removeLink(originalIndex);
           // console.log('Dropped outside!')
+        }
+        if(dropTarget === 'box') {
+          // dropped into one of the group box
+          
         }
         return {
           isDragging: monitor.isDragging(),
@@ -131,7 +142,7 @@ export const DraggableLink:React.FC<DraggableLinkPropsInterface> = ( { itemType 
 
   return (
     <div ref={ref} role="DraggableLink" id={props.id} className={`my-1 ${isDragging ? 'opacity-0': ''}`} data-handler-id={handlerId}>
-      <Link {...props}></Link>
+      <Link dataArr={dataArr} setDataArr={setDataArr} {...props}></Link>
     </div>
   )
 }

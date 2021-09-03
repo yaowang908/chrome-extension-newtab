@@ -1,21 +1,30 @@
 import React from "react";
-import { useRecoilState, useRecoilValue } from 'recoil';
+import {
+  useRecoilState,
+  useRecoilValue,
+  useResetRecoilState,
+} from "recoil";
 import { nanoid } from "nanoid";
 
 import { linksSelector } from '../Recoil/links_selector.atom';
 import { LinkProps } from "../tabs/link/link.interfaces";
 import { colorThemeSelector } from "../Recoil/color_theme.atom";
+import { groupSelector } from '../Recoil/group_selector.atom';
 import setting from '../setting/setting';
+import { visibleSelector } from '../Recoil/visible.atom';
 
 export const Header = () => {
   const [dataArr, setDataArr] = useRecoilState(linksSelector);
+  const resetLinks = useResetRecoilState(linksSelector);
+  const resetGroups = useResetRecoilState(groupSelector);
   const colorTheme = useRecoilValue(colorThemeSelector);
+  const [visible, setVisible] = useRecoilState(visibleSelector);
 
   React.useEffect(() => {
     chrome.storage.local.get(['tabs'], function(result) {
       if(result.tabs) {
         setDataArr(result.tabs);
-        console.log('header index: ', result.tabs);
+        // console.log('header index: ', result.tabs);
       }
     });
   }, []);
@@ -104,28 +113,54 @@ export const Header = () => {
 
   const resetClickHandler = () => {
     if(window.confirm("Are you sure about delete all saved tabs?")) {
-      chrome.storage.local.remove(["tabs"], function() {
+      chrome.storage.local.remove(["tabs", "groups"], function() {
         let error = chrome.runtime.lastError;
         if(error) {
           console.error(error)
         }
       });
-      setDataArr(undefined);
+      resetLinks();
+      resetGroups();
     } else {
       console.log("Abort!")
     }
   }
 
+  const headerDoubleClickHandler = () => {
+    console.log('Double Click!')
+    setVisible(!visible);
+  }
+
   return (
-    <div className={`flex-initial w-full border-b-2 ${setting.headBorder[colorTheme]} flex flex-row justify-between`}>
+    <div
+      className={`flex-initial w-full border-b-2 ${setting.headBorder[colorTheme]} flex flex-col sm:flex-row justify-between`}
+      onDoubleClick={headerDoubleClickHandler}
+    >
       <div className={`text-4xl ${setting.text[colorTheme]}`}>Dashboard</div>
 
-      <div className={`w-96 grid grid-cols-3 gap-2 mb-4 ${setting.text[colorTheme]}`}>
-        <button onClick={collectClickHandler} className={`${setting.text[colorTheme]} ${setting.headBorder[colorTheme]}`}>Collect all tabs!</button>
-        <button onClick={openAllClickHandler} className={`${setting.text[colorTheme]} ${setting.headBorder[colorTheme]}`}>Open all tabs!</button>
-        <button onClick={resetClickHandler} className={`${setting.text[colorTheme]} ${setting.headBorder[colorTheme]} cols-span-2 hover:text-red-900 hover:border-red-900`}>Reset all</button>
+      <div
+        className={`w-full sm:w-96 grid grid-cols-3 gap-2 mb-4 ${setting.text[colorTheme]}`}
+      >
+        <button
+          onClick={collectClickHandler}
+          className={`${setting.text[colorTheme]} ${setting.headBorder[colorTheme]} text-lg`}
+        >
+          Collect
+        </button>
+        <button
+          onClick={openAllClickHandler}
+          className={`${setting.text[colorTheme]} ${setting.headBorder[colorTheme]} text-lg`}
+        >
+          Open all
+        </button>
+        <button
+          onClick={resetClickHandler}
+          className={`${setting.text[colorTheme]} ${setting.headBorder[colorTheme]} text-lg cols-span-2 hover:text-red-900 hover:border-red-900`}
+        >
+          Reset
+        </button>
       </div>
     </div>
-  )
+  );
 };
 
