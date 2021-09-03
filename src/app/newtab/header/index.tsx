@@ -1,5 +1,9 @@
 import React from "react";
-import { useRecoilState, useRecoilValue, useResetRecoilState } from 'recoil';
+import {
+  useRecoilState,
+  useRecoilValue,
+  useResetRecoilState,
+} from "recoil";
 import { nanoid } from "nanoid";
 
 import { linksSelector } from '../Recoil/links_selector.atom';
@@ -7,12 +11,14 @@ import { LinkProps } from "../tabs/link/link.interfaces";
 import { colorThemeSelector } from "../Recoil/color_theme.atom";
 import { groupSelector } from '../Recoil/group_selector.atom';
 import setting from '../setting/setting';
+import { visibleSelector } from '../Recoil/visible.atom';
 
 export const Header = () => {
   const [dataArr, setDataArr] = useRecoilState(linksSelector);
   const resetLinks = useResetRecoilState(linksSelector);
   const resetGroups = useResetRecoilState(groupSelector);
   const colorTheme = useRecoilValue(colorThemeSelector);
+  const [visible, setVisible] = useRecoilState(visibleSelector);
 
   React.useEffect(() => {
     chrome.storage.local.get(['tabs'], function(result) {
@@ -120,9 +126,15 @@ export const Header = () => {
     }
   }
 
+  const headerDoubleClickHandler = () => {
+    console.log('Double Click!')
+    setVisible(!visible);
+  }
+
   return (
     <div
-    className={`flex-initial w-full border-b-2 ${setting.headBorder[colorTheme]} flex flex-col sm:flex-row justify-between`}
+      className={`flex-initial w-full border-b-2 ${setting.headBorder[colorTheme]} flex flex-col sm:flex-row justify-between`}
+      onDoubleClick={headerDoubleClickHandler}
     >
       <div className={`text-4xl ${setting.text[colorTheme]}`}>Dashboard</div>
 

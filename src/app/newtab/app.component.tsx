@@ -1,5 +1,5 @@
 import React from "react";
-import { useRecoilState } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import { DndProvider } from "react-dnd";
 
@@ -12,9 +12,11 @@ import setting from './setting/setting';
 
 import "../../style/styles.css";
 import { Group } from "./Group/Group.component";
+import { visibleSelector } from "./Recoil/visible.atom";
 
 const App: React.FC = () => {
   const [colorTheme, setColorTheme] = useRecoilState(colorThemeSelector);
+  const visible = useRecoilValue(visibleSelector);
   // TODO: one of the three columns can be used a container for important links to preserve
 
   React.useEffect(() => {
@@ -27,7 +29,11 @@ const App: React.FC = () => {
         className={`w-full min-h-screen ${setting.bg[colorTheme]} p-12 flex flex-col`}
       >
         <Header />
-        <div className="flex-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6">
+        <div
+          className={`flex-auto ${
+            visible ? "grid" : "hidden"
+          } grid-cols-1 md:grid-cols-2 lg:grid-cols-6`}
+        >
           <div className="lg:col-span-3">
             <TabsSection />
           </div>
