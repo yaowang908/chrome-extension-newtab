@@ -37,31 +37,36 @@ export const Header = () => {
     });
   }, []);
 
-  const collectClickHandler = () => {
+  const collectClickHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.stopPropagation();
     let queryOptions = {};
 
-    const getOrder = (prevArr: (LinkProps[] | undefined), currentIndex:number) => {
-      if(prevArr) {
+    const getOrder = (
+      prevArr: LinkProps[] | undefined,
+      currentIndex: number
+    ) => {
+      if (prevArr) {
         return prevArr.length + currentIndex;
-      } 
+      }
       return currentIndex;
-    }
+    };
 
     chrome.tabs.query(queryOptions).then((res) => {
       // console.log(res);
-      const formatData = res.filter(x => x?.url && !(x?.url.includes('chrome://'))).map((x, index) => ({
-          id: index + '_' + nanoid(),
+      const formatData = res
+        .filter((x) => x?.url && !x?.url.includes("chrome://"))
+        .map((x, index) => ({
+          id: index + "_" + nanoid(),
           index: getOrder(dataArr, index),
           imageUrl: x?.favIconUrl,
           link: x?.url,
           title: x?.title,
           priority: 0,
-        })
-      );
-      if(dataArr) {
+        }));
+      if (dataArr) {
         const newState = [...dataArr, ...formatData];
-        if(hasDuplicates(newState)) {
-          console.log("Removed duplicates!")
+        if (hasDuplicates(newState)) {
+          console.log("Removed duplicates!");
           setDataArr(removeDuplicates(newState));
         } else {
           setDataArr(newState);
@@ -76,8 +81,8 @@ export const Header = () => {
     // }, (response) => {
     //   console.log(response)
     // });
-    closeClickHandler()
-  }
+    closeClickHandler();
+  };
 
   const removeDuplicates = (arr:LinkProps[]) => {
     return arr.filter((value, index, array) => array.findIndex(t => (t.link === value.link)) === index);
@@ -104,20 +109,21 @@ export const Header = () => {
     })
   }
 
-  const openAllClickHandler = () => {
+  const openAllClickHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.stopPropagation();
     dataArr?.map((link, index) => {
-      if(!index) {
+      if (!index) {
         chrome.tabs.create({
           active: true,
-          url: link.link
+          url: link.link,
         });
       }
       chrome.tabs.create({
         active: false,
-        url: link.link
+        url: link.link,
       });
     });
-  }
+  };
 
   const resetClickHandler = () => {
     if(window.confirm("Are you sure about delete all saved tabs?")) {
@@ -134,15 +140,17 @@ export const Header = () => {
     }
   }
 
-  const headerClickHandler = () => {
+  const headerClickHandler = (e: React.MouseEvent<HTMLDivElement>) => {
     console.log("Single Click!");
+    e.stopPropagation();
     setVisible(!visible);
   }
-
-  const headerDoubleClickHandler = () => {
-    console.log('Double Click!')
+  
+  const headerDoubleClickHandler = (e: React.MouseEvent<HTMLDivElement>) => {
+    console.log("Double Click!");
+    e.stopPropagation();
     setVisible(!visible);
-  }
+  };
 
   return (
     <div
