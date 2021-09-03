@@ -134,6 +134,11 @@ export const Header = () => {
     }
   }
 
+  const headerClickHandler = () => {
+    console.log("Single Click!");
+    setVisible(!visible);
+  }
+
   const headerDoubleClickHandler = () => {
     console.log('Double Click!')
     setVisible(!visible);
@@ -141,8 +146,9 @@ export const Header = () => {
 
   return (
     <div
-      className={`flex-initial w-full border-b-2 ${setting.headBorder[colorTheme]} flex flex-col sm:flex-row justify-between`}
+      className={`flex-initial w-full border-b-2 ${setting.headBorder[colorTheme]} ${visible ? 'flex' : 'hidden' } flex-col sm:flex-row justify-between z-50`}
       onDoubleClick={headerDoubleClickHandler}
+      onClick={headerClickHandler}
     >
       <div className={`text-4xl ${setting.text[colorTheme]}`}>Dashboard</div>
 

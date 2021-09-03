@@ -13,6 +13,7 @@ import setting from './setting/setting';
 import "../../style/styles.css";
 import { Group } from "./Group/Group.component";
 import { visibleSelector } from "./Recoil/visible.atom";
+import CustomBackground from "./CustomBackground/CustomBackground.component";
 
 const App: React.FC = () => {
   const [colorTheme, setColorTheme] = useRecoilState(colorThemeSelector);
@@ -26,15 +27,15 @@ const App: React.FC = () => {
   return (
     <DndProvider backend={HTML5Backend}>
       <div
-        className={`w-full min-h-screen ${setting.bg[colorTheme]} p-12 flex flex-col`}
+        className={`w-full h-screen relative ${setting.bg[colorTheme]} p-12 flex flex-col overflow-hidden box-border`}
       >
         <Header />
         <div
-          className={`flex-auto ${
+          className={`flex-auto z-40 ${
             visible ? "grid" : "hidden"
-          } grid-cols-1 md:grid-cols-2 lg:grid-cols-6`}
+          } transition duration-1000 ease-in-out grid-cols-1 md:grid-cols-2 lg:grid-cols-6`}
         >
-          <div className="lg:col-span-3">
+          <div className="h-5/6 overflow-x-hidden overflow-y-scroll lg:col-span-4">
             <TabsSection />
           </div>
           <div className="lg:col-start-5 lg:col-span-2">
@@ -42,6 +43,7 @@ const App: React.FC = () => {
           </div>
           {/* <TopSites /> */}
         </div>
+        <CustomBackground />
       </div>
     </DndProvider>
   );

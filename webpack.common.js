@@ -30,7 +30,7 @@ module.exports = {
         use: ["html-loader"],
       },
       {
-        test: /\.(svg|png|jpg|gif)$/,
+        test: /\.(svg|png|jpg|jpeg|gif)$/,
         exclude: /node_modules/,
         type: "asset/resource",
       },

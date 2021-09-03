@@ -5,3 +5,28 @@
 button {
   @apply border-2 py-3 text-white hover:text-yellow-500 hover:border-yellow-500;
 }
+
+/* width */
+::-webkit-scrollbar {
+  width: 3px;
+  height: 30vh;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  /* border-radius: 100vh; */
+  /* background: #edf2f7; */
+  background: transparent;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  /* background: #cbd5e0; */
+  background: #edf2f7;
+  /* border: 1px solid #edf2f7; */
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #a0aec0;
+}
