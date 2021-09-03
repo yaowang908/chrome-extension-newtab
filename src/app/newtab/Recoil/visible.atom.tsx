@@ -17,7 +17,7 @@ const visibleSelector = selector<boolean>({
   key: "visibleSelector",
   get: ({ get }) => get(visibleAtom),
   set: ({ set, get }, method) => {
-    // console.log(method)
+    // console.log('visible: ', method)
     if (method instanceof DefaultValue) {
       set(visibleAtom, method);
     } else {

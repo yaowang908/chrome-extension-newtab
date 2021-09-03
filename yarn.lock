@@ -1089,6 +1089,13 @@
   dependencies:
     "@types/react" "*"
 
+"@types/react-helmet@^6.1.2":
+  version "6.1.2"
+  resolved "https://registry.yarnpkg.com/@types/react-helmet/-/react-helmet-6.1.2.tgz#e9d7d16b29e4ec5716711c52c35c3cec45819eac"
+  integrity sha512-dcfAZNlWb5JYFbO9CGfrPWLJAyFcT6UeR3u35eBbv8liY2Rg4K7fM1G5+HnwVgot+C+kVwXAZ8pLEn2jsMfTDg==
+  dependencies:
+    "@types/react" "*"
+
 "@types/react@*", "@types/react@^17.0.16":
   version "17.0.16"
   resolved "https://registry.yarnpkg.com/@types/react/-/react-17.0.16.tgz#056f40c45645761527baeb7d89d842a6abdf285a"
@@ -1102,6 +1109,11 @@
   version "0.16.2"
   resolved "https://registry.yarnpkg.com/@types/scheduler/-/scheduler-0.16.2.tgz#1a62f89525723dde24ba1b01b092bf5df8ad4d39"
   integrity sha512-hppQEBDmlwhFAXKJX2KnWLYu5yMfi91yazPb2l+lbJiwW+wdo1gNeRA+3RgNSO39WYX2euey41KEwnqesU2Jew==
+
+"@types/youtube-player@^5.5.4":
+  version "5.5.4"
+  resolved "https://registry.yarnpkg.com/@types/youtube-player/-/youtube-player-5.5.4.tgz#908cfaa6ed2b11f35604942c0dc76e77768eb7bc"
+  integrity sha512-RATQuYVAD8sHAvQI/wcfdE18R80vieJObZnZ66h78QfVlnXn8xRXsk/LrN6QII2CpaOkvLQp2s7tJacab2ZGhQ==
 
 "@webassemblyjs/ast@1.11.1":
   version "1.11.1"

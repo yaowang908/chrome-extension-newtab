@@ -21,13 +21,17 @@ const CustomBackground = () => {
   
   return (
     <div
-      className={`w-full h-full absolute top-0 left-0 overflow-hidden z-10 bg-cover ${visible ? 'filter blur-lg' : ''}`}
+      className={`w-full h-full absolute top-0 left-0 overflow-hidden z-10 bg-cover ${
+        visible ? "filter blur-lg" : ""
+      }`}
       style={{ backgroundImage: `url(${images[0].url})` }}
       onClick={customBgClickHandler}
       onDoubleClick={customBgDoubleClickHandler}
     >
-      {/* <img className="w-full h-full" src={images[0].url} alt={images[0].name} /> */}
-      <div className={`absolute bottom-5 left-5 text-lg text-gray-500`}>
+      {/* <div className="fixed w-full h-full z-30">
+
+      </div> */}
+      <div className={`absolute bottom-5 left-5 text-lg text-gray-500 z-20`}>
         {parse(images[0].credit)}
       </div>
     </div>
