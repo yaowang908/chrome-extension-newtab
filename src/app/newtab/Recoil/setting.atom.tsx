@@ -27,7 +27,7 @@ const settingAtom = atom<SettingProps>({
 });
 
 const settingSelector = selector<SettingProps>({
-  key: "dashboardGroup",
+  key: "settingSelector",
   get: ({ get }) => get(settingAtom),
   set: ({ set, get }, method) => {
     if (method instanceof DefaultValue) {

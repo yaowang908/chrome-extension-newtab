@@ -12,6 +12,7 @@ import { colorThemeSelector } from "../Recoil/color_theme.atom";
 import { groupSelector } from '../Recoil/group_selector.atom';
 import setting from '../setting/setting';
 import { visibleSelector } from '../Recoil/visible.atom';
+import { settingDialogueVisibility } from "../Recoil/setting.atom";
 
 export const Header = () => {
   const [dataArr, setDataArr] = useRecoilState(linksSelector);
@@ -19,6 +20,9 @@ export const Header = () => {
   const resetGroups = useResetRecoilState(groupSelector);
   const colorTheme = useRecoilValue(colorThemeSelector);
   const [visible, setVisible] = useRecoilState(visibleSelector);
+  const [settingVisibility, setSettingVisibility] = useRecoilState(
+    settingDialogueVisibility
+  );
 
   React.useEffect(() => {
     chrome.storage.local.get(['tabs'], function(result) {
@@ -152,17 +156,32 @@ export const Header = () => {
     setVisible(!visible);
   };
 
+  const settingClickHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.stopPropagation();
+    setSettingVisibility(!settingVisibility);
+  };
+
   return (
     <div
-      className={`flex-initial w-full border-b-2 ${setting.headBorder[colorTheme]} ${visible ? 'flex' : 'hidden' } flex-col sm:flex-row justify-between z-40`}
+      className={`flex-initial w-full border-b-2 ${
+        setting.headBorder[colorTheme]
+      } ${
+        visible ? "flex" : "hidden"
+      } flex-col sm:flex-row justify-between z-40`}
       onDoubleClick={headerDoubleClickHandler}
       onClick={headerClickHandler}
     >
       <div className={`text-4xl ${setting.text[colorTheme]}`}>Dashboard</div>
 
       <div
-        className={`w-full sm:w-96 grid grid-cols-3 gap-2 mb-4 ${setting.text[colorTheme]}`}
+        className={`w-full sm:w-96 grid grid-cols-4 gap-2 mb-4 ${setting.text[colorTheme]}`}
       >
+        <button
+          onClick={settingClickHandler}
+          className={`${setting.text[colorTheme]} ${setting.headBorder[colorTheme]} text-lg`}
+        >
+          Setting
+        </button>
         <button
           onClick={collectClickHandler}
           className={`${setting.text[colorTheme]} ${setting.headBorder[colorTheme]} text-lg`}

@@ -15,10 +15,12 @@ import { Group } from "./Group/Group.component";
 import { visibleSelector } from "./Recoil/visible.atom";
 import CustomBackground from "./CustomBackground/CustomBackground.component";
 import Setting from "./setting/Setting.component";
+import { settingDialogueVisibility } from "./Recoil/setting.atom";
 
 const App: React.FC = () => {
   const [colorTheme, setColorTheme] = useRecoilState(colorThemeSelector);
   const visible = useRecoilValue(visibleSelector);
+  const settingVisibility = useRecoilValue(settingDialogueVisibility)
   // TODO: one of the three columns can be used a container for important links to preserve
 
   React.useEffect(() => {
@@ -29,7 +31,7 @@ const App: React.FC = () => {
     <DndProvider backend={HTML5Backend}>
       <div
         className={`w-full h-screen relative ${setting.bg[colorTheme]} p-12 flex flex-col overflow-hidden box-border`}
-      > 
+      >
         <Setting />
         <Header />
         <div
