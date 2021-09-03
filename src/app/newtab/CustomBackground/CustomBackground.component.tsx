@@ -17,7 +17,7 @@ const CustomBackground = () => {
     console.log("Double Click!");
     setVisible(!visible);
   };
-  // TODO: add credits
+  // DONE: add credits
   
   return (
     <div
