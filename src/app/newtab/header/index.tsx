@@ -29,6 +29,14 @@ export const Header = () => {
     });
   }, []);
 
+  React.useEffect(() => {
+    chrome.storage.local.get(["visible"], function (result) {
+      if (result.visible) {
+        setVisible(result.visible);
+      }
+    });
+  }, []);
+
   const collectClickHandler = () => {
     let queryOptions = {};
 
