@@ -26,7 +26,7 @@ export const DropContainer:React.FC<DropContainerProps> = (
   const isActive = isOver && canDrop;
   let bgClass = 'bg-transparent';
   if (isActive) {
-    bgClass = 'bg-red-200'
+    bgClass = 'bg-blue-500'
   } else if (canDrop) {
     bgClass = 'bg-green-800';
   }
