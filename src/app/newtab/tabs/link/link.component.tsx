@@ -86,12 +86,12 @@ const Link: React.FC<DraggableLinkPropsInterface> = ({
 
   return (
     <div
-      className={`grid grid-cols-12 group ${
+      className={`grid grid-cols-12 items-center group ${
         preview ? "border-2 border-yellow-200 bg-gray-300 w-64" : "w-full"
       }`}
     >
       <div
-        className="col-span-1 w-6 h-6 bg-center bg-contain bg-no-repeat cursor-pointer mr-2"
+        className="col-span-1 w-3 h-3 sm:w-6 sm:h-6 bg-center bg-contain bg-no-repeat cursor-pointer mr-2"
         style={{ backgroundImage: `url(${imageUrl})` }}
       ></div>
       <div

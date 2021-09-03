@@ -23,12 +23,17 @@ const App: React.FC = () => {
 
   return (
     <DndProvider backend={HTML5Backend}>
-      <div className={`w-full min-h-screen ${setting.bg[colorTheme]} p-12 flex flex-col`}>
+      <div
+        className={`w-full min-h-screen ${setting.bg[colorTheme]} p-12 flex flex-col`}
+      >
         <Header />
-        <div className="flex-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
-          <TabsSection />
-          <Group />
-          <Section>Column 3</Section>
+        <div className="flex-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6">
+          <div className="lg:col-span-3">
+            <TabsSection />
+          </div>
+          <div className="lg:col-start-5 lg:col-span-2">
+            <Group />
+          </div>
           {/* <TopSites /> */}
         </div>
       </div>
