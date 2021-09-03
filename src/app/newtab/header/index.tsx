@@ -154,7 +154,7 @@ export const Header = () => {
 
   return (
     <div
-      className={`flex-initial w-full border-b-2 ${setting.headBorder[colorTheme]} ${visible ? 'flex' : 'hidden' } flex-col sm:flex-row justify-between z-50`}
+      className={`flex-initial w-full border-b-2 ${setting.headBorder[colorTheme]} ${visible ? 'flex' : 'hidden' } flex-col sm:flex-row justify-between z-40`}
       onDoubleClick={headerDoubleClickHandler}
       onClick={headerClickHandler}
     >

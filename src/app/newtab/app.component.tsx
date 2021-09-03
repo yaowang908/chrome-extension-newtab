@@ -14,6 +14,7 @@ import "../../style/styles.css";
 import { Group } from "./Group/Group.component";
 import { visibleSelector } from "./Recoil/visible.atom";
 import CustomBackground from "./CustomBackground/CustomBackground.component";
+import Setting from "./setting/Setting.component";
 
 const App: React.FC = () => {
   const [colorTheme, setColorTheme] = useRecoilState(colorThemeSelector);
@@ -28,7 +29,8 @@ const App: React.FC = () => {
     <DndProvider backend={HTML5Backend}>
       <div
         className={`w-full h-screen relative ${setting.bg[colorTheme]} p-12 flex flex-col overflow-hidden box-border`}
-      >
+      > 
+        <Setting />
         <Header />
         <div
           className={`flex-auto z-40 ${

@@ -24,6 +24,8 @@ module.exports = {
       borderWidth: ["last"],
       display: ["group-hover"],
       gridColumn: ["group-hover"],
+      backgroundColor: ["checked"],
+      borderColor: ["checked"],
     },
   },
   plugins: [],
