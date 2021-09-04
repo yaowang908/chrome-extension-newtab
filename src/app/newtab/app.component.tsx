@@ -16,10 +16,12 @@ import { visibleSelector } from "./Recoil/visible.atom";
 import CustomBackground from "./CustomBackground/CustomBackground.component";
 import Setting from "./setting/Setting.component";
 import { settingDialogueVisibility } from "./Recoil/setting.atom";
+import { viewSelector } from "./Recoil/view.atom";
 
 const App: React.FC = () => {
   const [colorTheme, setColorTheme] = useRecoilState(colorThemeSelector);
   const visible = useRecoilValue(visibleSelector);
+  const view = useRecoilValue(viewSelector);
   const settingVisibility = useRecoilValue(settingDialogueVisibility)
   // TODO: one of the three columns can be used a container for important links to preserve
 
@@ -39,13 +41,23 @@ const App: React.FC = () => {
             visible ? "grid" : "hidden"
           } transition duration-1000 ease-in-out grid-cols-1 md:grid-cols-2 lg:grid-cols-6`}
         >
-          <div className="h-5/6 overflow-x-hidden overflow-y-scroll lg:col-span-4">
-            <TabsSection />
-          </div>
-          <div className="lg:col-start-5 lg:col-span-2">
-            <Group />
-          </div>
-          {/* <TopSites /> */}
+          {
+            view === 'Dashboard'?
+            (
+              <>
+              <div className="h-5/6 overflow-x-hidden overflow-y-scroll lg:col-span-4">
+                <TabsSection />
+              </div>
+              <div className="lg:col-start-5 lg:col-span-2">
+                <Group />
+              </div>
+              {/* <TopSites /> */}
+              </>
+            ) : (
+              <>'BookMark'</>
+            )
+          }
+        
         </div>
         <CustomBackground />
       </div>
