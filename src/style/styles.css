@@ -42,3 +42,8 @@ button {
   background-position: 50%;
   background-repeat: no-repeat;
 }
+
+.nt-section {
+  max-height: 100vh;
+  height: calc(100vh - 178px);
+}
