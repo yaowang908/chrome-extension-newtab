@@ -7,7 +7,6 @@ import {
 
 import { linksSelector } from '../Recoil/links_selector.atom';
 import { colorThemeSelector } from "../Recoil/color_theme.atom";
-import { groupSelector } from '../Recoil/group_selector.atom';
 import setting from '../setting/setting';
 import { visibleSelector } from '../Recoil/visible.atom';
 import ToggleSwitch from "../ToggleSwitch/ToggleSwitch.component";
@@ -16,8 +15,6 @@ import DashboardButtons from "./DashboardButtons";
 
 export const Header = () => {
   const [dataArr, setDataArr] = useRecoilState(linksSelector);
-  const resetLinks = useResetRecoilState(linksSelector);
-  const resetGroups = useResetRecoilState(groupSelector);
   const colorTheme = useRecoilValue(colorThemeSelector);
   const [visible, setVisible] = useRecoilState(visibleSelector);
   const [viewState, setViewState] = useRecoilState(viewSelector);
@@ -60,10 +57,10 @@ export const Header = () => {
   };
 
   const viewClickHandler = (selectedName: ('Dashboard' | 'Bookmark')) => {
-    // console.log(selectedName);
+    console.log(selectedName);
     setViewState(selectedName)
   }
-  // TODO: hide buttons when in bookmark view
+  // DONE: hide buttons when in bookmark view
   return (
     <div
       className={`flex-initial w-full border-b-2 ${

@@ -1,15 +1,19 @@
 import React from 'react'
+import { nanoid } from 'nanoid';
+
 import ToggleSwitchElement from './ToggleSwitchElement.component';
 
 interface ToggleSwitchProps {
   defaultName: string;
   optionName: string;
+  selectedPosition?: 0 | 1;
   onChange?: (selectedName: any) => void;
 }
 
 const ToggleSwitch: React.FC<ToggleSwitchProps> = ({
   defaultName,
   optionName,
+  selectedPosition = 0,
   onChange = () => {},
 }) => {
   const defaultState = [
@@ -28,6 +32,7 @@ const ToggleSwitch: React.FC<ToggleSwitchProps> = ({
       e.stopPropagation();
       if (!!id === currentActive) {
         //do nothing
+        // console.log('DO nothing!')
       } else {
         setCurrentActive(!currentActive);
         setState(!currentActive ? oppositeState : defaultState);
@@ -37,12 +42,17 @@ const ToggleSwitch: React.FC<ToggleSwitchProps> = ({
     };
   };
 
+  React.useEffect(() => {
+    setState(!selectedPosition ? defaultState : oppositeState);
+    setCurrentActive(!selectedPosition ? false : true);
+  }, [selectedPosition])
+
   return (
     <div className="w-auto flex flex-row border-2 border-transparent box-border rounded-3xl bg-blue-900">
       {state.map((x) => {
         return (
           <ToggleSwitchElement
-            key={x.name}
+            key={nanoid()}
             name={x.name}
             isSelected={x.isSelected}
             _onClick={eleClickHandler(x.id)}
