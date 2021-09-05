@@ -3,6 +3,7 @@ import { atom, DefaultValue, selector } from "recoil";
 interface SettingProps {
   theme: 'blueTheme' | 'blackTheme' | 'whiteTheme' | 'bgImage';
   clickToHide: boolean;
+  bookmarkView?: 'grid' | 'list'
 }
 
 const storeSetting = (obj: SettingProps) => {
@@ -19,6 +20,7 @@ const settingDialogueVisibility = atom<boolean>({
 const defaultSetting: SettingProps = {
   theme: 'blueTheme',
   clickToHide: true,
+  bookmarkView: 'list'
 }
 
 const settingAtom = atom<SettingProps>({

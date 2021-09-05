@@ -17,6 +17,7 @@ import CustomBackground from "./CustomBackground/CustomBackground.component";
 import Setting from "./setting/Setting.component";
 import { settingDialogueVisibility } from "./Recoil/setting.atom";
 import { viewSelector } from "./Recoil/view.atom";
+import BookmarkView from "./Bookmark/Views";
 
 const App: React.FC = () => {
   const [colorTheme, setColorTheme] = useRecoilState(colorThemeSelector);
@@ -41,10 +42,8 @@ const App: React.FC = () => {
             visible ? "grid" : "hidden"
           } transition duration-1000 ease-in-out grid-cols-1 md:grid-cols-2 lg:grid-cols-6`}
         >
-          {
-            view === 'Dashboard'?
-            (
-              <>
+          {view === "Dashboard" ? (
+            <>
               <div className="h-5/6 overflow-x-hidden overflow-y-scroll lg:col-span-4">
                 <TabsSection />
               </div>
@@ -52,12 +51,10 @@ const App: React.FC = () => {
                 <Group />
               </div>
               {/* <TopSites /> */}
-              </>
-            ) : (
-              <>'BookMark'</>
-            )
-          }
-        
+            </>
+          ) : (
+            <BookmarkView />
+          )}
         </div>
         <CustomBackground />
       </div>

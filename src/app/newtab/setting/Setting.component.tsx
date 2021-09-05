@@ -21,11 +21,9 @@ const Setting = () => {
     <>
       {settingVisibility ? (
         <Popup outClick={closeClickHandler}>
-          <div
-            className="w-full h-full p-5 border-blue-900 text-blue-900 relative box-border"
-          >
+          <div className="w-full h-full p-5 border-blue-900 text-blue-900 relative box-border">
             <h1 className="text-3xl font-bold border-b-2 pb-2">Setting</h1>
-            <div className="mt-5 w-full grid grid-cols-1 sm:grid-cols-2">
+            <div className="mt-5 w-full grid grid-cols-1 gap-2 sm:gap-5 sm:grid-cols-2">
               <div className="p-4 w-full max-w-xs mx-auto bg-white rounded-xl shadow-md">
                 <label className="flex items-center space-x-3">
                   <input
@@ -49,6 +47,16 @@ const Setting = () => {
                     <option value="blackTheme">Dark</option>
                     <option value="whiteTheme">Light</option>
                     <option value="bgImage">Image Background</option>
+                  </select>
+                </label>
+              </div>
+              <div className="p-4 w-full max-w-xs mx-auto bg-white rounded-xl shadow-md">
+                <label className="flex items-center space-x-3">
+                  <span className="text-gray-900 font-medium">Bookmarks View:</span>
+                  <select className="appearance-none px-3 py-2 border-b-2">
+                    <option value="">--Please select View--</option>
+                    <option value="grid">Grid</option>
+                    <option value="list">List</option>
                   </select>
                 </label>
               </div>
