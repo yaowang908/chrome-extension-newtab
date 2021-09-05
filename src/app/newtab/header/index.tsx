@@ -71,7 +71,7 @@ export const Header = () => {
       onDoubleClick={headerDoubleClickHandler}
       onClick={headerClickHandler}
     >
-      <div className={`text-4xl mb-4 ${setting.text[colorTheme]}`}>
+      <div className={`text-4xl mb-4 ${setting.text[colorTheme]}`} style={{maxWidth: '26rem'}}>
         <ToggleSwitch
           defaultName="Dashboard"
           optionName="Bookmark"
