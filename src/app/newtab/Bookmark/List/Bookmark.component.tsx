@@ -9,6 +9,7 @@ import {
   BookmarkElement as BookmarkElementType,
   selectedFolderSelector,
 } from "../../Recoil/bookmarks.selector";
+import {bookmarkClickHandler} from '../../Helper/openURLInCurrentTab'
 
 const Bookmark = () => {
   const [bookmark, setBookmark] = useRecoilState(bookmarkSelector);
@@ -59,14 +60,14 @@ const Bookmark = () => {
     });
   }, []);
 
-  const bookmarkClickHandler = (newUrl: string) => {
-    chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
-      const tab = tabs[0];
-      if(tab.id) {
-        chrome.tabs.update(tab.id, { url: newUrl });
-      }
-    });
-  };
+  // const bookmarkClickHandler = (newUrl: string) => {
+  //   chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+  //     const tab = tabs[0];
+  //     if(tab.id) {
+  //       chrome.tabs.update(tab.id, { url: newUrl });
+  //     }
+  //   });
+  // };
 
   const renderBookmarks = (bookmarksData: (BookmarkElementType | BookmarkFolderType | undefined)): ReactElement => {
     if(bookmarksData === undefined) return (<></>);
@@ -94,7 +95,7 @@ const Bookmark = () => {
         key={nanoid()} 
         className="text-base px-2 my-1 cursor-pointer" 
         onClick={() => {bookmarkClickHandler(bookmarksData.url)}}>
-          {bookmarksData.title}
+          {bookmarksData.title ? bookmarksData.title : '  '}
         </div>
       );
     } else if (bookmarksData.parentId === "0") {

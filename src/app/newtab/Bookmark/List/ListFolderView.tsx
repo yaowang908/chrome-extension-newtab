@@ -10,6 +10,7 @@ import {
 } from "../../Recoil/bookmarks.selector";
 import Section from '../../section/section.component'
 import { settingSelector } from "../../Recoil/setting.atom"
+import { bookmarkClickHandler } from "../../Helper/openURLInCurrentTab";
 
 interface listViewProps {
   data: BookmarkFolderType | BookmarkElementType | undefined;
@@ -43,16 +44,17 @@ const ListFolderView = () => {
         <div
           id={bookmarksData.id}
           key={nanoid()}
-          className="text-base px-2 my-1"
+          className="text-base px-2 my-1 cursor-pointer"
+          onClick={() => {bookmarkClickHandler(bookmarksData.url)}}
         >
-          <a href={bookmarksData.url}>{bookmarksData.title}</a>
+          {bookmarksData.title ? bookmarksData.title : '(==empty title==)'}
         </div>
       );
     } else {
       return (
         <div key={nanoid()} className="px-2">
           <div className="px-4 py-2 font-bold text-lg bg-blue-900">
-            Folder: {bookmarksData.title}
+            {bookmarksData.title}
           </div>
           {bookmarksData.children?.map((ele) => {
             return renderBookmarkFolder(ele);
