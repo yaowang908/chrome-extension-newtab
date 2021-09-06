@@ -71,7 +71,7 @@ const saveSelectedFolder = (
   //   console.log('Update bookmark ', changes)
   // })
   chrome.storage.local.set({ selectedFolder: data }, function () {
-    console.log("SelectedFolder are saved locally ");
+    // console.log("SelectedFolder are saved locally ");
   });
 };
 
@@ -90,4 +90,32 @@ const selectedFolderSelector = selector<
   },
 });
 
-export { bookmarkSelector, selectedFolderSelector };
+const listViewLeftPanelVisibilityAtom = atom<boolean>({
+  key: "listViewLeftPanelVisibilityAtom",
+  default: true,
+});
+
+const saveListViewLeftPanelVisibility = (visibility: boolean) => {
+  chrome.storage.local.set({ LVLPVisibility: visibility }, function () {
+    // console.log("LVLPVisibility are saved locally ");
+  });
+}
+
+const listViewLeftPanelVisibilitySelector = selector<boolean>({
+  key: "listViewLeftPanelVisibilitySelector",
+  get: ({ get }) => get(listViewLeftPanelVisibilityAtom),
+  set: ({ set, get }, method) => {
+    if (method instanceof DefaultValue) {
+      set(listViewLeftPanelVisibilityAtom, method);
+    } else {
+      set(listViewLeftPanelVisibilityAtom, method);
+      saveListViewLeftPanelVisibility(method);
+    }
+  },
+});
+
+export {
+  bookmarkSelector,
+  selectedFolderSelector,
+  listViewLeftPanelVisibilitySelector,
+};

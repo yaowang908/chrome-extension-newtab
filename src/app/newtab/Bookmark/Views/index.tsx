@@ -9,7 +9,11 @@ const BookmarkView = () => {
 
   const setting = useRecoilValue(settingSelector);
 
-  return <>{setting?.bookmarkView === "grid" ? <GridView /> : <ListView />}</>;
+  return (
+    <>
+      {setting?.bookmarkView === "grid" ? <GridView /> : <ListView />}
+    </>
+  );
 }
 
 export default BookmarkView;

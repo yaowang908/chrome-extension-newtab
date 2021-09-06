@@ -1,9 +1,5 @@
 import React from "react";
-import {
-  useRecoilState,
-  useRecoilValue,
-  useResetRecoilState,
-} from "recoil";
+import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 
 import { linksSelector } from '../Recoil/links_selector.atom';
 import { colorThemeSelector } from "../Recoil/color_theme.atom";
@@ -12,54 +8,56 @@ import { visibleSelector } from '../Recoil/visible.atom';
 import ToggleSwitch from "../ToggleSwitch/ToggleSwitch.component";
 import { viewSelector } from '../Recoil/view.atom';
 import DashboardButtons from "./DashboardButtons";
+import BookmarkViewButtons from './BookmarkViewButtons';
+import { listViewLeftPanelVisibilitySelector } from "../Recoil/bookmarks.selector";
 
 export const Header = () => {
   const [dataArr, setDataArr] = useRecoilState(linksSelector);
   const colorTheme = useRecoilValue(colorThemeSelector);
   const [visible, setVisible] = useRecoilState(visibleSelector);
   const [viewState, setViewState] = useRecoilState(viewSelector);
+  const setListViewLeftPanelVisibility = useSetRecoilState(
+    listViewLeftPanelVisibilitySelector
+  );
 
   React.useEffect(() => {
-    chrome.storage.local.get(['tabs'], function(result) {
-      if(result.tabs) {
-        setDataArr(result.tabs);
-        // console.log('header index: ', result.tabs);
+    chrome.storage.local.get(
+      ["tabs", "visible", "view", "LVLPVisibility"],
+      function (result) {
+        // console.log(result);
+        if ('tabs' in result) {
+          setDataArr(result.tabs);
+          // console.log('header index: ', result.tabs);
+        }
+        if ('visible' in result) {
+          setVisible(result.visible);
+        }
+        if ('view' in result) {
+          setViewState(result.view);
+        }
+        if ("LVLPVisibility" in result) {
+          setListViewLeftPanelVisibility(result.LVLPVisibility);
+        }
       }
-    });
-  }, []);
-
-  React.useEffect(() => {
-    chrome.storage.local.get(["visible"], function (result) {
-      if (result.visible) {
-        setVisible(result.visible);
-      }
-    });
-  }, []);
-
-  React.useEffect(() => {
-    chrome.storage.local.get(["view"], function (result) {
-      if (result.view) {
-        setViewState(result.view);
-      }
-    });
+    );
   }, []);
 
   const headerClickHandler = (e: React.MouseEvent<HTMLDivElement>) => {
     console.log("Single Click!");
     e.stopPropagation();
     setVisible(!visible);
-  }
-  
+  };
+
   const headerDoubleClickHandler = (e: React.MouseEvent<HTMLDivElement>) => {
     console.log("Double Click!");
     e.stopPropagation();
     setVisible(!visible);
   };
 
-  const viewClickHandler = (selectedName: ('Dashboard' | 'Bookmark')) => {
+  const viewClickHandler = (selectedName: "Dashboard" | "Bookmark") => {
     console.log(selectedName);
-    setViewState(selectedName)
-  }
+    setViewState(selectedName);
+  };
   // DONE: hide buttons when in bookmark view
   return (
     <div
@@ -71,7 +69,10 @@ export const Header = () => {
       onDoubleClick={headerDoubleClickHandler}
       onClick={headerClickHandler}
     >
-      <div className={`text-4xl mb-4 ${setting.text[colorTheme]}`} style={{maxWidth: '26rem'}}>
+      <div
+        className={`text-4xl mb-4 ${setting.text[colorTheme]}`}
+        style={{ maxWidth: "26rem" }}
+      >
         <ToggleSwitch
           defaultName="Dashboard"
           optionName="Bookmark"
@@ -79,7 +80,11 @@ export const Header = () => {
           onChange={viewClickHandler}
         />
       </div>
-      {viewState === "Dashboard" ? <DashboardButtons /> : ""}
+      {viewState === "Dashboard" ? (
+        <DashboardButtons />
+      ) : (
+        <BookmarkViewButtons />
+      )}
     </div>
   );
 };
