@@ -23,7 +23,7 @@ const ListView = () => {
   }
   return (
     <div className="col-span-full">
-      <div className="max-w-7xl">
+      <div className="max-w-5xl mx-auto">
         <ListFolderView />
       </div>
     </div>

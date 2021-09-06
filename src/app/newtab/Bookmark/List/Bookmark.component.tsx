@@ -90,12 +90,17 @@ const Bookmark = () => {
         );
       }
       return (
-        <div 
-        id={bookmarksData.id} 
-        key={nanoid()} 
-        className="text-base px-2 my-1 cursor-pointer" 
-        onClick={() => {bookmarkClickHandler(bookmarksData.url)}}>
-          {bookmarksData.title ? bookmarksData.title : '  '}
+        <div
+          id={bookmarksData.id}
+          key={nanoid()}
+          className="text-base px-2 my-1 cursor-pointer"
+          onClick={() => {
+            bookmarkClickHandler(bookmarksData.url);
+          }}
+        >
+          {bookmarksData.title
+            ? bookmarksData.title
+            : `(==empty title==) ${bookmarksData.url}`}
         </div>
       );
     } else if (bookmarksData.parentId === "0") {

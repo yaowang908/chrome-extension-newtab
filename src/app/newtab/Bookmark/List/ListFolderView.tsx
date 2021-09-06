@@ -47,12 +47,12 @@ const ListFolderView = () => {
           className="text-base px-2 my-1 cursor-pointer"
           onClick={() => {bookmarkClickHandler(bookmarksData.url)}}
         >
-          {bookmarksData.title ? bookmarksData.title : '(==empty title==)'}
+          {bookmarksData.title ? bookmarksData.title : `(==empty title==) ${bookmarksData.url}`}
         </div>
       );
     } else {
       return (
-        <div key={nanoid()} className="px-2">
+        <div key={nanoid()} className="px-4">
           <div className="px-4 py-2 font-bold text-lg bg-blue-900">
             {bookmarksData.title}
           </div>
