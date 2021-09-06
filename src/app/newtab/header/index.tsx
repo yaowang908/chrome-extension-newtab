@@ -2,7 +2,10 @@ import React from "react";
 import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 
 import { linksSelector } from '../Recoil/links_selector.atom';
-import { colorThemeSelector } from "../Recoil/color_theme.atom";
+import {
+  colorThemeSelector,
+  colorThemeChangedSelector,
+} from "../Recoil/color_theme.atom";
 import setting from '../setting/setting';
 import { visibleSelector } from '../Recoil/visible.atom';
 import ToggleSwitch from "../ToggleSwitch/ToggleSwitch.component";
@@ -13,7 +16,8 @@ import { listViewLeftPanelVisibilitySelector } from "../Recoil/bookmarks.selecto
 
 export const Header = () => {
   const [dataArr, setDataArr] = useRecoilState(linksSelector);
-  const colorTheme = useRecoilValue(colorThemeSelector);
+  const [colorTheme, setColorTheme] = useRecoilState(colorThemeSelector);
+  const setColorThemeChangedAtom = useSetRecoilState(colorThemeChangedSelector);
   const [visible, setVisible] = useRecoilState(visibleSelector);
   const [viewState, setViewState] = useRecoilState(viewSelector);
   const setListViewLeftPanelVisibility = useSetRecoilState(
@@ -22,21 +26,26 @@ export const Header = () => {
 
   React.useEffect(() => {
     chrome.storage.local.get(
-      ["tabs", "visible", "view", "LVLPVisibility"],
+      ["tabs", "visible", "view", "LVLPVisibility", "colorTheme"],
       function (result) {
         // console.log(result);
-        if ('tabs' in result) {
+        if ("tabs" in result) {
           setDataArr(result.tabs);
           // console.log('header index: ', result.tabs);
         }
-        if ('visible' in result) {
+        if ("visible" in result) {
           setVisible(result.visible);
         }
-        if ('view' in result) {
+        if ("view" in result) {
           setViewState(result.view);
         }
         if ("LVLPVisibility" in result) {
           setListViewLeftPanelVisibility(result.LVLPVisibility);
+        }
+        if ("colorTheme" in result) {
+          setColorTheme(result.colorTheme.colorTheme)
+          setColorThemeChangedAtom(result.colorTheme.colorThemeChanged);
+          console.log('colorThemeChanged: ', result.colorTheme.colorThemeChanged)
         }
       }
     );

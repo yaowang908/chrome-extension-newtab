@@ -21,7 +21,7 @@ import BookmarkView from "./Bookmark/Views";
 
 const App: React.FC = () => {
   const [colorTheme, setColorTheme] = useRecoilState(colorThemeSelector);
-  const visible = useRecoilValue(visibleSelector);
+  const [visible, setVisible] = useRecoilState(visibleSelector);
   const view = useRecoilValue(viewSelector);
   const settingVisibility = useRecoilValue(settingDialogueVisibility)
   // TODO: one of the three columns can be used a container for important links to preserve
@@ -30,10 +30,15 @@ const App: React.FC = () => {
     setColorTheme('blackTheme');
   }, [])
 
+  const bgClickHandler = () => {
+    setVisible(!visible);
+  };
+
   return (
     <DndProvider backend={HTML5Backend}>
       <div
         className={`w-full h-screen relative ${setting.bg[colorTheme]} p-12 flex flex-col overflow-hidden box-border`}
+        onClick={bgClickHandler}
       >
         <Setting />
         <Header />
@@ -56,7 +61,7 @@ const App: React.FC = () => {
             <BookmarkView />
           )}
         </div>
-        <CustomBackground />
+        {colorTheme === "bgImage" ? <CustomBackground /> : <></>}
       </div>
     </DndProvider>
   );

@@ -3,8 +3,17 @@ import { useRecoilState } from 'recoil';
 
 import Popup from '../Popup/Popup.component';
 import {settingDialogueVisibility} from '../Recoil/setting.atom';
+import {
+  colorThemeSelector,
+  colorThemeProp,
+  colorThemeChangedSelector,
+} from "../Recoil/color_theme.atom";
 
 const Setting = () => {
+  const [colorTheme, setColorTheme] = useRecoilState(colorThemeSelector);
+  const [colorThemeChangedState, setColorThemeChangedState] = useRecoilState(
+    colorThemeChangedSelector
+  );
   const [settingVisibility, setSettingVisibility] = useRecoilState(
     settingDialogueVisibility
   );
@@ -16,6 +25,26 @@ const Setting = () => {
       setSettingVisibility(!settingVisibility);
     }
   }
+
+  const themeOnChangeHandler = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    e.stopPropagation();
+    console.log("themeChange: ", e.target.value);
+    if(e.target.value === 'DEFAULT') return;
+    setColorTheme(e.target.value as colorThemeProp);
+    setColorThemeChangedState(true);
+  };
+
+  const getThemeName = (
+    e: "blueTheme" | "blackTheme" | "whiteTheme" | "bgImage"
+  ) => {
+    const _data = {
+      'blueTheme': 'Dark Blue', 
+      'blackTheme': 'Dark',
+      'whiteTheme': 'Light', 
+      'bgImage': 'Image Background',
+    }
+    return _data[e];
+  };
 
   return (
     <>
@@ -40,9 +69,17 @@ const Setting = () => {
               <div className="p-4 w-full max-w-xs mx-auto bg-white rounded-xl shadow-md">
                 <label className="flex items-center space-x-3">
                   <span className="text-gray-900 font-medium">Theme:</span>
-                  <select className="appearance-none px-3 py-2 border-b-2">
+                  <select
+                    className="appearance-none px-3 py-2 border-b-2"
+                    value="DEFAULT"
+                    onChange={themeOnChangeHandler}
+                  >
                     {/* 'blueTheme' | 'blackTheme' | 'whiteTheme' | 'bgImage' */}
-                    <option value="">--Please select theme--</option>
+                    {colorThemeChangedState ? (
+                      <option value="DEFAULT">{getThemeName(colorTheme)}</option>
+                    ) : (
+                      <option value="DEFAULT">--Please select theme--</option>
+                    )}
                     <option value="blueTheme">Dark Blue</option>
                     <option value="blackTheme">Dark</option>
                     <option value="whiteTheme">Light</option>
@@ -52,7 +89,9 @@ const Setting = () => {
               </div>
               <div className="p-4 w-full max-w-xs mx-auto bg-white rounded-xl shadow-md">
                 <label className="flex items-center space-x-3">
-                  <span className="text-gray-900 font-medium">Bookmarks View:</span>
+                  <span className="text-gray-900 font-medium">
+                    Bookmarks View:
+                  </span>
                   <select className="appearance-none px-3 py-2 border-b-2">
                     <option value="">--Please select View--</option>
                     <option value="grid">Grid</option>
