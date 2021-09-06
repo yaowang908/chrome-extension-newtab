@@ -12,7 +12,7 @@ interface GroupProps {
 
 const storeGroup = (dataArr: (GroupProps[])) => {
   chrome.storage.local.set({groups: dataArr}, function() {
-    console.log('Groups are saved locally ');
+    // console.log('Groups are saved locally ');
   });
 }
 

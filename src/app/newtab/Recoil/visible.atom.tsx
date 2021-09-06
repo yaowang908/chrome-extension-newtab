@@ -9,7 +9,7 @@ const visibleAtom = atom<boolean>({
 
 const storeVisible = (state: boolean) => {
   chrome.storage.local.set({ visible: state }, function () {
-    console.log("Visible is saved locally ");
+    // console.log("Visible is saved locally ");
   });
 };
 

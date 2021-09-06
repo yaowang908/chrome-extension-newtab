@@ -45,26 +45,26 @@ export const Header = () => {
         if ("colorTheme" in result) {
           setColorTheme(result.colorTheme.colorTheme)
           setColorThemeChangedAtom(result.colorTheme.colorThemeChanged);
-          console.log('colorThemeChanged: ', result.colorTheme.colorThemeChanged)
+          // console.log('colorThemeChanged: ', result.colorTheme.colorThemeChanged)
         }
       }
     );
   }, []);
 
   const headerClickHandler = (e: React.MouseEvent<HTMLDivElement>) => {
-    console.log("Single Click!");
+    // console.log("Single Click!");
     e.stopPropagation();
     setVisible(!visible);
   };
 
   const headerDoubleClickHandler = (e: React.MouseEvent<HTMLDivElement>) => {
-    console.log("Double Click!");
+    // console.log("Double Click!");
     e.stopPropagation();
     setVisible(!visible);
   };
 
   const viewClickHandler = (selectedName: "Dashboard" | "Bookmark") => {
-    console.log(selectedName);
+    // console.log(selectedName);
     setViewState(selectedName);
   };
   // DONE: hide buttons when in bookmark view

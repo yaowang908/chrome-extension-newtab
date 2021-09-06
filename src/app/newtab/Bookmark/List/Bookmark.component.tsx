@@ -51,8 +51,8 @@ const Bookmark = () => {
       const [_bookmarksBar, _otherBookmarks] = bookmarkTreeNodes[0].children || [[],[]];
       const bookmarksBar = getBookmarks(_bookmarksBar);
       const otherBookmarks = getBookmarks(_otherBookmarks);
-      console.log("BookmarksBar: ", getBookmarks(_bookmarksBar));
-      console.log("OtherBookmarks: ", getBookmarks(_otherBookmarks));
+      // console.log("BookmarksBar: ", getBookmarks(_bookmarksBar));
+      // console.log("OtherBookmarks: ", getBookmarks(_otherBookmarks));
 
       if(bookmarksBar && otherBookmarks) {
         setBookmark({BookmarksBar: bookmarksBar, OtherBookmarks: otherBookmarks})

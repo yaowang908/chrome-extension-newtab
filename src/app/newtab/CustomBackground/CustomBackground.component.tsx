@@ -9,12 +9,12 @@ const CustomBackground = () => {
   const [visible, setVisible] = useRecoilState(visibleSelector);
   
   const customBgClickHandler = () => {
-    console.log("Single Click!");
+    // console.log("Single Click!");
     setVisible(!visible);
   };
 
   const customBgDoubleClickHandler = () => {
-    console.log("Double Click!");
+    // console.log("Double Click!");
     setVisible(!visible);
   };
   // DONE: add credits
