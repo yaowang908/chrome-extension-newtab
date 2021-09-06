@@ -26,17 +26,27 @@ const List:React.FC<ListProps> = ({contentArr, itemType}) => {
   // thus the logic is broken.
   
   return (
-    <div className={ `w-full h-full flex flex-col overflow-hidden` } ref={drop}>
-      {
-        contentArr?.length ?
-        contentArr?.map((ele: LinkProps, index) => {
-          const draggableLinkProps =  Object.assign({}, {...ele}, {itemType: itemType, index: index, dataArr: linksDataArr, setDataArr: setLinksDataArr});
-          return <DraggableLink key={ele.id} {...draggableLinkProps}/>
-        }) :
-        "Empty!"
-      }
+    <div
+      className={`w-full h-full flex flex-col overflow-x-hidden overflow-y-scroll`}
+      ref={drop}
+    >
+      {contentArr?.length
+        ? contentArr?.map((ele: LinkProps, index) => {
+            const draggableLinkProps = Object.assign(
+              {},
+              { ...ele },
+              {
+                itemType: itemType,
+                index: index,
+                dataArr: linksDataArr,
+                setDataArr: setLinksDataArr,
+              }
+            );
+            return <DraggableLink key={ele.id} {...draggableLinkProps} />;
+          })
+        : "Empty!"}
     </div>
-  )
+  );
 }
 
 export default List;

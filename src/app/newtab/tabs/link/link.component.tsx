@@ -94,7 +94,11 @@ const Link: React.FC<DraggableLinkPropsInterface> = ({
     >
       <div
         className="col-span-1 w-3 h-3 sm:w-6 sm:h-6 bg-center bg-contain bg-no-repeat cursor-pointer mr-2"
-        style={{ backgroundImage: `url(${imageUrl})` }}
+        style={{
+          backgroundImage: `url(${
+            imageUrl ? imageUrl : "https://via.placeholder.com/16"
+          })`,
+        }}
       ></div>
       <div
         className={`col-span-11 relative grid grid-cols-12 gap-1 ${setting.text[colorTheme]} cursor-pointer`}
