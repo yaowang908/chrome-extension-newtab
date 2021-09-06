@@ -59,4 +59,35 @@ const bookmarkSelector = selector<BookmarkAtom>({
   },
 });
 
-export { bookmarkSelector };
+const selectedFolderAtom = atom<BookmarkFolder | BookmarkElement | undefined>({
+  key: "selectedFolderAtom",
+  default: undefined,
+});
+
+const saveSelectedFolder = (
+  data: BookmarkFolder | BookmarkElement | undefined
+) => {
+  // chrome.bookmarks.update(id, changes, () => {
+  //   console.log('Update bookmark ', changes)
+  // })
+  chrome.storage.local.set({ selectedFolder: data }, function () {
+    console.log("SelectedFolder are saved locally ");
+  });
+};
+
+const selectedFolderSelector = selector<
+  BookmarkFolder | BookmarkElement | undefined
+>({
+  key: "selectedFolderSelector",
+  get: ({ get }) => get(selectedFolderAtom),
+  set: ({ set, get }, method) => {
+    if (method instanceof DefaultValue) {
+      set(selectedFolderAtom, method);
+    } else {
+      set(selectedFolderAtom, method);
+      saveSelectedFolder(method);
+    }
+  },
+});
+
+export { bookmarkSelector, selectedFolderSelector };

@@ -44,7 +44,7 @@ const App: React.FC = () => {
         >
           {view === "Dashboard" ? (
             <>
-              <div className="h-5/6 overflow-x-hidden overflow-y-scroll lg:col-span-4">
+              <div className="overflow-x-hidden overflow-y-scroll lg:col-span-4">
                 <TabsSection />
               </div>
               <div className="lg:col-start-5 lg:col-span-2">
