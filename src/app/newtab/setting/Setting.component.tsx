@@ -73,6 +73,11 @@ const Setting = () => {
     );
   }
 
+  const bookmarkViewOnChangeHandler = (e :React.ChangeEvent<HTMLSelectElement>) => {
+    // console.log(e.target.value);
+    if(e.target.value === 'grid') window.confirm('Coming Soon!')
+  };
+
   return (
     <>
       {settingVisibility ? (
@@ -116,7 +121,10 @@ const Setting = () => {
                   <span className="text-gray-900 font-medium">
                     Bookmarks View:
                   </span>
-                  <select className="appearance-none px-3 py-2 border-b-2">
+                  <select
+                    className="appearance-none px-3 py-2 border-b-2"
+                    onChange={bookmarkViewOnChangeHandler}
+                  >
                     <option value="">--Please select View--</option>
                     <option value="grid">Grid</option>
                     <option value="list">List</option>

@@ -126,7 +126,7 @@ export const Box: React.FC<BoxProps> = ({
   }
   const editClickHandler = () => {
     // TODO: open a new edit module to edit the links in this group
-    
+    window.confirm('Coming Soon!')
   }
   
   const saveNewGroupName = (newName: string) => {
