@@ -13,6 +13,7 @@ import { viewSelector } from '../Recoil/view.atom';
 import DashboardButtons from "./DashboardButtons";
 import BookmarkViewButtons from './BookmarkViewButtons';
 import { listViewLeftPanelVisibilitySelector } from "../Recoil/bookmarks.selector";
+import {settingSelector} from '../Recoil/setting.atom';
 
 export const Header = () => {
   const [dataArr, setDataArr] = useRecoilState(linksSelector);
@@ -23,10 +24,11 @@ export const Header = () => {
   const setListViewLeftPanelVisibility = useSetRecoilState(
     listViewLeftPanelVisibilitySelector
   );
+  const [settingState, setSettingSelector] = useRecoilState(settingSelector);
 
   React.useEffect(() => {
     chrome.storage.local.get(
-      ["tabs", "visible", "view", "LVLPVisibility", "colorTheme"],
+      ["tabs", "visible", "view", "LVLPVisibility", "colorTheme", "setting"],
       function (result) {
         // console.log(result);
         if ("tabs" in result) {
@@ -43,9 +45,12 @@ export const Header = () => {
           setListViewLeftPanelVisibility(result.LVLPVisibility);
         }
         if ("colorTheme" in result) {
-          setColorTheme(result.colorTheme.colorTheme)
+          setColorTheme(result.colorTheme.colorTheme);
           setColorThemeChangedAtom(result.colorTheme.colorThemeChanged);
           // console.log('colorThemeChanged: ', result.colorTheme.colorThemeChanged)
+        }
+        if ("setting" in result) {
+          setSettingSelector(result.setting);
         }
       }
     );
@@ -54,13 +59,13 @@ export const Header = () => {
   const headerClickHandler = (e: React.MouseEvent<HTMLDivElement>) => {
     // console.log("Single Click!");
     e.stopPropagation();
-    setVisible(!visible);
+    if (settingState.clickToHide) setVisible(!visible);
   };
 
   const headerDoubleClickHandler = (e: React.MouseEvent<HTMLDivElement>) => {
     // console.log("Double Click!");
     e.stopPropagation();
-    setVisible(!visible);
+    if (settingState.clickToHide) setVisible(!visible);
   };
 
   const viewClickHandler = (selectedName: "Dashboard" | "Bookmark") => {

@@ -1,24 +1,17 @@
 import { atom, DefaultValue, selector } from "recoil";
 
 interface SettingProps {
-  theme: 'blueTheme' | 'blackTheme' | 'whiteTheme' | 'bgImage';
   clickToHide: boolean;
   bookmarkView?: 'grid' | 'list'
 }
 
 const storeSetting = (obj: SettingProps) => {
   chrome.storage.local.set({ setting: obj }, function () {
-    console.log("Settings are saved locally ");
+    // console.log("Settings are saved locally ");
   });
 };
 
-const settingDialogueVisibility = atom<boolean>({
-  key: "settingDialogueVisibility",
-  default: false
-});
-
 const defaultSetting: SettingProps = {
-  theme: 'blueTheme',
   clickToHide: true,
   bookmarkView: 'list'
 }
@@ -41,6 +34,11 @@ const settingSelector = selector<SettingProps>({
     // console.log("Recoil atom gets: ", method);
     // console.error("Unrecognized Status");
   },
+});
+
+const settingDialogueVisibility = atom<boolean>({
+  key: "settingDialogueVisibility",
+  default: false,
 });
 
 export { settingDialogueVisibility, settingSelector };

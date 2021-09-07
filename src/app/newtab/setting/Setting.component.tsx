@@ -2,7 +2,7 @@ import React from 'react'
 import { useRecoilState } from 'recoil';
 
 import Popup from '../Popup/Popup.component';
-import {settingDialogueVisibility} from '../Recoil/setting.atom';
+import {settingDialogueVisibility, settingSelector} from '../Recoil/setting.atom';
 import {
   colorThemeSelector,
   colorThemeProp,
@@ -17,6 +17,7 @@ const Setting = () => {
   const [settingVisibility, setSettingVisibility] = useRecoilState(
     settingDialogueVisibility
   );
+  const [settingState, setSettingState] = useRecoilState(settingSelector)
 
   const closeClickHandler = (e: React.MouseEvent<HTMLDivElement>) => {
     e.stopPropagation();
@@ -46,6 +47,32 @@ const Setting = () => {
     return _data[e];
   };
 
+  const clickToHideOnChangeHandler = (
+    e: React.MouseEvent<HTMLInputElement>
+  ) => {
+    // console.log("clickToHideOnChangeHandler: ", e);
+    e.preventDefault();
+    setSettingState(
+      Object.assign({}, settingState, { clickToHide: !settingState.clickToHide })
+    );
+  };
+
+  const renderClickToHideInput = () => {
+    if(settingState.clickToHide) {
+      return (
+        <div className="form-tick appearance-none h-6 w-6 border border-gray-300 rounded-md bg-blue-600 border-transparent focus:outline-none"
+          onClick={clickToHideOnChangeHandler}
+        />
+      );
+    }
+    return (
+      <div
+        className="form-tick appearance-none h-6 w-6 border border-gray-300 rounded-md focus:outline-none"
+        onClick={clickToHideOnChangeHandler}
+      />
+    );
+  }
+
   return (
     <>
       {settingVisibility ? (
@@ -55,12 +82,15 @@ const Setting = () => {
             <div className="mt-5 w-full grid grid-cols-1 gap-2 sm:gap-5 sm:grid-cols-2">
               <div className="p-4 w-full max-w-xs mx-auto bg-white rounded-xl shadow-md">
                 <label className="flex items-center space-x-3">
-                  <input
+                  {/* <input
                     type="checkbox"
                     name="clickToHide"
                     value="1"
+                    defaultChecked={settingState.clickToHide}
                     className="form-tick appearance-none h-6 w-6 border border-gray-300 rounded-md checked:bg-blue-600 checked:border-transparent focus:outline-none"
-                  />
+                    onClick={clickToHideOnChangeHandler}
+                  /> */}
+                  {renderClickToHideInput()}
                   <span className="text-gray-900 font-medium px-3 py-2">
                     Enable Click to hide
                   </span>
@@ -76,7 +106,9 @@ const Setting = () => {
                   >
                     {/* 'blueTheme' | 'blackTheme' | 'whiteTheme' | 'bgImage' */}
                     {colorThemeChangedState ? (
-                      <option value="DEFAULT">{getThemeName(colorTheme)}</option>
+                      <option value="DEFAULT">
+                        {getThemeName(colorTheme)}
+                      </option>
                     ) : (
                       <option value="DEFAULT">--Please select theme--</option>
                     )}

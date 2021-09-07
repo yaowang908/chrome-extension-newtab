@@ -15,7 +15,7 @@ import { Group } from "./Group/Group.component";
 import { visibleSelector } from "./Recoil/visible.atom";
 import CustomBackground from "./CustomBackground/CustomBackground.component";
 import Setting from "./setting/Setting.component";
-import { settingDialogueVisibility } from "./Recoil/setting.atom";
+import { settingDialogueVisibility, settingSelector } from "./Recoil/setting.atom";
 import { viewSelector } from "./Recoil/view.atom";
 import BookmarkView from "./Bookmark/Views";
 
@@ -24,6 +24,7 @@ const App: React.FC = () => {
   const [visible, setVisible] = useRecoilState(visibleSelector);
   const view = useRecoilValue(viewSelector);
   const settingVisibility = useRecoilValue(settingDialogueVisibility)
+  const settingState = useRecoilValue(settingSelector)
   // TODO: one of the three columns can be used a container for important links to preserve
 
   React.useEffect(() => {
@@ -31,7 +32,7 @@ const App: React.FC = () => {
   }, [])
 
   const bgClickHandler = () => {
-    setVisible(!visible);
+    if (settingState.clickToHide) setVisible(!visible);
   };
 
   return (
