@@ -116,8 +116,9 @@ const Bookmark = () => {
       return (
         <div
           key={nanoid()}
-          className="border-b-2 border-gray-100 bg-blue-900 px-2 py-1 font-bold text-base cursor-pointer"
-          onClick={() => {
+          className="border-b-2 border-gray-100 bg-blue-900 px-2 py-1 font-bold text-base cursor-pointer text-white"
+          onClick={(e: React.MouseEvent<HTMLDivElement>) => {
+            e.stopPropagation();
             setSelectedFolder(bookmarksData);
           }}
         >
