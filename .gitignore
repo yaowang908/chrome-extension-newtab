@@ -5,3 +5,5 @@ yarn-error.log
 
 buffer
 # to hold the manifest.json file for webpack to copy
+
+Packed

@@ -3,7 +3,7 @@ import { atom, DefaultValue, selector } from "recoil";
 
 const visibleAtom = atom<boolean>({
   key: "visibleAtom",
-  default: false,
+  default: true,
 });
 
 

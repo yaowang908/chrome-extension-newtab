@@ -12,7 +12,7 @@ const storeSetting = (obj: SettingProps) => {
 };
 
 const defaultSetting: SettingProps = {
-  clickToHide: true,
+  clickToHide: false,
   bookmarkView: 'list'
 }
 
