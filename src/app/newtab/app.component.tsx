@@ -24,7 +24,6 @@ const App: React.FC = () => {
   const view = useRecoilValue(viewSelector);
   const settingVisibility = useRecoilValue(settingDialogueVisibility)
   const settingState = useRecoilValue(settingSelector)
-  // TODO: one of the three columns can be used a container for important links to preserve
 
   // React.useEffect(() => {
   //   setColorTheme('blackTheme');
