@@ -47,8 +47,9 @@ export const CustomDragLayer: React.FC = () => {
   }))
 
   function renderItem() {
-    // console.log('Preview fired! item: ', item)
+    // console.log('Preview fired! itemType: ', itemType)
     // add new case if other column need to be draggable
+    if(itemType === null) return;
     switch (itemType) {
       case ItemTypes.LINK:
         return <LinkDragPreview {...item} />
@@ -58,7 +59,7 @@ export const CustomDragLayer: React.FC = () => {
   }
 
   return (
-    <div className={`fixed pointer-events-none z-50 left-0 top-0 w-full h-full`}>
+    <div className={`fixed pointer-events-none left-0 top-0 w-full h-full z-50`}>
       <div style={getItemStyles(initialOffset, currentOffset)}>
         {renderItem()}
       </div>

@@ -26,12 +26,14 @@ const Link: React.FC<DraggableLinkPropsInterface> = ({
     setDataArr(dataArr?.filter((x) => x?.id !== id));
   };
 
-  const removeRecordClickHandler = () => {
+  const removeRecordClickHandler = (e: React.MouseEvent<HTMLElement>) => {
+    e.stopPropagation();
     removeCurrentLink();
   };
 
   const openClickHandler = (e: React.MouseEvent<HTMLElement>) => {
     e.preventDefault();
+    e.stopPropagation();
     chrome.tabs.create({
       active: true,
       url: link,
@@ -41,6 +43,7 @@ const Link: React.FC<DraggableLinkPropsInterface> = ({
 
   const editClickHandler = (e: React.MouseEvent<HTMLElement>) => {
     e.preventDefault();
+    e.stopPropagation();
     // console.log('Clicked edit!')
     // DONE: rename the current clicked link
     if (linkTitle && linkTitle.current) {

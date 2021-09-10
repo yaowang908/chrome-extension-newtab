@@ -17,6 +17,7 @@ import Setting from "./setting/Setting.component";
 import { settingDialogueVisibility, settingSelector } from "./Recoil/setting.atom";
 import { viewSelector } from "./Recoil/view.atom";
 import BookmarkView from "./Bookmark/Views";
+import EditGroup from "./Group/EditGroup.component";
 
 const App: React.FC = () => {
   const [colorTheme, setColorTheme] = useRecoilState(colorThemeSelector);
@@ -40,6 +41,7 @@ const App: React.FC = () => {
         onClick={bgClickHandler}
       >
         <Setting />
+        <EditGroup />
         <Header />
         <div
           className={`flex-auto z-40 ${

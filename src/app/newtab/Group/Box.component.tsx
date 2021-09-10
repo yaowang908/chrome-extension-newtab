@@ -1,6 +1,6 @@
 import React from "react";
 import { useDrop, DropTargetMonitor } from "react-dnd";
-import { useRecoilState, useRecoilValue } from "recoil";
+import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 
 import { DropContainer } from "../DropContainer/DropContainer.component";
 import setting from "../setting/setting";
@@ -8,6 +8,10 @@ import { groupSelector } from "../Recoil/group_selector.atom";
 import { LinkProps } from "../tabs/link/link.interfaces";
 import { colorThemeSelector } from "../Recoil/color_theme.atom";
 import { linksSelector } from "../Recoil/links_selector.atom";
+import {
+  groupEditorVisibleAtom,
+  selectedGroupAtom,
+} from "../Recoil/groupEditor.atom";
 interface BoxProps {
   groupName?: string;
   itemType: string;
@@ -22,6 +26,10 @@ export const Box: React.FC<BoxProps> = ({
   const [groupDataArr, setGroupDataArr] = useRecoilState(groupSelector);
   const colorTheme = useRecoilValue(colorThemeSelector);
   const [dataArr, setDataArr] = useRecoilState(linksSelector);
+  const setGroupEditorVisibleState = useSetRecoilState(
+    groupEditorVisibleAtom
+  );
+  const setSelectedGroupState = useSetRecoilState(selectedGroupAtom);
 
   const onDropHandler = (el: LinkProps) => {
     console.log("dropped in box:", el);
@@ -126,7 +134,8 @@ export const Box: React.FC<BoxProps> = ({
   }
   const editClickHandler = () => {
     // TODO: open a new edit module to edit the links in this group
-    window.confirm('Coming Soon!')
+    setSelectedGroupState(boxID);
+    setGroupEditorVisibleState(true);
   }
   
   const saveNewGroupName = (newName: string) => {
