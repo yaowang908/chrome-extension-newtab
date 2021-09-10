@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import { useDrop, DropTargetMonitor } from "react-dnd";
 import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 
@@ -30,6 +30,7 @@ export const Box: React.FC<BoxProps> = ({
     groupEditorVisibleAtom
   );
   const setSelectedGroupState = useSetRecoilState(selectedGroupAtom);
+  const nameContainer = useRef<HTMLDivElement>(null);
 
   const onDropHandler = (el: LinkProps) => {
     console.log("dropped in box:", el);
@@ -158,6 +159,12 @@ export const Box: React.FC<BoxProps> = ({
     saveNewGroupName(newName);
   }
 
+  const renameOnFocusHandler = (el: React.FocusEvent<HTMLDivElement>) => {
+    // // el.select()
+    console.log(el.target)
+    console.log(el.currentTarget)
+  };
+
   const renameOnKeyDownHandler = (el: React.KeyboardEvent<HTMLDivElement>) => {
     // TODO: display a caveat when tap more than 15 characters
     if (el.keyCode === 13 || el.keyCode === 27) {
@@ -171,6 +178,19 @@ export const Box: React.FC<BoxProps> = ({
     // console.log('KeyUp: ', el.keyCode);
   };
 
+  const buttonRenameClickHandler = (el: React.MouseEvent<HTMLButtonElement>) => {
+    // el.currentTarget.contentEditable = "true";
+    if(nameContainer) {
+      console.log(el.currentTarget)
+      console.log(nameContainer.current?.contentEditable);
+      if (nameContainer.current?.contentEditable) {
+        nameContainer.current.contentEditable = "true";
+        nameContainer.current.focus();
+        // nameContainer.current.select();
+      }
+    }
+  }
+
   return (
     <div
       ref={drop}
@@ -181,18 +201,20 @@ export const Box: React.FC<BoxProps> = ({
         <div className="absolute h-auto w-full flex flex-row justify-between">
           <div
             className="whitespace-nowrap overflow-hidden"
+            ref={nameContainer}
             onClick={renameClickHandler}
             onBlur={renameOnBlurHandler}
+            onFocus={renameOnFocusHandler}
             onKeyDown={renameOnKeyDownHandler}
-            style={{ maxWidth: "17ch", minWidth:"2ch" }}
+            style={{ maxWidth: "17ch", minWidth: "2ch" }}
           >
             {groupName}
           </div>
-          <div className="group relative cursor-pointer">
+          <div className="w-10 group relative cursor-pointer text-right">
             ...
             <div
               className={`
-              group-hover:grid hidden absolute w-24 h-24 right-0 z-50 grid-cols-1 gap-1
+              group-hover:grid hidden absolute w-24 h-36 right-0 z-50 grid-cols-1 gap-1
               ${setting.bg[colorTheme]}
               `}
             >
@@ -201,6 +223,12 @@ export const Box: React.FC<BoxProps> = ({
                 className={`${setting.text[colorTheme]} ${setting.headBorder[colorTheme]}`}
               >
                 Open all
+              </button>
+              <button
+                onClick={buttonRenameClickHandler}
+                className={`${setting.text[colorTheme]} ${setting.headBorder[colorTheme]}`}
+              >
+                Rename
               </button>
               <button
                 onClick={editClickHandler}
