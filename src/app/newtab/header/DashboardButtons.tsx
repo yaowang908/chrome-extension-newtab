@@ -10,6 +10,8 @@ import setting from "../setting/setting";
 import { visibleSelector } from "../Recoil/visible.atom";
 import { settingDialogueVisibility } from "../Recoil/setting.atom";
 import { viewSelector } from "../Recoil/view.atom";
+import handleDuplicates from "../Helper/duplicateLinks";
+import closeChromeTabs from '../Helper/chromeCloseTabs';
 
 const DashboardButtons = () => {
   const [dataArr, setDataArr] = useRecoilState(linksSelector);
@@ -51,12 +53,13 @@ const DashboardButtons = () => {
         }));
       if (dataArr) {
         const newState = [...dataArr, ...formatData];
-        if (hasDuplicates(newState)) {
-          console.log("Removed duplicates!");
-          setDataArr(removeDuplicates(newState));
-        } else {
-          setDataArr(newState);
-        }
+        setDataArr(handleDuplicates(newState));
+        // if (hasDuplicates(newState)) {
+        //   console.log("Removed duplicates!");
+        //   setDataArr(removeDuplicates(newState));
+        // } else {
+        //   setDataArr(newState);
+        // }
         // setDataArr([...dataArr, ...formatData]);
       } else {
         setDataArr(formatData);
@@ -70,36 +73,8 @@ const DashboardButtons = () => {
     closeClickHandler();
   };
 
-  const removeDuplicates = (arr: LinkProps[]) => {
-    return arr.filter(
-      (value, index, array) =>
-        array.findIndex((t) => t.link === value.link) === index
-    );
-  };
-
-  const hasDuplicates = (arr: LinkProps[]) => {
-    const uniqueUrls = new Set(arr.map((x) => x.link));
-    if (uniqueUrls.size < arr.length) {
-      return true;
-    }
-    return false;
-  };
-
   const closeClickHandler = () => {
-    let queryOptions = {};
-    chrome.tabs.query(queryOptions).then((res) => {
-      const tabIdArr: number[] =
-        res
-          ?.filter((r) => r)
-          ?.filter((x) => !x.active)
-          ?.map((i) => (i.id ? i.id : 0)) || [];
-      // console.log(tabIdArr);
-      if (tabIdArr) {
-        chrome.tabs.remove(tabIdArr.filter((x) => x)).then((res) => {
-          console.log("Closed tabs");
-        });
-      }
-    });
+    closeChromeTabs();
   };
 
   const openAllClickHandler = (e: React.MouseEvent<HTMLButtonElement>) => {

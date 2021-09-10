@@ -1,6 +1,7 @@
 import React, { useRef } from "react";
 import { useDrop, DropTargetMonitor } from "react-dnd";
 import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
+import { nanoid } from "nanoid";
 
 import { DropContainer } from "../DropContainer/DropContainer.component";
 import setting from "../setting/setting";
@@ -12,6 +13,9 @@ import {
   groupEditorVisibleAtom,
   selectedGroupAtom,
 } from "../Recoil/groupEditor.atom";
+import handleDuplicates from "../Helper/duplicateLinks";
+import closeChromeTabs from "../Helper/chromeCloseTabs";
+
 interface BoxProps {
   groupName?: string;
   itemType: string;
@@ -64,7 +68,8 @@ export const Box: React.FC<BoxProps> = ({
     }),
   });
 
-  const data = groupDataArr.filter((x) => x.id === boxID)[0]?.content;
+  const groupData = groupDataArr.filter((x) => x.id === boxID)[0];
+  const data = groupData?.content;
   // console.log('render data', data)
   const removeCurrentLink = (linkID: string) => {
     const newContentArray = data?.filter(x => x.id !== linkID);
@@ -75,6 +80,19 @@ export const Box: React.FC<BoxProps> = ({
       return d;
     })
     setGroupDataArr(newGroupData);
+  };
+
+  const setGroupContent = (newGroupContent: (LinkProps[] | undefined)) => {
+    const newSelectedGroupState = Object.assign({}, groupData, {
+      content: newGroupContent,
+    });
+    const newGroupArrState = groupDataArr.map((x) => {
+      if (x.id === boxID) {
+        return newSelectedGroupState;
+      }
+      return x;
+    });
+    setGroupDataArr(newGroupArrState);
   };
 
   const groupLinkClickHandler = (el: LinkProps) => {
@@ -134,7 +152,7 @@ export const Box: React.FC<BoxProps> = ({
     // console.log("openALL: ", allLinks);
   }
   const editClickHandler = () => {
-    // TODO: open a new edit module to edit the links in this group
+    // DONE: open a new edit module to edit the links in this group
     setSelectedGroupState(boxID);
     setGroupEditorVisibleState(true);
   }
@@ -147,7 +165,7 @@ export const Box: React.FC<BoxProps> = ({
       return x;
     });
     setGroupDataArr(newGroupData);
-    console.log("Save name here!");
+    // console.log("Save name here!");
   }
   const renameClickHandler = (el: React.MouseEvent<HTMLDivElement>) => {
     // DONE:
@@ -161,8 +179,8 @@ export const Box: React.FC<BoxProps> = ({
 
   const renameOnFocusHandler = (el: React.FocusEvent<HTMLDivElement>) => {
     // // el.select()
-    console.log(el.target)
-    console.log(el.currentTarget)
+    // console.log(el.target)
+    // console.log(el.currentTarget)
   };
 
   const renameOnKeyDownHandler = (el: React.KeyboardEvent<HTMLDivElement>) => {
@@ -181,8 +199,8 @@ export const Box: React.FC<BoxProps> = ({
   const buttonRenameClickHandler = (el: React.MouseEvent<HTMLButtonElement>) => {
     // el.currentTarget.contentEditable = "true";
     if(nameContainer) {
-      console.log(el.currentTarget)
-      console.log(nameContainer.current?.contentEditable);
+      // console.log(el.currentTarget)
+      // console.log(nameContainer.current?.contentEditable);
       if (nameContainer.current?.contentEditable) {
         nameContainer.current.contentEditable = "true";
         nameContainer.current.focus();
@@ -190,6 +208,46 @@ export const Box: React.FC<BoxProps> = ({
       }
     }
   }
+
+  const buttonCollectHandler = (el: React.MouseEvent<HTMLButtonElement>) => {
+    // console.log('collect');
+    el.stopPropagation();
+    let queryOptions = {};
+
+    const getOrder = (
+      prevArr: LinkProps[] | undefined,
+      currentIndex: number
+    ) => {
+      if (prevArr) {
+        return prevArr.length + currentIndex;
+      }
+      return currentIndex;
+    };
+
+    chrome.tabs.query(queryOptions).then((res) => {
+      // console.log(res);
+      const formatData = res
+        .filter((x) => x?.url && !x?.url.includes("chrome://"))
+        .map((x, index) => ({
+          id: index + "_" + nanoid(),
+          index: getOrder(data, index),
+          imageUrl: x?.favIconUrl,
+          link: x?.url,
+          title: x?.title,
+          priority: 0,
+        }));
+      if (data) {
+        const newState = [...data, ...formatData];
+        setGroupContent(handleDuplicates(newState));
+      } else {
+        setGroupContent(formatData);
+      }
+    });
+
+    closeChromeTabs();
+  };
+
+  // TODO: drag and drop between boxes
 
   return (
     <div
@@ -214,7 +272,7 @@ export const Box: React.FC<BoxProps> = ({
             ...
             <div
               className={`
-              group-hover:grid hidden absolute w-24 h-36 right-0 z-50 grid-cols-1 gap-1
+              group-hover:grid hidden absolute w-24 h-48 right-0 z-50 grid-cols-1 gap-1
               ${setting.bg[colorTheme]}
               `}
             >
@@ -223,6 +281,13 @@ export const Box: React.FC<BoxProps> = ({
                 className={`${setting.text[colorTheme]} ${setting.headBorder[colorTheme]}`}
               >
                 Open all
+              </button>
+
+              <button
+                onClick={buttonCollectHandler}
+                className={`${setting.text[colorTheme]} ${setting.headBorder[colorTheme]}`}
+              >
+                Collect
               </button>
               <button
                 onClick={buttonRenameClickHandler}
@@ -234,7 +299,7 @@ export const Box: React.FC<BoxProps> = ({
                 onClick={editClickHandler}
                 className={`${setting.text[colorTheme]} ${setting.headBorder[colorTheme]}`}
               >
-                Edit
+                Expand
               </button>
             </div>
           </div>
