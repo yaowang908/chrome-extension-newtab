@@ -5,7 +5,6 @@ import { DndProvider } from "react-dnd";
 
 import { Header } from "./header";
 import Section from "./section/section.component";
-import TopSites from "./topsites/topsites.component";
 import TabsSection from "./tabs";
 import { colorThemeSelector } from "./Recoil/color_theme.atom";
 import setting from './setting/setting';
@@ -56,7 +55,6 @@ const App: React.FC = () => {
               <div className="lg:col-start-5 lg:col-span-2">
                 <Group />
               </div>
-              {/* <TopSites /> */}
             </>
           ) : (
             <BookmarkView />
