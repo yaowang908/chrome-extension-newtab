@@ -249,6 +249,8 @@ export const Box: React.FC<BoxProps> = ({
 
   // TODO: drag and drop between boxes
 
+  // TODO: drag and drop boxes, change order
+
   return (
     <div
       ref={drop}
