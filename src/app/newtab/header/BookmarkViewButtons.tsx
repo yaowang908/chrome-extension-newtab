@@ -40,7 +40,7 @@ const BookmarkViewButtons = () => {
         onClick={toggleLeftPanelClickHandler}
         className={`${setting.text[colorTheme]} ${setting.headBorder[colorTheme]} text-lg`}
       >
-        Toggle Left Panel
+        Toggle Main List
       </button>
     </div>
   );
