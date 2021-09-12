@@ -70,7 +70,7 @@ const saveSelectedFolder = (
   // chrome.bookmarks.update(id, changes, () => {
   //   console.log('Update bookmark ', changes)
   // })
-  chrome.storage.local.set({ selectedFolder: data }, function () {
+  chrome.storage.sync.set({ selectedFolder: data }, function () {
     // console.log("SelectedFolder are saved locally ");
   });
 };
@@ -96,7 +96,7 @@ const listViewLeftPanelVisibilityAtom = atom<boolean>({
 });
 
 const saveListViewLeftPanelVisibility = (visibility: boolean) => {
-  chrome.storage.local.set({ LVLPVisibility: visibility }, function () {
+  chrome.storage.sync.set({ LVLPVisibility: visibility }, function () {
     // console.log("LVLPVisibility are saved locally ");
   });
 }

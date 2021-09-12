@@ -15,7 +15,7 @@ import { LinkProps } from '../tabs/link/link.interfaces';
 // }
 
 const storeTabsOnChange = (dataArr: (LinkProps[] | undefined)) => {
-  chrome.storage.local.set({tabs: dataArr}, function() {
+  chrome.storage.sync.set({ tabs: dataArr }, function () {
     // console.log('Tabs are saved locally ');
   });
 }

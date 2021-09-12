@@ -27,7 +27,7 @@ export const Header = () => {
   const [settingState, setSettingSelector] = useRecoilState(settingSelector);
 
   React.useEffect(() => {
-    chrome.storage.local.get(
+    chrome.storage.sync.get(
       ["tabs", "visible", "view", "LVLPVisibility", "colorTheme", "setting"],
       function (result) {
         // console.log(result);

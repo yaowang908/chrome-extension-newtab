@@ -95,7 +95,7 @@ const DashboardButtons = () => {
 
   const resetClickHandler = () => {
     if (window.confirm("Are you sure about delete all saved tabs?")) {
-      chrome.storage.local.remove(["tabs", "groups"], function () {
+      chrome.storage.sync.remove(["tabs", "groups"], function () {
         let error = chrome.runtime.lastError;
         if (error) {
           console.error(error);

@@ -7,7 +7,7 @@ interface SettingProps {
 }
 
 const storeSetting = (obj: SettingProps) => {
-  chrome.storage.local.set({ setting: obj }, function () {
+  chrome.storage.sync.set({ setting: obj }, function () {
     // console.log("Settings are saved locally ");
   });
 };
