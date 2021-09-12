@@ -2,7 +2,8 @@ import { atom, DefaultValue, selector } from "recoil";
 
 interface SettingProps {
   clickToHide: boolean;
-  bookmarkView?: 'grid' | 'list'
+  replaceTheDefaultNewTab: boolean;
+  bookmarkView?: "grid" | "list";
 }
 
 const storeSetting = (obj: SettingProps) => {
@@ -13,8 +14,9 @@ const storeSetting = (obj: SettingProps) => {
 
 const defaultSetting: SettingProps = {
   clickToHide: false,
-  bookmarkView: 'list'
-}
+  bookmarkView: "list",
+  replaceTheDefaultNewTab: false,
+};
 
 const settingAtom = atom<SettingProps>({
   key: "settingAtom",

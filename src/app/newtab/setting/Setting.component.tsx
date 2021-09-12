@@ -73,6 +73,35 @@ const Setting = () => {
     );
   }
 
+  const clickToReplaceTheDefaultNewTabHandler = (
+    e: React.MouseEvent<HTMLInputElement>
+  ) => {
+    // console.log("clickToHideOnChangeHandler: ", e);
+    e.preventDefault();
+    setSettingState(
+      Object.assign({}, settingState, {
+        replaceTheDefaultNewTab: !settingState.replaceTheDefaultNewTab,
+      })
+    );
+  };
+
+  const renderReplaceTheDefaultNewTab = () => {
+    if (settingState.replaceTheDefaultNewTab) {
+      return (
+        <div
+          className="form-tick appearance-none h-6 w-6 border border-gray-300 rounded-md bg-blue-600 border-transparent focus:outline-none"
+          onClick={clickToReplaceTheDefaultNewTabHandler}
+        />
+      );
+    }
+    return (
+      <div
+        className="form-tick appearance-none h-6 w-6 border border-gray-300 rounded-md focus:outline-none"
+        onClick={clickToReplaceTheDefaultNewTabHandler}
+      />
+    );
+  };
+
   const bookmarkViewOnChangeHandler = (e :React.ChangeEvent<HTMLSelectElement>) => {
     // console.log(e.target.value);
     if(e.target.value === 'grid') window.confirm('Coming Soon!')
@@ -90,6 +119,14 @@ const Setting = () => {
                   {renderClickToHideInput()}
                   <span className="text-gray-900 font-medium px-3 py-2">
                     Enable Click to hide
+                  </span>
+                </label>
+              </div>
+              <div className="p-4 w-full max-w-xs mx-auto bg-white rounded-xl shadow-md">
+                <label className="flex items-center space-x-3">
+                  {renderReplaceTheDefaultNewTab()}
+                  <span className="text-gray-900 font-medium px-3 py-2">
+                    Replace the default new tab
                   </span>
                 </label>
               </div>
