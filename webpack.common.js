@@ -7,6 +7,7 @@ module.exports = {
     "js/newtab": __dirname + "/src/app/newtab.tsx",
     "js/popup": __dirname + "/src/app/popup.tsx",
     "js/options": __dirname + "/src/app/options.tsx",
+    "js/help": __dirname + "/src/app/help.tsx",
     background: __dirname + "/src/app/background.tsx",
   },
   module: {
@@ -59,6 +60,12 @@ module.exports = {
       template: __dirname + "/index.html",
       inject: "body",
       chunks: ["js/options"],
+    }),
+    new HtmlWebpackPlugin({
+      filename: "help.html",
+      template: __dirname + "/index.html",
+      inject: "body",
+      chunks: ["js/help"],
     }),
     new MiniCssExtractPlugin({
       filename: "css/[name].css",
