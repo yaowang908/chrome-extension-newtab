@@ -13,7 +13,7 @@ const colorThemeAtom = atom<colorThemeProp>({
 const saveColorTheme = (
   data: {colorTheme: colorThemeProp; colorThemeChanged: boolean}
 ) => {
-  chrome.storage.local.set({ colorTheme: data }, function () {
+  chrome.storage.sync.set({ colorTheme: data }, function () {
     // console.log("SelectedFolder are saved locally ");
   });
 };

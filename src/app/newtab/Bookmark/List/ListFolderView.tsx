@@ -20,7 +20,7 @@ const ListFolderView = () => {
   const [selectedFolder, setSelectedFolder ] = useRecoilState(selectedFolderSelector);
 
   React.useEffect(() => {
-    chrome.storage.local.get(["selectedFolder"], function (result) {
+    chrome.storage.sync.get(["selectedFolder"], function (result) {
       if (result.selectedFolder) {
         setSelectedFolder(result.selectedFolder);
       }

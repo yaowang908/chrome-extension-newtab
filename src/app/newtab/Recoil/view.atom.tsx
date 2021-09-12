@@ -6,7 +6,7 @@ const viewAtom = atom<"Dashboard" | "Bookmark">({
 });
 
 const storeView = (state: "Dashboard" | "Bookmark") => {
-  chrome.storage.local.set({ view: state }, function () {
+  chrome.storage.sync.set({ view: state }, function () {
     // console.log("View is saved locally ");
   });
 };

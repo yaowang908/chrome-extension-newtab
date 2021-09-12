@@ -11,8 +11,8 @@ export const Group:React.FC = () => {
   const [groupsArr, setGroupsArr] = useRecoilState(groupSelector);
 
   React.useEffect(() => {
-    chrome.storage.local.get(['groups'], function(result) {
-      if(result.groups) {
+    chrome.storage.sync.get(["groups"], function (result) {
+      if (result.groups) {
         setGroupsArr(result.groups);
         // console.log('get groups from local storage: ', result.groups);
       }

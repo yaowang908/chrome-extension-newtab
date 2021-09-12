@@ -7,20 +7,25 @@ import "../style/styles.css";
 
 const Newtab: React.FC = () => {
   
-  chrome.storage.local.get(["setting"], function (result) {
+  chrome.storage.sync.get(["setting"], function (result) {
     if ("setting" in result) {
       //do something
       if (result?.setting?.replaceTheDefaultNewTab) {
         //replace default new tab
       } else {
         //load default new tab only when url match chrome://newtab/
-        chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
-          const activeTab = tabs[0];
-          console.log(activeTab);
-          if(activeTab?.url && activeTab.url === "chrome://newtab/") {
-            chrome.tabs.update({ url: "chrome-search://local-ntp/local-ntp.html"})
+        chrome.tabs.query(
+          { active: true, currentWindow: true },
+          function (tabs) {
+            const activeTab = tabs[0];
+            console.log(activeTab);
+            if (activeTab?.url && activeTab.url === "chrome://newtab/") {
+              chrome.tabs.update({
+                url: "chrome-search://local-ntp/local-ntp.html",
+              });
+            }
           }
-        });
+        );
       }
     }
   });
