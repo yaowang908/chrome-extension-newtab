@@ -49,3 +49,7 @@ button {
   height: calc(100vh - 178px);
   scroll-padding-top: 1rem;
 }
+
+p {
+  @apply pb-5
+}

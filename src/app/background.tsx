@@ -6,5 +6,5 @@ chrome.action.onClicked.addListener(function () {
 });
 
 chrome.runtime.onInstalled.addListener(function (object) {
-  chrome.tabs.create({url: chrome.runtime.getURL("options.html")});
+  chrome.tabs.create({url: chrome.runtime.getURL("help.html")});
 })
