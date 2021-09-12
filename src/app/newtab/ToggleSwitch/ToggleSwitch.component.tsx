@@ -1,8 +1,10 @@
 import React from 'react'
 import { nanoid } from 'nanoid';
+import {useRecoilValue} from 'recoil'
 
 import ToggleSwitchElement from './ToggleSwitchElement.component';
-
+import { colorThemeSelector } from '../Recoil/color_theme.atom';
+import setting from "../setting/setting";
 interface ToggleSwitchProps {
   defaultName: string;
   optionName: string;
@@ -26,6 +28,7 @@ const ToggleSwitch: React.FC<ToggleSwitchProps> = ({
   ];
   const [state, setState] = React.useState(defaultState);
   const [currentActive, setCurrentActive] = React.useState(false); //0 => false, 1 => true
+  const colorTheme = useRecoilValue(colorThemeSelector);
 
   const eleClickHandler = (id: number) => {
     return (e: React.MouseEvent<HTMLDivElement>) => {
@@ -48,7 +51,9 @@ const ToggleSwitch: React.FC<ToggleSwitchProps> = ({
   }, [selectedPosition])
 
   return (
-    <div className="w-auto flex flex-row border-2 border-transparent box-border rounded-3xl bg-blue-900">
+    <div
+      className={`w-auto flex flex-row border-2 border-transparent box-border rounded-3xl ${setting.toggleSwitchBgColor[colorTheme]}`}
+    >
       {state.map((x) => {
         return (
           <ToggleSwitchElement

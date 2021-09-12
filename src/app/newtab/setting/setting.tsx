@@ -39,6 +39,13 @@ const svgTrashColor = {
   'bgImage': '#a50000',
 }
 
+const toggleSwitchBgColor = {
+  blackTheme: "bg-gray-800",
+  blueTheme: "bg-blue-800",
+  whiteTheme: "bg-gray-200",
+  bgImage: "bg-blue-900",
+};
+
 const setting = {
   bg,
   text,
@@ -46,6 +53,7 @@ const setting = {
   headBorder,
   svgOpenColor,
   svgTrashColor,
-}
+  toggleSwitchBgColor,
+};
 
 export default setting;
