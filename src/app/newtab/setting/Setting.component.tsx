@@ -104,7 +104,15 @@ const Setting = () => {
 
   const bookmarkViewOnChangeHandler = (e :React.ChangeEvent<HTMLSelectElement>) => {
     console.log(e.target.value);
-    if(e.target.value === 'grid') window.confirm('Coming Soon!')
+
+    if(e.target.value === 'grid' || 'list') {
+      // window.confirm('Coming Soon!');
+      setSettingState(
+        Object.assign({}, settingState, {
+          bookmarkView: e.target.value,
+        })
+      );
+    }
   };
 
   return (
