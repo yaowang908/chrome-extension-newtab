@@ -1,4 +1,8 @@
 import React from 'react'
+import { useRecoilValue } from 'recoil'
+
+import { colorThemeSelector } from "../Recoil/color_theme.atom"
+import setting from "../setting/setting"
 
 interface ToggleSwitchElementProps {
   name?: string;
@@ -11,6 +15,7 @@ const ToggleSwitchElement: React.FC<ToggleSwitchElementProps> = ({
   isSelected,
   _onClick,
 }) => {
+  const colorTheme = useRecoilValue(colorThemeSelector);
   const __onClick = _onClick
     ? _onClick
     : (e: React.MouseEvent<HTMLDivElement>) => {
@@ -30,7 +35,7 @@ const ToggleSwitchElement: React.FC<ToggleSwitchElementProps> = ({
   }
   return (
     <div
-      className="border-2 border-transparent box-border px-4 py-2 rounded-3xl text-gray-100 text-blue-500 cursor-pointer"
+      className={`border-2 border-transparent box-border px-4 py-2 rounded-3xl text-gray-100 text-blue-500 cursor-pointer ${setting.toggleSwitchBgColor[colorTheme]}`}
       onClick={__onClick}
     >
       {name}
