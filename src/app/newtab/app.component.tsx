@@ -18,6 +18,7 @@ import { settingDialogueVisibility, settingSelector } from "./Recoil/setting.ato
 import { viewSelector } from "./Recoil/view.atom";
 import BookmarkView from "./Bookmark/Views";
 import EditGroup from "./Group/EditGroup.component";
+import ErrorHandler from "./ErrorHandler/ErrorHandler.component";
 
 const App: React.FC = () => {
   const [colorTheme, setColorTheme] = useRecoilState(colorThemeSelector);
@@ -40,6 +41,7 @@ const App: React.FC = () => {
         className={`w-full h-screen relative ${setting.bg[colorTheme]} p-12 flex flex-col overflow-hidden box-border`}
         onClick={bgClickHandler}
       >
+        <ErrorHandler />
         <Setting />
         <EditGroup />
         <Header />

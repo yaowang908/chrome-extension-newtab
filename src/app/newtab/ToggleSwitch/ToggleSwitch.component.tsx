@@ -52,7 +52,7 @@ const ToggleSwitch: React.FC<ToggleSwitchProps> = ({
 
   return (
     <div
-      className={`w-auto flex flex-row border-2 border-transparent box-border rounded-3xl ${setting.toggleSwitchBgColor[colorTheme]}`}
+      className={`w-auto flex flex-col sm:flex-row box-border rounded-3xl ${setting.toggleSwitchBgColor[colorTheme]}`}
     >
       {state.map((x) => {
         return (

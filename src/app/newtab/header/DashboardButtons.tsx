@@ -5,21 +5,14 @@ import { nanoid } from "nanoid";
 import { linksSelector } from "../Recoil/links_selector.atom";
 import { colorThemeSelector } from "../Recoil/color_theme.atom";
 import { LinkProps } from "../tabs/link/link.interfaces";
-import { groupSelector } from "../Recoil/group_selector.atom";
 import setting from "../setting/setting";
-import { visibleSelector } from "../Recoil/visible.atom";
 import { settingDialogueVisibility } from "../Recoil/setting.atom";
-import { viewSelector } from "../Recoil/view.atom";
 import handleDuplicates from "../Helper/duplicateLinks";
 import closeChromeTabs from '../Helper/chromeCloseTabs';
 
 const DashboardButtons = () => {
   const [dataArr, setDataArr] = useRecoilState(linksSelector);
-  const resetLinks = useResetRecoilState(linksSelector);
-  const resetGroups = useResetRecoilState(groupSelector);
   const colorTheme = useRecoilValue(colorThemeSelector);
-  const [visible, setVisible] = useRecoilState(visibleSelector);
-  const [viewState, setViewState] = useRecoilState(viewSelector);
   const [settingVisibility, setSettingVisibility] = useRecoilState(
     settingDialogueVisibility
   );
@@ -93,20 +86,20 @@ const DashboardButtons = () => {
     });
   };
 
-  const resetClickHandler = () => {
-    if (window.confirm("Are you sure about delete all saved tabs?")) {
-      chrome.storage.sync.remove(["tabs", "groups"], function () {
-        let error = chrome.runtime.lastError;
-        if (error) {
-          console.error(error);
-        }
-      });
-      resetLinks();
-      resetGroups();
-    } else {
-      console.log("Abort!");
-    }
-  };
+  // const resetClickHandler = () => {
+  //   if (window.confirm("Are you sure about delete all saved tabs?")) {
+  //     chrome.storage.sync.remove(["tabs", "groups"], function () {
+  //       let error = chrome.runtime.lastError;
+  //       if (error) {
+  //         console.error(error);
+  //       }
+  //     });
+  //     resetLinks();
+  //     resetGroups();
+  //   } else {
+  //     console.log("Abort!");
+  //   }
+  // };
   
   const settingClickHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation();
@@ -115,7 +108,7 @@ const DashboardButtons = () => {
 
   return (
     <div
-      className={`w-full sm:w-96 grid grid-cols-4 gap-2 mb-4 ${setting.text[colorTheme]}`}
+      className={`w-full md:w-96 grid grid-cols-3 gap-2 mb-4 ${setting.text[colorTheme]}`}
     >
       <button
         onClick={settingClickHandler}
@@ -134,12 +127,6 @@ const DashboardButtons = () => {
         className={`${setting.text[colorTheme]} ${setting.headBorder[colorTheme]} text-lg`}
       >
         Open all
-      </button>
-      <button
-        onClick={resetClickHandler}
-        className={`${setting.text[colorTheme]} ${setting.headBorder[colorTheme]} text-lg cols-span-2 hover:text-red-900 hover:border-red-900`}
-      >
-        Reset
       </button>
     </div>
   );
