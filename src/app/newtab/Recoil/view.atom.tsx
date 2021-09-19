@@ -1,17 +1,19 @@
 import { atom, DefaultValue, selector } from "recoil";
 
-const viewAtom = atom<"Dashboard" | "Bookmark">({
+export type viewType = "Dashboard" | "Bookmark" | "QuickLinks";
+
+const viewAtom = atom<viewType>({
   key: "viewAtom",
   default: "Dashboard",
 });
 
-const storeView = (state: "Dashboard" | "Bookmark") => {
+const storeView = (state: viewType) => {
   chrome.storage.sync.set({ view: state }, function () {
     // console.log("View is saved locally ");
   });
 };
 
-const viewSelector = selector<"Dashboard" | "Bookmark">({
+const viewSelector = selector<viewType>({
   key: "viewSelector",
   get: ({ get }) => get(viewAtom),
   set: ({ set, get }, method) => {

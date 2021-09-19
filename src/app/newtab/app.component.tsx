@@ -19,6 +19,7 @@ import { viewSelector } from "./Recoil/view.atom";
 import BookmarkView from "./Bookmark/Views";
 import EditGroup from "./Group/EditGroup.component";
 import ErrorHandler from "./ErrorHandler/ErrorHandler.component";
+import QuickLinks from "./QuickLinks/QuickLinks.component";
 
 const App: React.FC = () => {
   const [colorTheme, setColorTheme] = useRecoilState(colorThemeSelector);
@@ -35,6 +36,27 @@ const App: React.FC = () => {
     if (settingState.clickToHide) setVisible(!visible);
   };
 
+  const viewRender = () => {
+    if(view === "Dashboard") {
+      return (
+        <>
+          <div className="overflow-x-hidden overflow-y-scroll lg:col-span-4">
+            <TabsSection />
+          </div>
+          <div className="lg:col-start-5 lg:col-span-2">
+            <Group />
+          </div>
+        </>
+      );
+    }
+    if(view === "Bookmark") {
+      return <BookmarkView />;
+    }
+    if(view === "QuickLinks") {
+      return <QuickLinks />;
+    }
+  }
+
   return (
     <DndProvider backend={HTML5Backend}>
       <div
@@ -50,18 +72,7 @@ const App: React.FC = () => {
             visible ? "grid" : "hidden"
           } transition duration-1000 ease-in-out grid-cols-1 md:grid-cols-2 lg:grid-cols-6`}
         >
-          {view === "Dashboard" ? (
-            <>
-              <div className="overflow-x-hidden overflow-y-scroll lg:col-span-4">
-                <TabsSection />
-              </div>
-              <div className="lg:col-start-5 lg:col-span-2">
-                <Group />
-              </div>
-            </>
-          ) : (
-            <BookmarkView />
-          )}
+          {viewRender()}
         </div>
         {colorTheme === "bgImage" ? <CustomBackground /> : <></>}
       </div>
