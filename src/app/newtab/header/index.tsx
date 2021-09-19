@@ -30,7 +30,7 @@ export const Header = () => {
     chrome.storage.sync.get(
       ["tabs", "visible", "view", "LVLPVisibility", "colorTheme", "setting"],
       function (result) {
-        // console.log(result);
+        console.log('get tabs from sync storage',result);
         if ("tabs" in result) {
           setDataArr(result.tabs);
           // console.log('header index: ', result.tabs);

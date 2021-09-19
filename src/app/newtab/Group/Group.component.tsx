@@ -14,7 +14,7 @@ export const Group:React.FC = () => {
     chrome.storage.sync.get(["groups"], function (result) {
       if (result.groups) {
         setGroupsArr(result.groups);
-        // console.log('get groups from local storage: ', result.groups);
+        console.log('get groups from sync storage: ', result.groups);
       }
     });
   }, []);

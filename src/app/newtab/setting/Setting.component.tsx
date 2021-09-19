@@ -126,12 +126,40 @@ const Setting = () => {
     }
   };
 
+  const downloadObject = (obj:{}, filename:string) => {
+    var blob = new Blob([JSON.stringify(obj, null, 2)], {
+      type: "application/json;charset=utf-8",
+    }).slice(2, -1);
+    var url = URL.createObjectURL(blob);
+    var elem = document.createElement("a");
+    elem.href = url;
+    elem.download = filename;
+    document.body.appendChild(elem);
+    elem.click();
+    document.body.removeChild(elem);
+  }
+
   const exportClickHandler = () => {
-    console.log('export requested')
+    if (window.confirm("Only tabs and links will be exported, theme settings will not.")) {
+      console.log('export requested')
+      chrome.storage.sync.get(
+        [ "tabs", "visible", "view", "LVLPVisibility", "colorTheme", "setting", "groups" ],
+        function (result) {
+          console.log("get tabs from sync storage", result);
+          downloadObject(result, "tabs.txt");
+        }
+      );
+    } else {
+      console.log("Abort!");
+    }
   };
   
   const importClickHandler = () => {
-    console.log('import requested')
+    if ( window.confirm( "Only tabs and links will be exported, theme settings will not." ) ) {
+      console.log('import requested')
+    } else {
+      console.log("Abort!");
+    }
   };
 
   return (
