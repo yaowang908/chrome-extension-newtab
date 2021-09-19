@@ -1,5 +1,5 @@
 import React from 'react'
-import { useRecoilState, useResetRecoilState } from "recoil";
+import { useRecoilState, useResetRecoilState, useSetRecoilState } from "recoil";
 
 import Popup from '../Popup/Popup.component';
 import {settingDialogueVisibility, settingSelector} from '../Recoil/setting.atom';
@@ -12,6 +12,10 @@ import { linksSelector } from "../Recoil/links_selector.atom";
 import { groupSelector } from "../Recoil/group_selector.atom";
 import Uploader from '../Uploader/Uploader.component';
 import { importModuleVisibility } from '../Recoil/importModule.atom';
+import {
+  errorModuleVisibility,
+  errorMessageAtom,
+} from "../Recoil/errorModule.atom";
 
 const Setting = () => {
   const [colorTheme, setColorTheme] = useRecoilState(colorThemeSelector);
@@ -25,11 +29,14 @@ const Setting = () => {
   const resetLinks = useResetRecoilState(linksSelector);
   const resetGroups = useResetRecoilState(groupSelector);
   const [importModuleVisibilityState, setImportModuleVisibilityState] = useRecoilState(importModuleVisibility);
+  const setErrorVisibility = useSetRecoilState(errorModuleVisibility);
+  const setErrorMessage = useSetRecoilState(errorMessageAtom);
 
   const closeClickHandler = (e: React.MouseEvent<HTMLDivElement>) => {
     e.stopPropagation();
     e.preventDefault();
     if(e.target === e.currentTarget) {
+      setImportModuleVisibilityState(false);
       setSettingVisibility(!settingVisibility);
     }
   }
@@ -173,9 +180,17 @@ const Setting = () => {
 
   const handleUpload = (obj:{}) => {
     if(validateNewState(obj)) {
-      console.log('validated obj ')
+      // console.log('validated obj ')
+      chrome.storage.sync.set(obj, function () {
+        // console.log('sync storage set');
+        location.reload();
+      });
     } else {
-      console.log('not valid input')
+      // console.log('not valid input')
+      setErrorVisibility(true);
+      setErrorMessage(
+        "Invalid Input! Please copy paste the whole content from the file you exported from Dashboard before."
+      );
     }
   };
 

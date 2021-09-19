@@ -5,6 +5,7 @@ import {
   errorModuleVisibility,
   errorMessageAtom,
 } from "../Recoil/errorModule.atom";
+import { importModuleVisibility } from "../Recoil/importModule.atom";
 
 interface UploaderProps {
   handleUpload: (obj:{}) => void;
@@ -12,8 +13,9 @@ interface UploaderProps {
 
 const Uploader:React.FC<UploaderProps> = ({handleUpload}) => {
   const [textareaState, setTextareaState] = React.useState<string>('');
-  const setVisibility = useSetRecoilState(errorModuleVisibility);
+  const setErrorVisibility = useSetRecoilState(errorModuleVisibility);
   const setErrorMessage = useSetRecoilState(errorMessageAtom);
+  const setImportModuleVisibilityState = useSetRecoilState(importModuleVisibility);
 
   const textAreaChangeHandler = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setTextareaState(e.target.value);
@@ -25,10 +27,14 @@ const Uploader:React.FC<UploaderProps> = ({handleUpload}) => {
       console.log(uploadedObj);
       handleUpload(uploadedObj);
     } catch {
-      setVisibility(true);
+      setErrorVisibility(true);
       setErrorMessage("Invalid Input! Please copy paste the whole content from the file you exported from Dashboard before.");
       throw new Error("Invalid input!");
     }
+  };
+
+  const closeClickHandler = () => {
+    setImportModuleVisibilityState(false);
   };
 
   return (
@@ -48,6 +54,12 @@ const Uploader:React.FC<UploaderProps> = ({handleUpload}) => {
             onClick={uploadClickHandler}
           >
             Upload
+          </div>
+          <div
+            className="inline-block w-32 text-center border-2 px-6 py-2 bg-blue-900 text-white cursor-pointer text-2xl font-bold"
+            onClick={closeClickHandler}
+          >
+            Close
           </div>
         </div>
       </div>

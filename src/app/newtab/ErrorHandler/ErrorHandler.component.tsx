@@ -13,7 +13,7 @@ const ErrorHandler:React.FC = () => {
   const outClick = (e: React.MouseEvent<HTMLDivElement>) => {
     e.stopPropagation();
     e.preventDefault();
-    console.log('out click!')
+    // console.log('out click!')
     if (e.target === e.currentTarget) {
       setVisibility(false);
     }
