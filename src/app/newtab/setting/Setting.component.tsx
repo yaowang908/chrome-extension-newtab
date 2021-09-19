@@ -10,6 +10,8 @@ import {
 } from "../Recoil/color_theme.atom";
 import { linksSelector } from "../Recoil/links_selector.atom";
 import { groupSelector } from "../Recoil/group_selector.atom";
+import Uploader from '../Uploader/Uploader.component';
+import { importModuleVisibility } from '../Recoil/importModule.atom';
 
 const Setting = () => {
   const [colorTheme, setColorTheme] = useRecoilState(colorThemeSelector);
@@ -22,6 +24,7 @@ const Setting = () => {
   const [settingState, setSettingState] = useRecoilState(settingSelector);
   const resetLinks = useResetRecoilState(linksSelector);
   const resetGroups = useResetRecoilState(groupSelector);
+  const [importModuleVisibilityState, setImportModuleVisibilityState] = useRecoilState(importModuleVisibility);
 
   const closeClickHandler = (e: React.MouseEvent<HTMLDivElement>) => {
     e.stopPropagation();
@@ -155,10 +158,24 @@ const Setting = () => {
   };
   
   const importClickHandler = () => {
-    if ( window.confirm( "Only tabs and links will be exported, theme settings will not." ) ) {
-      console.log('import requested')
+    setImportModuleVisibilityState(true);
+  };
+
+  const validateNewState = (obj: any) => {
+    const keys = [ "tabs", "visible", "view", "LVLPVisibility", "colorTheme", "setting", "groups", ];
+    let result = true;
+    keys.map(x => {
+      result = obj[x] === undefined ? false : true; 
+    })
+    console.log(result)
+    return result;
+  }
+
+  const handleUpload = (obj:{}) => {
+    if(validateNewState(obj)) {
+      console.log('validated obj ')
     } else {
-      console.log("Abort!");
+      console.log('not valid input')
     }
   };
 
@@ -167,6 +184,10 @@ const Setting = () => {
       {settingVisibility ? (
         <Popup outClick={closeClickHandler}>
           <div className="w-full h-full p-5 border-blue-900 text-blue-900 relative box-border overflow-y-scroll">
+            {importModuleVisibilityState?
+              <Uploader handleUpload={handleUpload} />
+              : ''
+            }
             <h1 className="text-3xl font-bold border-b-2 pb-2">Setting</h1>
             <div className="mt-5 w-full grid grid-cols-1 gap-2 sm:gap-5 md:grid-cols-2">
               <div className="p-4 w-full max-w-xs mx-auto bg-white rounded-xl shadow-md">
