@@ -79,7 +79,7 @@ export const Header = () => {
         setting.headBorder[colorTheme]
       } ${
         visible ? "flex" : "hidden"
-      } flex-col sm:flex-row justify-between z-40`}
+      } flex-col md:flex-row justify-between z-40`}
       onDoubleClick={headerDoubleClickHandler}
       onClick={headerClickHandler}
     >
