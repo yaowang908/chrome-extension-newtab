@@ -126,6 +126,14 @@ const Setting = () => {
     }
   };
 
+  const exportClickHandler = () => {
+    console.log('export requested')
+  };
+  
+  const importClickHandler = () => {
+    console.log('import requested')
+  };
+
   return (
     <>
       {settingVisibility ? (
@@ -189,11 +197,20 @@ const Setting = () => {
               </div>
               {/* TODO: add option to select bg from unsplash */}
             </div>
-            <div className="border-2 border-red-500 px-4 py-4 my-4">
-              <h1 className="text-3xl font-bold border-b-2 pb-2 text-red-500">
-                Danger Zone
-              </h1>
-              <div className="mt-5 w-full grid grid-cols-1 gap-2 sm:gap-5 sm:grid-cols-2">
+            <div className="border-2 border-red-500 px-4 py-4 my-4 rounded-xl">
+              <div className="w-full grid grid-cols-1 gap-2 sm:gap-5 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+                <button
+                  onClick={exportClickHandler}
+                  className={`w-24 text-center border-2 px-3 py-1 bg-white text-red-600 cursor-pointer text-xl font-bold hover:bg-white hover:text-red-500 hover:border-red-500 rounded-xl shadow-md inline-block`}
+                >
+                  Export
+                </button>
+                <button
+                  onClick={importClickHandler}
+                  className={`w-24 text-center border-2 px-3 py-1 bg-white text-red-600 cursor-pointer text-xl font-bold hover:bg-white hover:text-red-500 hover:border-red-500 rounded-xl shadow-md inline-block`}
+                >
+                  Import
+                </button>
                 <button
                   onClick={resetClickHandler}
                   className={`w-24 text-center border-2 px-3 py-1 bg-white text-red-600 cursor-pointer text-xl font-bold hover:bg-white hover:text-red-500 hover:border-red-500 rounded-xl shadow-md inline-block`}
