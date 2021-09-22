@@ -94,11 +94,11 @@ export const VerticalHeader = () => {
   };
 
   return (
-    <div className="navigation h-screen w-24 flex flex-col justify-between items-center px-5 py-10 font-bold text-xl">
-      <div className="w-6 h-80 flex flex-col justify-between">
-        <div>
-          <img src="https://assets.codepen.io/390494/Vector+1.png" />
-        </div>
+    <div className="navigation h-screen relative w-24 px-5 font-bold text-xl">
+      <div className="w-full h-24 pt-8 mx-auto">
+        <img className="box-border mx-auto w-6 h-6 cursor-pointer" src="https://assets.codepen.io/390494/Vector+1.png" />
+      </div>
+      <div className="w-6 h-auto mt-4 mx-auto flex flex-col justify-between">
         <div
           className="h-60 relative grid grid-rows-2 gap-8 pointer-events-none"
           onClick={buttonsClickHandler}
@@ -121,8 +121,11 @@ export const VerticalHeader = () => {
           ></div>
         </div>
       </div>
-      <div className="nav-ele cursor-pointer" onClick={settingClickHandler}>
-        Setting
+      <div className="w-14 h-auto absolute bottom-0">
+        <div className="nav-ele cursor-pointer mx-auto" onClick={settingClickHandler}>
+          Setting
+        </div>
+        <div className="w-full h-24"></div>
       </div>
     </div>
   );
