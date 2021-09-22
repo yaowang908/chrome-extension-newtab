@@ -20,6 +20,7 @@ import BookmarkView from "./Bookmark/Views";
 import EditGroup from "./Group/EditGroup.component";
 import ErrorHandler from "./ErrorHandler/ErrorHandler.component";
 import QuickLinks from "./QuickLinks/QuickLinks.component";
+import Layout from "./Layout/Layout.component";
 
 const App: React.FC = () => {
   const [colorTheme, setColorTheme] = useRecoilState(colorThemeSelector);
@@ -57,24 +58,38 @@ const App: React.FC = () => {
     }
   }
 
+  // return (
+  //   <DndProvider backend={HTML5Backend}>
+  //     <div
+  //       className={`w-full h-screen relative ${setting.bg[colorTheme]} p-12 flex flex-col overflow-hidden box-border`}
+  //       onClick={bgClickHandler}
+  //     >
+  //       <ErrorHandler />
+  //       <Setting />
+  //       <EditGroup />
+  //       <Header />
+  //       <div
+  //         className={`flex-auto z-40 ${
+  //           visible ? "grid" : "hidden"
+  //         } transition duration-1000 ease-in-out grid-cols-1 md:grid-cols-2 lg:grid-cols-6`}
+  //       >
+  //         {viewRender()}
+  //       </div>
+  //       {colorTheme === "bgImage" ? <CustomBackground /> : <></>}
+  //     </div>
+  //   </DndProvider>
+  // );
+
   return (
     <DndProvider backend={HTML5Backend}>
       <div
-        className={`w-full h-screen relative ${setting.bg[colorTheme]} p-12 flex flex-col overflow-hidden box-border`}
-        onClick={bgClickHandler}
+        className={`w-full h-screen relative p-0 overflow-hidden box-border`}
       >
         <ErrorHandler />
         <Setting />
         <EditGroup />
+        <Layout />
         <Header />
-        <div
-          className={`flex-auto z-40 ${
-            visible ? "grid" : "hidden"
-          } transition duration-1000 ease-in-out grid-cols-1 md:grid-cols-2 lg:grid-cols-6`}
-        >
-          {viewRender()}
-        </div>
-        {colorTheme === "bgImage" ? <CustomBackground /> : <></>}
       </div>
     </DndProvider>
   );

@@ -53,3 +53,34 @@ button {
 p {
   @apply pb-5
 }
+
+/* Layout.component */
+
+.bg {
+  --darkBlue: #111827;
+  --lighterBlue: #1E3A8A;
+  background-color: var(--darkBlue);
+}
+.bg .navigation {
+  color: white;
+}
+.bg .navigation .nav-select {
+  background-color: var(--lighterBlue);
+}
+.bg .navigation .nav-ele {
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+}
+.bg .layer {
+  background-color: var(--lighterBlue);
+  border-radius: 50px 0px 0px 50px;
+  /* Shadow */
+  box-shadow: -5px 4px 4px rgba(0, 0, 0, 0.25);
+}
+.bg .reserve {
+  max-width: 700px;
+  background-color: var(--darkBlue);
+  border-radius: 50px 0px 0px 50px;
+  /* Shadow */
+  box-shadow: -5px 4px 4px rgba(0, 0, 0, 0.25);
+}
