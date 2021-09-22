@@ -27,7 +27,7 @@ const Layout:React.FC = () => {
   const viewRenderLeft = () => {
     if (view === "Dashboard") {
       return (
-        <div className="overflow-x-hidden overflow-y-scroll px-12 py-24 w-full h-full sm:w-4/6 md:w-5/6">
+        <div className="-mt-1">
           <TabsSection />
         </div>
       );
@@ -42,11 +42,7 @@ const Layout:React.FC = () => {
 
   const viewRenderRight = () => {
     if (view === "Dashboard") {
-      return (
-        <div className="p-12 w-full h-full grid place-items-center box-border overflow-hidden">
-          <Group />
-        </div>
-      );
+      return <Group />;
     }
     if (view === "Bookmark") {
       return <BookmarkView />;
@@ -60,10 +56,16 @@ const Layout:React.FC = () => {
     <div className="bg w-full h-screen relative">
       <VerticalHeader />
       <div className="layer h-screen w-auto absolute z-10 top-0 right-0 bottom-0 left-24">
-        {viewRenderLeft()}
+        <div className="overflow-x-hidden overflow-y-scroll px-12 w-full h-full sm:w-4/6 md:w-5/6">
+          <div className="h-24 w-full mb-3"></div>
+          {viewRenderLeft()}
+        </div>
       </div>
       <div className="reserve h-screen w-0 sm:w-3/6 absolute z-20 top-0 right-0 bottom-0 left-auto">
-        {viewRenderRight()}
+        <div className="overflow-x-hidden overflow-y-scroll px-12 w-full h-full sm:w-4/6 md:w-5/6">
+          <div className="h-24 w-full mb-3"></div>
+          {viewRenderRight()}
+        </div>
       </div>
     </div>
   );
