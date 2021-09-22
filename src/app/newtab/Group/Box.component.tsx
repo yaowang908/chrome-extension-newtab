@@ -254,7 +254,7 @@ export const Box: React.FC<BoxProps> = ({
   return (
     <div
       ref={drop}
-      className={`relative block h-36 md:h-64 box-border border-2 p-2 ${setting.border[colorTheme]}`}
+      className={`relative block h-auto box-border border-2 p-2 ${setting.border[colorTheme]}`}
       data-id={boxID}
     >
       <DropContainer accepts={["LINK"]} onDrop={onDropHandler}>

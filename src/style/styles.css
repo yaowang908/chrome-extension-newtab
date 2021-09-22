@@ -46,7 +46,7 @@ button {
 
 .nt-section {
   max-height: 100vh;
-  height: calc(100vh - 178px);
+  height: calc(100vh - 12.75rem);
   scroll-padding-top: 1rem;
 }
 

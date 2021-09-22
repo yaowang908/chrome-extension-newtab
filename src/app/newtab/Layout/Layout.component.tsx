@@ -62,9 +62,10 @@ const Layout:React.FC = () => {
         </div>
       </div>
       <div className="reserve h-screen w-0 sm:w-3/6 absolute z-20 top-0 right-0 bottom-0 left-auto">
-        <div className="overflow-x-hidden overflow-y-scroll px-12 w-full h-full sm:w-4/6 md:w-5/6">
+        <div className="overflow-x-hidden overflow-y-scroll px-12 w-full h-full">
           <div className="h-24 w-full mb-3"></div>
           {viewRenderRight()}
+          <div className="h-24 w-full"></div>
         </div>
       </div>
     </div>
