@@ -106,19 +106,8 @@ const Link: React.FC<DraggableLinkPropsInterface> = ({
       <div
         className={`col-span-11 relative grid grid-cols-12 gap-1 ${setting.text[colorTheme]} cursor-pointer`}
       >
-        <div className="col-span-12 group-hover:col-span-8 block whitespace-nowrap truncate">
-          <div
-            onClick={openClickHandler}
-            onBlur={linkTitleOnBlurHandler}
-            onKeyDown={linkTitleOnKeyDownHandler}
-            className="text-base"
-            ref={linkTitle}
-          >
-            {title}
-          </div>
-        </div>
-        <div className="hidden group-hover:block group-hover:col-span-1"></div>
-        <div className="hidden group-hover:grid col-span-3 inset-0 z-10 text-sm font-base grid-cols-3">
+        {/* <div className="hidden group-hover:block group-hover:col-span-1 "></div> */}
+        <div className="hidden group-hover:grid group-hover:col-span-2 inset-0 text-sm font-base grid-cols-3">
           <a
             href="#"
             target="_blank"
@@ -177,6 +166,17 @@ const Link: React.FC<DraggableLinkPropsInterface> = ({
                 <polygon points="266.667,21.333 245.333,0 138.667,0 117.333,21.333 42.667,21.333 42.667,64 341.333,64 341.333,21.333" />
               </g>
             </svg>
+          </div>
+        </div>
+        <div className="col-span-12 group-hover:col-span-10 block whitespace-nowrap truncate">
+          <div
+            onClick={openClickHandler}
+            onBlur={linkTitleOnBlurHandler}
+            onKeyDown={linkTitleOnKeyDownHandler}
+            className="text-base"
+            ref={linkTitle}
+          >
+            {title}
           </div>
         </div>
       </div>
