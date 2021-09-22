@@ -20,6 +20,7 @@ import EditGroup from "../Group/EditGroup.component";
 import ErrorHandler from "../ErrorHandler/ErrorHandler.component";
 import QuickLinks from "../QuickLinks/QuickLinks.component";
 import { VerticalHeader } from '../header/VerticalHeader.component';
+import DashboardButtons from "../header/DashboardButtons";
 
 const Layout:React.FC = () => {
   const view = useRecoilValue(viewSelector);
@@ -57,7 +58,9 @@ const Layout:React.FC = () => {
       <VerticalHeader />
       <div className="layer h-screen w-auto absolute z-10 top-0 right-0 bottom-0 left-24">
         <div className="overflow-x-hidden overflow-y-scroll px-12 w-full h-full sm:w-4/6 md:w-5/6">
-          <div className="h-24 w-full mb-3"></div>
+          <div className="h-24 w-full mb-3">
+            {view === 'Dashboard' ? <DashboardButtons /> : ''}
+          </div>
           {viewRenderLeft()}
         </div>
       </div>

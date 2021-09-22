@@ -7,7 +7,7 @@ html {
 }
 
 button {
-  @apply border-2 py-3 text-white hover:text-yellow-500 hover:border-yellow-500;
+  @apply h-10 w-32 rounded-lg border-2 py-1 text-white hover:text-yellow-500 hover:border-yellow-500;
 }
 
 /* width */

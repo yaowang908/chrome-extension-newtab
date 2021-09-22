@@ -108,14 +108,8 @@ const DashboardButtons = () => {
 
   return (
     <div
-      className={`w-full md:w-96 grid grid-cols-3 gap-2 mb-4 ${setting.text[colorTheme]}`}
+      className={`w-full md:w-96 h-full grid grid-cols-3 items-center gap-2 mb-4 ${setting.text[colorTheme]}`}
     >
-      <button
-        onClick={settingClickHandler}
-        className={`${setting.text[colorTheme]} ${setting.headBorder[colorTheme]} text-lg`}
-      >
-        Setting
-      </button>
       <button
         onClick={collectClickHandler}
         className={`${setting.text[colorTheme]} ${setting.headBorder[colorTheme]} text-lg`}
