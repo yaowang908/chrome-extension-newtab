@@ -43,7 +43,7 @@ const Layout:React.FC = () => {
   const viewRenderRight = () => {
     if (view === "Dashboard") {
       return (
-        <div className="p-12 w-full h-full grid place-items-center">
+        <div className="p-12 w-full h-full grid place-items-center box-border overflow-hidden">
           <Group />
         </div>
       );

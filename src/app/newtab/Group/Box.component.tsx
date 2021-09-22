@@ -307,7 +307,7 @@ export const Box: React.FC<BoxProps> = ({
           </div>
         </div>
         <div
-          className={`pt-8 grid grid-cols-6 sm:grid-cols-12 md:grid-cols-5 gap-1 overflow-hidden`}
+          className={`pt-8 grid grid-cols-2 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 gap-1 overflow-hidden`}
         >
           {createGroupList()}
         </div>
