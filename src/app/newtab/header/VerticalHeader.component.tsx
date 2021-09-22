@@ -16,6 +16,7 @@ import QuickLinksButtons from "./QuickLinksButtons";
 import { listViewLeftPanelVisibilitySelector } from "../Recoil/bookmarks.selector";
 import { settingSelector } from "../Recoil/setting.atom";
 import arrow from "../../../assets/arrow.png";
+import { settingDialogueVisibility } from "../Recoil/setting.atom";
 
 export const VerticalHeader = () => {
   const [dataArr, setDataArr] = useRecoilState(linksSelector);
@@ -28,6 +29,9 @@ export const VerticalHeader = () => {
     listViewLeftPanelVisibilitySelector
   );
   const [settingState, setSettingSelector] = useRecoilState(settingSelector);
+  const [settingVisibility, setSettingVisibility] = useRecoilState(
+    settingDialogueVisibility
+  );
 
   const buttonHighlighter = React.useRef<HTMLDivElement>(null);
 
@@ -83,6 +87,12 @@ export const VerticalHeader = () => {
     }
   };
 
+  //setting
+  const settingClickHandler = (e: React.MouseEvent<HTMLDivElement>) => {
+    e.stopPropagation();
+    setSettingVisibility(!settingVisibility);
+  };
+
   return (
     <div className="navigation h-screen w-24 flex flex-col justify-between items-center px-5 py-10 font-bold text-xl">
       <div className="w-6 h-80 flex flex-col justify-between">
@@ -111,7 +121,9 @@ export const VerticalHeader = () => {
           ></div>
         </div>
       </div>
-      <div className="nav-ele">Setting</div>
+      <div className="nav-ele cursor-pointer" onClick={settingClickHandler}>
+        Setting
+      </div>
     </div>
   );
 };
