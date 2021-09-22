@@ -24,7 +24,7 @@ export const Group:React.FC = () => {
 
   return (
     <Section>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
+      <div className="h-full grid grid-cols-1 md:grid-cols-2 gap-2">
         {
           groupsArr.map(x => <Box key={x.id} itemType={ItemTypes.LINK} boxID={x.id} groupName={x.name}/>)
         }

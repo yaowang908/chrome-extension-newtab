@@ -27,7 +27,7 @@ const Layout:React.FC = () => {
   const viewRenderLeft = () => {
     if (view === "Dashboard") {
       return (
-        <div className="overflow-x-hidden overflow-y-scroll lg:col-span-4">
+        <div className="overflow-x-hidden overflow-y-scroll px-12 py-24 w-full h-full sm:w-4/6 md:w-5/6">
           <TabsSection />
         </div>
       );
@@ -43,7 +43,7 @@ const Layout:React.FC = () => {
   const viewRenderRight = () => {
     if (view === "Dashboard") {
       return (
-        <div className="lg:col-start-5 lg:col-span-2">
+        <div className="p-12 w-full h-full grid place-items-center">
           <Group />
         </div>
       );

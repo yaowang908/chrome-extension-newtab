@@ -8,7 +8,7 @@ const Section:React.FC = props => {
   const colorTheme = useRecoilValue<colorThemeProp>(colorThemeSelector);
 
   return (
-    <div className={`nt-section relative w-full my-t border-r-2 last:border-0 ${setting.border[colorTheme]} ${setting.text[colorTheme]} px-2 mt-4`}>
+    <div className={`nt-section relative w-full h-full my-t border-r-2 last:border-0 ${setting.border[colorTheme]} ${setting.text[colorTheme]} px-2`}>
       {props.children}
     </div>
   )
