@@ -105,3 +105,19 @@ p {
 .quickLinkBox {
   background-color: var(--quicklinks);
 }
+
+.cross {
+  background-color: var(--quickLinksNewBgColor)
+}
+
+.cross:hover {
+  background-color: var(--lighterPanelColor)
+}
+
+.cross-arm {
+  background-color: var(--textColor);
+}
+.cross:hover > div > .cross-arm {
+  background-color: var(--lighterPanelColor);
+  border: 1px solid var(--textColor)
+}
