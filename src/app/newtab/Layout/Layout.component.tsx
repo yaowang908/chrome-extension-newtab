@@ -15,7 +15,6 @@ import {
   settingSelector,
 } from "../Recoil/setting.atom";
 import { viewSelector } from "../Recoil/view.atom";
-import BookmarkView from "../Bookmark/Views";
 import EditGroup from "../Group/EditGroup.component";
 import ErrorHandler from "../ErrorHandler/ErrorHandler.component";
 import QuickLinks from "../QuickLinks/QuickLinks.component";

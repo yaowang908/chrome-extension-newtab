@@ -13,6 +13,7 @@ import { settingSelector } from "../Recoil/setting.atom";
 import arrow from "../../../assets/arrow.png";
 import { settingDialogueVisibility } from "../Recoil/setting.atom";
 import { QuickLinksSelector } from "../Recoil/quicklinks.atom";
+import { collapseAtom } from "../Recoil/collapse.atom";
 
 export const VerticalHeader = () => {
   const [dataArr, setDataArr] = useRecoilState(linksSelector);
@@ -29,6 +30,7 @@ export const VerticalHeader = () => {
     settingDialogueVisibility
   );
   const setQuickLinksArr = useSetRecoilState(QuickLinksSelector);
+  const [collapseState, setCollapseState] = useRecoilState(collapseAtom);
 
   const buttonHighlighter = React.useRef<HTMLDivElement>(null);
 
@@ -93,10 +95,22 @@ export const VerticalHeader = () => {
     setSettingVisibility(!settingVisibility);
   };
 
+  //toggle collapse
+  const collapseClickHandler = (e: React.MouseEvent<HTMLDivElement>) => {
+    // console.log('toggle collapse')
+    setCollapseState(!collapseState);
+  };
+
   return (
     <div className="navigation h-screen relative w-24 px-5 font-bold text-xl">
-      <div className="w-full h-24 pt-8 mx-auto">
-        <img className="box-border mx-auto w-6 h-6 cursor-pointer" src={arrow} />
+      <div
+        className="w-full h-24 pt-8 mx-auto cursor-pointer"
+        onClick={collapseClickHandler}
+      >
+        <img
+          className="box-border mx-auto w-6 h-6 pointer-events-none"
+          src={arrow}
+        />
       </div>
       <div className="w-6 h-auto mt-4 mx-auto flex flex-col justify-between">
         <div
@@ -122,7 +136,10 @@ export const VerticalHeader = () => {
         </div>
       </div>
       <div className="w-14 h-auto absolute bottom-0">
-        <div className="nav-ele cursor-pointer mx-auto" onClick={settingClickHandler}>
+        <div
+          className="nav-ele cursor-pointer mx-auto"
+          onClick={settingClickHandler}
+        >
           Setting
         </div>
         <div className="w-full h-24"></div>
