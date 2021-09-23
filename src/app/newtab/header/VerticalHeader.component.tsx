@@ -6,11 +6,8 @@ import {
   colorThemeSelector,
   colorThemeChangedSelector,
 } from "../Recoil/color_theme.atom";
-import setting from "../setting/setting";
 import { visibleSelector } from "../Recoil/visible.atom";
 import { viewSelector, viewType } from "../Recoil/view.atom";
-import DashboardButtons from "./DashboardButtons";
-import QuickLinksButtons from "./QuickLinksButtons";
 import { listViewLeftPanelVisibilitySelector } from "../Recoil/bookmarks.selector";
 import { settingSelector } from "../Recoil/setting.atom";
 import arrow from "../../../assets/arrow.png";
@@ -99,7 +96,7 @@ export const VerticalHeader = () => {
   return (
     <div className="navigation h-screen relative w-24 px-5 font-bold text-xl">
       <div className="w-full h-24 pt-8 mx-auto">
-        <img className="box-border mx-auto w-6 h-6 cursor-pointer" src="https://assets.codepen.io/390494/Vector+1.png" />
+        <img className="box-border mx-auto w-6 h-6 cursor-pointer" src={arrow} />
       </div>
       <div className="w-6 h-auto mt-4 mx-auto flex flex-col justify-between">
         <div
