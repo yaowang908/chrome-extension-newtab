@@ -122,6 +122,24 @@ const EditQuickLink = () => {
     }
   }
 
+  const deleteClickHandler = () => {
+    console.log("delete!")
+    if (selectedQuickLinkIndexState === false) {
+      setErrorVisibility(true);
+      setErrorMessage("No link selected");
+      return;
+    }
+
+    // console.log("update! index: ", titleLocalState, urlLocalState);
+    const nextState = [...quickLinksState];
+    // console.log(nextState[selectedQuickLinkIndexState]);
+    nextState.splice(selectedQuickLinkIndexState, 1);
+    setQuickLinksState(nextState);
+    setVisibility(!visibility);
+    setTitleLocalState("");
+    setUrlLocalState("");
+  };
+
   return (
     <>
       {visibility ? (
@@ -172,6 +190,12 @@ const EditQuickLink = () => {
                 </div>
               </div>
               <div className="h-12 text-center">
+                <div
+                  className="inline-block w-32 text-center border-2 px-6 py-2 bg-red-600 text-white cursor-pointer text-2xl font-bold"
+                  onClick={deleteClickHandler}
+                >
+                  Delete
+                </div>
                 <div
                   className="inline-block w-32 text-center border-2 px-6 py-2 bg-blue-900 text-white cursor-pointer text-2xl font-bold"
                   onClick={closeClickHandler}

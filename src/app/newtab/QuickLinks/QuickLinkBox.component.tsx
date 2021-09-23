@@ -36,9 +36,10 @@ const QuickLinkBox: React.FC<quickLinkInterface> = ({ title, url, index = false}
 
   return (
     <div
-      className="relative pb-full box-border color-white cursor-pointer box-border group z-20 grid place-items-center hover:bg-white hover:bg-opacity-30"
+      className="relative pb-full box-border color-white cursor-pointer box-border group z-20 grid place-items-center hover:bg-white hover:bg-opacity-30 focus:bg-white focus:bg-opacity-30"
       style={{ width: "10vmin", height: "10vmin" }}
       onClick={onClickHandler}
+      tabIndex={index === false ? undefined : index}
     >
       <div
         className="text-vertical absolute w-6 h-full top-0 -right-6 box-border text-left transform origin-bottom-left bg-opacity-0 ease-in-out delay-150 duration-300 opacity-0 z-0 group-hover:opacity-100 group-hover:bg-opacity-10 text-lg "
