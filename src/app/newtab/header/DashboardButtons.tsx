@@ -35,7 +35,8 @@ const DashboardButtons = () => {
     chrome.tabs.query(queryOptions).then((res) => {
       // console.log(res);
       const formatData = res
-        .filter((x) => x?.url && !x?.url.includes("chrome://"))
+        // .filter((x) => x?.url && !x?.url.includes("chrome://"))
+        .filter((x) => x?.url)
         .map((x, index) => ({
           id: index + "_" + nanoid(),
           index: getOrder(dataArr, index),

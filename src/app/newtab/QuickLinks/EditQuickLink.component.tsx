@@ -13,6 +13,7 @@ import {
   errorModuleVisibility,
   errorMessageAtom,
 } from "../Recoil/errorModule.atom";
+import protocolAutoPrefix from '../Helper/protocolAutoPrefix';
 
 const EditQuickLink = () => {
   const [visibility, setVisibility] = useRecoilState(QuickLinkEditorVisibility);
@@ -32,12 +33,6 @@ const EditQuickLink = () => {
   };
 
   //DONE: selected id, update or create base on mode
-  
-  const protocolAutoPrefix = (link: string) => {
-    if (link.startsWith("http://") || link.startsWith("https://")) return link;
-    // http will auto redirect to https if available
-    return `http://${link}`;
-  };
 
   const saveClickHandler = () => {
     console.log("Save!");
