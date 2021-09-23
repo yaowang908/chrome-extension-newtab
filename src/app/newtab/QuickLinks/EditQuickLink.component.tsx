@@ -22,7 +22,8 @@ const EditQuickLink = () => {
   const [urlLocalState, setUrlLocalState] = React.useState<string>('');
   const setErrorVisibility = useSetRecoilState(errorModuleVisibility);
   const setErrorMessage = useSetRecoilState(errorMessageAtom);
-  const selectedQuickLinkIndexState = useRecoilValue(SelectedQuickLinkIndex);
+  const [selectedQuickLinkIndexState, setSelectedQuickLinkIndexState] =
+    useRecoilState(SelectedQuickLinkIndex);
 
   const closeClickHandler = (e: React.MouseEvent<HTMLDivElement>) => {
     if (e.target === e.currentTarget) {
@@ -30,8 +31,7 @@ const EditQuickLink = () => {
     }
   };
 
-  //TODO: selected id, update or create base on mode
-
+  //DONE: selected id, update or create base on mode
   
   const protocolAutoPrefix = (link: string) => {
     if (link.startsWith("http://") || link.startsWith("https://")) return link;
@@ -55,6 +55,7 @@ const EditQuickLink = () => {
     newQuickLinksArr.push(current);
     setQuickLinksState(newQuickLinksArr);
     setVisibility(!visibility);
+    setSelectedQuickLinkIndexState(false);
   };
 
   interface onChangeHandlerProps {
@@ -76,7 +77,11 @@ const EditQuickLink = () => {
   }
 
   React.useEffect(() => {
-    if (selectedQuickLinkIndexState === false) return;
+    if (selectedQuickLinkIndexState === false) {
+      // setTitleLocalState('');
+      // setUrlLocalState('');
+      return;
+    }
     console.log(selectedQuickLinkIndexState);
     setTitleLocalState(quickLinksState[selectedQuickLinkIndexState]["title"]);
     setUrlLocalState(quickLinksState[selectedQuickLinkIndexState]["url"]);
@@ -95,6 +100,8 @@ const EditQuickLink = () => {
     nextState.splice(selectedQuickLinkIndexState, 1, {title: titleLocalState, url: urlLocalState});
     setQuickLinksState(nextState);
     setVisibility(!visibility);
+    setTitleLocalState("");
+    setUrlLocalState("");
   };
 
   const renderSaveOrUpdateButton = () => {
@@ -145,7 +152,7 @@ const EditQuickLink = () => {
                       onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                         onChangeHandler({ e: e, id: "title" });
                       }}
-                      placeholder="Google"
+                      placeholder="Title"
                     />
                   </div>
                 </div>
@@ -164,7 +171,7 @@ const EditQuickLink = () => {
                       onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                         onChangeHandler({ e: e, id: "url" });
                       }}
-                      placeholder="https://www.google.com"
+                      placeholder="https://www.url.com"
                     />
                   </div>
                 </div>
