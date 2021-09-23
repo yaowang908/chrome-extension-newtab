@@ -59,6 +59,7 @@ p {
 .bg {
   --darkBlue: #111827;
   --lighterBlue: #1E3A8A;
+  --quicklinks: #2A56B5;
   background-color: var(--darkBlue);
 }
 .bg .navigation {
@@ -83,4 +84,20 @@ p {
   border-radius: 50px 0px 0px 50px;
   /* Shadow */
   box-shadow: -5px 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+.text-vertical {
+  writing-mode: vertical-lr;
+  text-orientation: mixed;
+}
+
+/* quicklinks */
+/* .square {
+  width: 100%;
+  padding-bottom: 100%;
+  height: 0;
+} */
+
+.quickLinkBox {
+  background-color: var(--quicklinks);
 }

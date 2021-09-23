@@ -22,57 +22,55 @@ import QuickLinks from "../QuickLinks/QuickLinks.component";
 import { VerticalHeader } from '../header/VerticalHeader.component';
 import DashboardButtons from "../header/DashboardButtons";
 
-const Layout:React.FC = () => {
+const Layout: React.FC = () => {
   const view = useRecoilValue(viewSelector);
 
-  const viewRenderLeft = () => {
-    if (view === "Dashboard") {
-      return (
-        <div className="-mt-1">
-          <TabsSection />
+  const dashboardView = () => {
+    return (
+      <>
+        <div className="layer h-screen w-auto absolute z-10 top-0 right-0 bottom-0 left-24">
+          <div className="overflow-x-hidden overflow-y-scroll px-12 w-full h-full sm:w-4/6 md:w-5/6">
+            <div className="h-24 w-full mb-3">
+              <DashboardButtons />
+            </div>
+            <div className="-mt-1">
+              <TabsSection />
+            </div>
+          </div>
         </div>
-      );
-    }
-    if (view === "Bookmark") {
-      return <BookmarkView />;
-    }
-    if (view === "QuickLinks") {
-      return <QuickLinks />;
-    }
+        <div className="reserve h-screen w-0 sm:w-3/6 absolute z-20 top-0 right-0 bottom-0 left-auto">
+          <div className="overflow-x-hidden overflow-y-scroll px-12 w-full h-full">
+            <div className="h-24 w-full mb-3"></div>
+            <Group />
+            <div className="h-24 w-full"></div>
+          </div>
+        </div>
+      </>
+    );
   }
 
-  const viewRenderRight = () => {
-    if (view === "Dashboard") {
-      return <Group />;
-    }
-    if (view === "Bookmark") {
-      return <BookmarkView />;
-    }
-    if (view === "QuickLinks") {
-      return <QuickLinks />;
-    }
+  const quickLinksView = () => {
+    return (
+      <>
+        <div className="layer h-screen w-auto absolute z-10 top-0 right-0 bottom-0 left-24">
+          <div className="overflow-x-hidden overflow-y-scroll px-12 w-full h-full">
+            <div className="h-24 w-full mb-3"></div>
+            <div className="-mt-1">
+              <QuickLinks />
+            </div>
+          </div>
+        </div>
+      </>
+    );
   }
 
   return (
     <div className="bg w-full h-screen relative">
       <VerticalHeader />
-      <div className="layer h-screen w-auto absolute z-10 top-0 right-0 bottom-0 left-24">
-        <div className="overflow-x-hidden overflow-y-scroll px-12 w-full h-full sm:w-4/6 md:w-5/6">
-          <div className="h-24 w-full mb-3">
-            {view === 'Dashboard' ? <DashboardButtons /> : ''}
-          </div>
-          {viewRenderLeft()}
-        </div>
-      </div>
-      <div className="reserve h-screen w-0 sm:w-3/6 absolute z-20 top-0 right-0 bottom-0 left-auto">
-        <div className="overflow-x-hidden overflow-y-scroll px-12 w-full h-full">
-          <div className="h-24 w-full mb-3"></div>
-          {viewRenderRight()}
-          <div className="h-24 w-full"></div>
-        </div>
-      </div>
+      {view === "Dashboard" ? dashboardView() : ""}
+      {view === "QuickLinks" ? quickLinksView() : ""}
     </div>
   );
 }
 
-export default Layout
+export default Layout;
