@@ -17,6 +17,7 @@ import { listViewLeftPanelVisibilitySelector } from "../Recoil/bookmarks.selecto
 import { settingSelector } from "../Recoil/setting.atom";
 import arrow from "../../../assets/arrow.png";
 import { settingDialogueVisibility } from "../Recoil/setting.atom";
+import { QuickLinksSelector } from "../Recoil/quicklinks.atom";
 
 export const VerticalHeader = () => {
   const [dataArr, setDataArr] = useRecoilState(linksSelector);
@@ -32,13 +33,14 @@ export const VerticalHeader = () => {
   const [settingVisibility, setSettingVisibility] = useRecoilState(
     settingDialogueVisibility
   );
+  const setQuickLinksArr = useSetRecoilState(QuickLinksSelector);
 
   const buttonHighlighter = React.useRef<HTMLDivElement>(null);
 
   // app init
   React.useEffect(() => {
     chrome.storage.sync.get(
-      ["tabs", "visible", "view", "LVLPVisibility", "colorTheme", "setting"],
+      ["tabs", "visible", "view", "LVLPVisibility", "colorTheme", "setting", "quickLinks",],
       function (result) {
         // console.log('get tabs from sync storage',result);
         if ("tabs" in result) {
@@ -61,6 +63,9 @@ export const VerticalHeader = () => {
         }
         if ("setting" in result) {
           setSettingSelector(result.setting);
+        }
+        if ("quickLinks" in result) {
+          setQuickLinksArr(result.quickLinks);
         }
       }
     );

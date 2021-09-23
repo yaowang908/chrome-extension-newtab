@@ -12,13 +12,16 @@ const AddQuickLink = () => {
 
   return (
     <div
-      className="square_err quickLinkBox border-2 border-white color-white cursor-pointer grid place-items-center"
+      className="square_err quickLinkBox border-2 border-white color-white cursor-pointer grid place-items-center group"
       style={{ width: "10vmin", height: "10vmin" }}
+      onClick={() => {
+        setVisibility(true);
+        setMode("new");
+      }}
     >
       <div
-        className="relative cross group cursor-pointer"
+        className="relative crosscursor-pointer"
         style={{ width: "6vmin", height: "6vmin" }}
-        onClick={() => {setVisibility(true); setMode('new');}}
       >
         <div
           className="cross-v bg-gray-100 absolute left-1/2 group-hover:bg-blue-800"

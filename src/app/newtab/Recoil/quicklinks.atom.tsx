@@ -1,8 +1,9 @@
 import { atom, selector, DefaultValue } from "recoil";
 
-interface quickLinkInterface {
+export interface quickLinkInterface {
   title: string;
   url: string;
+  index?: number | false;
   icon?: string;
 }
 
@@ -20,7 +21,7 @@ const storeQuickLinks = (newArr: quickLinkInterface[] | undefined) => {
   });
 };
 
-const QuickLinksSelector = selector<quickLinkInterface[] | DefaultValue>({
+const QuickLinksSelector = selector<quickLinkInterface[]>({
   key: "QuickLinksSelector",
   get: ({ get }) => get(QuickLinksAtom),
   set: ({ set, get }, method) => {
@@ -43,4 +44,14 @@ const QuickLinkEditorMode = atom<'new' | 'edit'>({
   default: 'new'
 });
 
-export { QuickLinksSelector, QuickLinkEditorVisibility, QuickLinkEditorMode };
+const SelectedQuickLinkIndex = atom<number | false>({
+  key: 'SelectedQuickLinkIndex',
+  default: false
+})
+
+export {
+  QuickLinksSelector,
+  QuickLinkEditorVisibility,
+  QuickLinkEditorMode,
+  SelectedQuickLinkIndex,
+};

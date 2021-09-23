@@ -60,7 +60,7 @@ const Layout: React.FC = () => {
           <title>QuickLinks</title>
         </Helmet>
         <div className="layer h-screen w-auto absolute z-10 top-0 right-0 bottom-0 left-24">
-          <div className="overflow-x-hidden overflow-y-scroll px-12 w-full h-full">
+          <div className="overflow-x-hidden overflow-y-scroll px-24 w-full h-full">
             <div className="h-24 w-full mb-3"></div>
             <div className="-mt-1">
               <QuickLinks />
