@@ -106,19 +106,25 @@ const Link: React.FC<DraggableLinkPropsInterface> = ({
       <div
         className={`col-span-11 relative grid grid-cols-12 gap-1 ${setting.text[colorTheme]} cursor-pointer`}
       >
-        <div className="col-span-12 group-hover:col-span-8 block whitespace-nowrap truncate">
+        {/* <div className="hidden group-hover:block group-hover:col-span-1 "></div> */}
+        <div className="hidden group-hover:grid group-hover:col-span-2 inset-0 text-sm font-base grid-cols-3">
           <div
-            onClick={openClickHandler}
-            onBlur={linkTitleOnBlurHandler}
-            onKeyDown={linkTitleOnKeyDownHandler}
-            className="text-base"
-            ref={linkTitle}
+            className={`${setting.text[colorTheme]} text-white text-center text-xs grid place-items-center box-border`}
+            onClick={removeRecordClickHandler}
+            title="DELETE"
           >
-            {title}
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 384 384"
+              className="w-4 h-4 text-red-900"
+              fill={`${setting.svgTrashColor[colorTheme]}`}
+            >
+              <g>
+                <path d="M64,341.333C64,364.907,83.093,384,106.667,384h170.667C300.907,384,320,364.907,320,341.333v-256H64V341.333z" />
+                <polygon points="266.667,21.333 245.333,0 138.667,0 117.333,21.333 42.667,21.333 42.667,64 341.333,64 341.333,21.333" />
+              </g>
+            </svg>
           </div>
-        </div>
-        <div className="hidden group-hover:block group-hover:col-span-1"></div>
-        <div className="hidden group-hover:grid col-span-3 inset-0 z-10 text-sm font-base grid-cols-3">
           <a
             href="#"
             target="_blank"
@@ -161,22 +167,16 @@ const Link: React.FC<DraggableLinkPropsInterface> = ({
               </g>
             </svg>
           </a>
+        </div>
+        <div className="col-span-12 group-hover:col-span-10 block whitespace-nowrap truncate">
           <div
-            className={`${setting.text[colorTheme]} text-white text-center text-xs grid place-items-center box-border`}
-            onClick={removeRecordClickHandler}
-            title="DELETE"
+            onClick={openClickHandler}
+            onBlur={linkTitleOnBlurHandler}
+            onKeyDown={linkTitleOnKeyDownHandler}
+            className="text-base"
+            ref={linkTitle}
           >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 384 384"
-              className="w-4 h-4 text-red-900"
-              fill={`${setting.svgTrashColor[colorTheme]}`}
-            >
-              <g>
-                <path d="M64,341.333C64,364.907,83.093,384,106.667,384h170.667C300.907,384,320,364.907,320,341.333v-256H64V341.333z" />
-                <polygon points="266.667,21.333 245.333,0 138.667,0 117.333,21.333 42.667,21.333 42.667,64 341.333,64 341.333,21.333" />
-              </g>
-            </svg>
+            {title}
           </div>
         </div>
       </div>

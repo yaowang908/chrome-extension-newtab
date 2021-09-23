@@ -26,6 +26,8 @@ module.exports = {
       gridColumn: ["group-hover"],
       backgroundColor: ["checked"],
       borderColor: ["checked"],
+      inset: ["group-hover"],
+      backgroundOpacity: ["group-hover"],
     },
   },
   plugins: [],

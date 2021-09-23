@@ -123,7 +123,7 @@ const Setting = () => {
 
   const resetClickHandler = () => {
     if (window.confirm("Are you sure about delete all saved tabs?")) {
-      chrome.storage.sync.remove(["tabs", "groups"], function () {
+      chrome.storage.sync.remove(["tabs", "groups", "setting"], function () {
         let error = chrome.runtime.lastError;
         if (error) {
           console.error(error);
@@ -153,7 +153,16 @@ const Setting = () => {
     if (window.confirm("Only tabs and links will be exported, theme settings will not.")) {
       console.log('export requested')
       chrome.storage.sync.get(
-        [ "tabs", "visible", "view", "LVLPVisibility", "colorTheme", "setting", "groups" ],
+        [
+          "tabs",
+          "visible",
+          "view",
+          "LVLPVisibility",
+          "colorTheme",
+          "setting",
+          "groups",
+          "quickLinks",
+        ],
         function (result) {
           console.log("get tabs from sync storage", result);
           downloadObject(result, "tabs.txt");
@@ -169,7 +178,16 @@ const Setting = () => {
   };
 
   const validateNewState = (obj: any) => {
-    const keys = [ "tabs", "visible", "view", "LVLPVisibility", "colorTheme", "setting", "groups", ];
+    // quicklinks can be empty
+    const keys = [
+      "tabs",
+      "visible",
+      "view",
+      "LVLPVisibility",
+      "colorTheme",
+      "setting",
+      "groups",
+    ];
     let result = true;
     keys.map(x => {
       result = obj[x] === undefined ? false : true; 

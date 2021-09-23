@@ -15,7 +15,7 @@ const storeSetting = (obj: SettingProps) => {
 const defaultSetting: SettingProps = {
   clickToHide: false,
   bookmarkView: "list",
-  replaceTheDefaultNewTab: true,
+  replaceTheDefaultNewTab: false,
 };
 
 const settingAtom = atom<SettingProps>({

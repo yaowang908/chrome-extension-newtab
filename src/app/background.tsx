@@ -6,5 +6,11 @@ chrome.action.onClicked.addListener(function () {
 });
 
 chrome.runtime.onInstalled.addListener(function (object) {
+  chrome.storage.sync.remove(["setting"], function () {
+    let error = chrome.runtime.lastError;
+    if (error) {
+      console.error(error);
+    }
+  });
   chrome.tabs.create({url: chrome.runtime.getURL("help.html")});
 })

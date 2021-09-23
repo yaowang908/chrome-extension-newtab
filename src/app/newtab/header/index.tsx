@@ -9,11 +9,13 @@ import {
 import setting from '../setting/setting';
 import { visibleSelector } from '../Recoil/visible.atom';
 import ToggleSwitch from "../ToggleSwitch/ToggleSwitch.component";
-import { viewSelector } from '../Recoil/view.atom';
+import { viewSelector, viewType } from "../Recoil/view.atom";
 import DashboardButtons from "./DashboardButtons";
 import BookmarkViewButtons from './BookmarkViewButtons';
+import QuickLinksButtons from './QuickLinksButtons';
 import { listViewLeftPanelVisibilitySelector } from "../Recoil/bookmarks.selector";
 import {settingSelector} from '../Recoil/setting.atom';
+import { QuickLinksSelector } from "../Recoil/quicklinks.atom";
 
 export const Header = () => {
   const [dataArr, setDataArr] = useRecoilState(linksSelector);
@@ -25,10 +27,19 @@ export const Header = () => {
     listViewLeftPanelVisibilitySelector
   );
   const [settingState, setSettingSelector] = useRecoilState(settingSelector);
+  const setQuickLinksArr = useSetRecoilState(QuickLinksSelector);
 
   React.useEffect(() => {
     chrome.storage.sync.get(
-      ["tabs", "visible", "view", "LVLPVisibility", "colorTheme", "setting"],
+      [
+        "tabs",
+        "visible",
+        "view",
+        "LVLPVisibility",
+        "colorTheme",
+        "setting",
+        "quickLinks",
+      ],
       function (result) {
         // console.log('get tabs from sync storage',result);
         if ("tabs" in result) {
@@ -52,6 +63,9 @@ export const Header = () => {
         if ("setting" in result) {
           setSettingSelector(result.setting);
         }
+        if("quickLinks" in result) {
+          setQuickLinksArr(result.quickLinks);
+        }
       }
     );
   }, []);
@@ -68,11 +82,18 @@ export const Header = () => {
     if (settingState.clickToHide) setVisible(!visible);
   };
 
-  const viewClickHandler = (selectedName: "Dashboard" | "Bookmark") => {
+  const viewClickHandler = (selectedName: viewType) => {
     // console.log(selectedName);
     setViewState(selectedName);
   };
   // DONE: hide buttons when in bookmark view
+
+  const renderButtons = () => {
+    if(viewState === 'Dashboard') return <DashboardButtons />;
+    if(viewState === 'Bookmark') return <BookmarkViewButtons />;
+    if(viewState === 'QuickLinks') return <QuickLinksButtons />;
+  }
+
   return (
     <div
       className={`flex-initial w-full border-b-2 ${
@@ -89,16 +110,13 @@ export const Header = () => {
       >
         <ToggleSwitch
           defaultName="Dashboard"
-          optionName="Bookmark"
+          // optionName="Bookmark"
+          optionName="QuickLinks"
           selectedPosition={viewState === "Dashboard" ? 0 : 1}
           onChange={viewClickHandler}
         />
       </div>
-      {viewState === "Dashboard" ? (
-        <DashboardButtons />
-      ) : (
-        <BookmarkViewButtons />
-      )}
+      {renderButtons()}
     </div>
   );
 };
