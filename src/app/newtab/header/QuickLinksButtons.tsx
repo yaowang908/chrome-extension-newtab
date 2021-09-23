@@ -16,16 +16,25 @@ const QuickLinksButtons = () => {
 
   return (
     <div
-      className={`w-full sm:w-96 grid grid-cols-2 gap-2 mb-4 ${setting.text[colorTheme]}`}
+      className={`w-full sm:w-96 grid grid-cols-2 gap-2 mb-4`}
+      style={{ color: `var(--textColor)` }}
     >
       <button
         onClick={settingClickHandler}
-        className={`${setting.text[colorTheme]} ${setting.headBorder[colorTheme]} text-lg`}
+        className={`text-lg`}
+        style={{
+          borderColor: `var(--textColor)`,
+          color: `var(--textColor)`,
+        }}
       >
         Setting
       </button>
       <button
-        className={`${setting.text[colorTheme]} ${setting.headBorder[colorTheme]} text-lg`}
+        className={`text-lg`}
+        style={{
+          borderColor: `var(--textColor)`,
+          color: `var(--textColor)`,
+        }}
       >
         Toggle Main List
       </button>

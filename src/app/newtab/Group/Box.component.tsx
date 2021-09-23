@@ -196,7 +196,7 @@ export const Box: React.FC<BoxProps> = ({
     // console.log('KeyUp: ', el.keyCode);
   };
 
-  const buttonRenameClickHandler = (el: React.MouseEvent<HTMLButtonElement>) => {
+  const buttonRenameClickHandler = (el: React.MouseEvent<HTMLDivElement>) => {
     // el.currentTarget.contentEditable = "true";
     if(nameContainer) {
       // console.log(el.currentTarget)
@@ -209,7 +209,7 @@ export const Box: React.FC<BoxProps> = ({
     }
   }
 
-  const buttonCollectHandler = (el: React.MouseEvent<HTMLButtonElement>) => {
+  const buttonCollectHandler = (el: React.MouseEvent<HTMLDivElement>) => {
     // console.log('collect');
     el.stopPropagation();
     let queryOptions = {};
@@ -254,7 +254,8 @@ export const Box: React.FC<BoxProps> = ({
   return (
     <div
       ref={drop}
-      className={`relative block h-auto box-border border-2 p-2 ${setting.border[colorTheme]}`}
+      className={`relative block h-auto box-border border-2 p-2`}
+      style={{ borderColor: `var(--groupBoxBorderColor)` }}
       data-id={boxID}
     >
       <DropContainer accepts={["LINK"]} onDrop={onDropHandler}>
@@ -273,36 +274,50 @@ export const Box: React.FC<BoxProps> = ({
           <div className="w-10 group relative cursor-pointer text-right">
             ...
             <div
-              className={`
-              group-hover:grid hidden absolute w-24 h-48 right-0 z-50 grid-cols-1 gap-1
-              ${setting.bg[colorTheme]}
-              `}
+              className={`group-hover:grid hidden absolute w-24 h-48 right-0 z-50 grid-cols-1 gap-1 `}
+              style={{ backgroundColor: `var(--lighterPanelColor)` }}
             >
-              <button
+              <div
                 onClick={openAllClickHandler}
-                className={`${setting.text[colorTheme]} ${setting.headBorder[colorTheme]}`}
+                className="border-2 w-full grid place-items-center box-border"
+                style={{
+                  borderColor: `var(--textColor)`,
+                  color: `var(--textColor)`,
+                }}
               >
                 Open all
-              </button>
+              </div>
 
-              <button
+              <div
                 onClick={buttonCollectHandler}
-                className={`${setting.text[colorTheme]} ${setting.headBorder[colorTheme]}`}
+                className="border-2 w-full grid place-items-center box-border"
+                style={{
+                  borderColor: `var(--textColor)`,
+                  color: `var(--textColor)`,
+                }}
               >
                 Collect
-              </button>
-              <button
+              </div>
+              <div
                 onClick={buttonRenameClickHandler}
-                className={`${setting.text[colorTheme]} ${setting.headBorder[colorTheme]}`}
+                className="border-2 w-full grid place-items-center box-border"
+                style={{
+                  borderColor: `var(--textColor)`,
+                  color: `var(--textColor)`,
+                }}
               >
                 Rename
-              </button>
-              <button
+              </div>
+              <div
                 onClick={editClickHandler}
-                className={`${setting.text[colorTheme]} ${setting.headBorder[colorTheme]}`}
+                className="border-2 w-full grid place-items-center box-border"
+                style={{
+                  borderColor: `var(--textColor)`,
+                  color: `var(--textColor)`,
+                }}
               >
-                Expand
-              </button>
+                Edit
+              </div>
             </div>
           </div>
         </div>
