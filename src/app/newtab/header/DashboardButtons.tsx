@@ -109,17 +109,28 @@ const DashboardButtons = () => {
 
   return (
     <div
-      className={`w-full md:w-96 h-full grid grid-cols-3 items-center gap-2 mb-4 ${setting.text[colorTheme]}`}
+      className={`w-full md:w-96 h-full grid grid-cols-3 items-center gap-2 mb-4`}
+      style={{
+        color: `var(--textColor)`,
+      }}
     >
       <button
         onClick={collectClickHandler}
-        className={`${setting.text[colorTheme]} ${setting.headBorder[colorTheme]} text-lg`}
+        className={`text-lg`}
+        style={{
+          borderColor: `var(--textColor)`,
+          color: `var(--textColor)`,
+        }}
       >
         Collect
       </button>
       <button
         onClick={openAllClickHandler}
-        className={`${setting.text[colorTheme]} ${setting.headBorder[colorTheme]} text-lg`}
+        className={`text-lg`}
+        style={{
+          borderColor: `var(--textColor)`,
+          color: `var(--textColor)`,
+        }}
       >
         Open all
       </button>

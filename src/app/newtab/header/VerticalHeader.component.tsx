@@ -8,10 +8,8 @@ import {
 } from "../Recoil/color_theme.atom";
 import setting from "../setting/setting";
 import { visibleSelector } from "../Recoil/visible.atom";
-import ToggleSwitch from "../ToggleSwitch/ToggleSwitch.component";
 import { viewSelector, viewType } from "../Recoil/view.atom";
 import DashboardButtons from "./DashboardButtons";
-import BookmarkViewButtons from "./BookmarkViewButtons";
 import QuickLinksButtons from "./QuickLinksButtons";
 import { listViewLeftPanelVisibilitySelector } from "../Recoil/bookmarks.selector";
 import { settingSelector } from "../Recoil/setting.atom";

@@ -104,12 +104,18 @@ const Link: React.FC<DraggableLinkPropsInterface> = ({
         }}
       ></div>
       <div
-        className={`col-span-11 relative grid grid-cols-12 gap-1 ${setting.text[colorTheme]} cursor-pointer`}
+        className={`col-span-11 relative grid grid-cols-12 gap-1 cursor-pointer`}
+        style={{
+          color: `var(--textColor)`,
+        }}
       >
         {/* <div className="hidden group-hover:block group-hover:col-span-1 "></div> */}
         <div className="hidden group-hover:grid group-hover:col-span-2 inset-0 text-sm font-base grid-cols-3">
           <div
-            className={`${setting.text[colorTheme]} text-white text-center text-xs grid place-items-center box-border`}
+            className={`text-white text-center text-xs grid place-items-center box-border`}
+            style={{
+              color: `var(--textColor)`,
+            }}
             onClick={removeRecordClickHandler}
             title="DELETE"
           >
@@ -117,7 +123,7 @@ const Link: React.FC<DraggableLinkPropsInterface> = ({
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 384 384"
               className="w-4 h-4 text-red-900"
-              fill={`${setting.svgTrashColor[colorTheme]}`}
+              fill={`var(--cautionColor)`}
             >
               <g>
                 <path d="M64,341.333C64,364.907,83.093,384,106.667,384h170.667C300.907,384,320,364.907,320,341.333v-256H64V341.333z" />
@@ -138,7 +144,7 @@ const Link: React.FC<DraggableLinkPropsInterface> = ({
               y="0px"
               viewBox="0 0 512 512"
               className={`w-4 h-4`}
-              fill={`${setting.svgOpenColor[colorTheme]}`}
+              fill={`var(--textColor)`}
             >
               <g>
                 <path d="M234.667,512H192c-5.891,0-10.667-4.776-10.667-10.667s4.776-10.667,10.667-10.667h42.667 c5.891,0,10.667-4.776,10.667-10.667V32c0-5.891-4.776-10.667-10.667-10.667H192c-5.891,0-10.667-4.776-10.667-10.667 S186.109,0,192,0h42.667c17.673,0,32,14.327,32,32v448C266.667,497.673,252.34,512,234.667,512z" />
@@ -159,7 +165,7 @@ const Link: React.FC<DraggableLinkPropsInterface> = ({
               viewBox="0 0 512 512"
               className={`w-4 h-4`}
               xmlns="http://www.w3.org/2000/svg"
-              fill={`${setting.svgOpenColor[colorTheme]}`}
+              fill={`var(--textColor)`}
             >
               <g>
                 <path d="m472 452c0 11.028-8.972 20-20 20h-392c-11.028 0-20-8.972-20-20v-392c0-11.028 8.972-20 20-20h176v-40h-176c-33.084 0-60 26.916-60 60v392c0 33.084 26.916 60 60 60h392c33.084 0 60-26.916 60-60v-176h-40z" />

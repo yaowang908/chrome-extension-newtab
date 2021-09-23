@@ -2,7 +2,7 @@ import { atom, DefaultValue, selector } from "recoil";
 
 export type colorThemeProp = "blueTheme" | "blackTheme" | "whiteTheme" | "bgImage" ;
 
-const defaultTheme = "bgImage";
+const defaultTheme = "blackTheme";
 
 const colorThemeAtom = atom<colorThemeProp>({
   key: "colorThemeAtom",

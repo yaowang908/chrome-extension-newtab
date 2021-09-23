@@ -212,101 +212,85 @@ const Setting = () => {
     }
   };
 
+  const debug = false;
+
   return (
     <>
-      {settingVisibility ? (
+      {settingVisibility || debug ? (
         <Popup outClick={closeClickHandler}>
-          <div className="w-full h-full p-5 border-blue-900 text-blue-900 relative box-border overflow-y-scroll">
-            {importModuleVisibilityState?
+          <div className="w-full h-full p-5 border-blue-900 text-blue-900 relative box-border flex flex-col">
+            {importModuleVisibilityState ? (
               <Uploader handleUpload={handleUpload} />
-              : ''
-            }
+            ) : (
+              ""
+            )}
             <h1 className="text-3xl font-bold border-b-2 pb-2">Setting</h1>
-            <div className="mt-5 w-full grid grid-cols-1 gap-2 sm:gap-5 md:grid-cols-2">
-              <div className="p-4 w-full max-w-xs mx-auto bg-white rounded-xl shadow-md">
-                <label className="flex items-center space-x-3">
-                  {renderClickToHideInput()}
-                  <span className="text-gray-900 font-medium px-3 py-2">
-                    Enable Click to hide
-                  </span>
-                </label>
+            <div className="relative flex-auto overflow-y-scroll">
+              <div className="mt-5 w-full grid grid-cols-1 gap-2 sm:gap-5 md:grid-cols-2 mx-auto max-w-3xl">
+                <div className="p-4 w-full max-w-md mx-auto bg-white rounded-xl shadow-md place-self-start">
+                  <label className="flex items-center space-x-3">
+                    {renderReplaceTheDefaultNewTab()}
+                    <span className="text-gray-900 font-medium px-3 py-2">
+                      Replace the default new tab
+                    </span>
+                  </label>
+                </div>
+                <div className="p-4 w-full max-w-md mx-auto bg-white rounded-xl shadow-md place-self-end">
+                  <label className="flex items-center space-x-3 flex-row">
+                    <span className="text-gray-900 font-medium">Theme:</span>
+                    <select
+                      className="appearance-none px-3 py-2 border-b-2"
+                      value="DEFAULT"
+                      onChange={themeOnChangeHandler}
+                    >
+                      {/* 'blueTheme' | 'blackTheme' | 'whiteTheme' | 'bgImage' */}
+                      {colorThemeChangedState ? (
+                        <option value="DEFAULT">
+                          {getThemeName(colorTheme)}
+                        </option>
+                      ) : (
+                        <option value="DEFAULT">--Please select theme--</option>
+                      )}
+                      {/* <option value="DEFAULT">--Please select theme--</option> */}
+                      {["blackTheme", "whiteTheme"].map((x) => {
+                        if(x!==colorTheme) {
+                          return <option value={x}>{getThemeName(x as ("blackTheme" | "whiteTheme"))}</option>;
+                        }
+                      })}
+                    </select>
+                  </label>
+                </div>
+                {/* TODO: add option to select bg from unsplash */}
               </div>
-              <div className="p-4 w-full max-w-xs mx-auto bg-white rounded-xl shadow-md">
-                <label className="flex items-center space-x-3">
-                  {renderReplaceTheDefaultNewTab()}
-                  <span className="text-gray-900 font-medium px-3 py-2">
-                    Replace the default new tab
-                  </span>
-                </label>
-              </div>
-              <div className="p-4 w-full max-w-xs mx-auto bg-white rounded-xl shadow-md">
-                <label className="flex items-center space-x-3 flex-col lg:flex-row">
-                  <span className="text-gray-900 font-medium">Theme:</span>
-                  <select
-                    className="appearance-none px-3 py-2 border-b-2"
-                    value="DEFAULT"
-                    onChange={themeOnChangeHandler}
+              <div className="border-2 border-red-500 px-4 py-4 my-4 mx-auto max-w-3xl rounded-xl">
+                <div className="w-full grid grid-cols-1 gap-2 sm:gap-5 sm:grid-cols-2 md:grid-cols-3 place-items-center">
+                  <button
+                    onClick={exportClickHandler}
+                    className={`w-24 text-center border-2 px-3 py-1 bg-white text-red-600 cursor-pointer text-xl font-bold hover:bg-white hover:text-red-500 hover:border-red-500 rounded-xl shadow-md inline-block`}
                   >
-                    {/* 'blueTheme' | 'blackTheme' | 'whiteTheme' | 'bgImage' */}
-                    {colorThemeChangedState ? (
-                      <option value="DEFAULT">
-                        {getThemeName(colorTheme)}
-                      </option>
-                    ) : (
-                      <option value="DEFAULT">--Please select theme--</option>
-                    )}
-                    <option value="blueTheme">Dark Blue</option>
-                    <option value="blackTheme">Dark</option>
-                    <option value="whiteTheme">Light</option>
-                    <option value="bgImage">Image Background</option>
-                  </select>
-                </label>
-              </div>
-              <div className="p-4 w-full max-w-xs mx-auto bg-white rounded-xl shadow-md">
-                <label className="flex items-center space-x-3 flex-col lg:flex-row">
-                  <span className="text-gray-900 font-medium">
-                    Bookmarks View:
-                  </span>
-                  <select
-                    className="appearance-none px-3 py-2 border-b-2"
-                    onChange={bookmarkViewOnChangeHandler}
+                    Export
+                  </button>
+                  <button
+                    onClick={importClickHandler}
+                    className={`w-24 text-center border-2 px-3 py-1 bg-white text-red-600 cursor-pointer text-xl font-bold hover:bg-white hover:text-red-500 hover:border-red-500 rounded-xl shadow-md inline-block`}
                   >
-                    <option value="">--Please select View--</option>
-                    <option value="grid">Grid</option>
-                    <option value="list">List</option>
-                  </select>
-                </label>
+                    Import
+                  </button>
+                  <button
+                    onClick={resetClickHandler}
+                    className={`w-24 text-center border-2 px-3 py-1 bg-white text-red-600 cursor-pointer text-xl font-bold hover:bg-white hover:text-red-500 hover:border-red-500 rounded-xl shadow-md inline-block`}
+                  >
+                    Reset
+                  </button>
+                </div>
               </div>
-              {/* TODO: add option to select bg from unsplash */}
-            </div>
-            <div className="border-2 border-red-500 px-4 py-4 my-4 rounded-xl">
-              <div className="w-full grid grid-cols-1 gap-2 sm:gap-5 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-                <button
-                  onClick={exportClickHandler}
-                  className={`w-24 text-center border-2 px-3 py-1 bg-white text-red-600 cursor-pointer text-xl font-bold hover:bg-white hover:text-red-500 hover:border-red-500 rounded-xl shadow-md inline-block`}
+              <div className="h-12 flex-auto text-center bg-gray-100 absolute bottom-0 left-0 w-full">
+                <div
+                  className="inline-block w-32 text-center border-2 px-6 py-2 bg-blue-900 text-white cursor-pointer text-2xl font-bold"
+                  onClick={closeClickHandler}
                 >
-                  Export
-                </button>
-                <button
-                  onClick={importClickHandler}
-                  className={`w-24 text-center border-2 px-3 py-1 bg-white text-red-600 cursor-pointer text-xl font-bold hover:bg-white hover:text-red-500 hover:border-red-500 rounded-xl shadow-md inline-block`}
-                >
-                  Import
-                </button>
-                <button
-                  onClick={resetClickHandler}
-                  className={`w-24 text-center border-2 px-3 py-1 bg-white text-red-600 cursor-pointer text-xl font-bold hover:bg-white hover:text-red-500 hover:border-red-500 rounded-xl shadow-md inline-block`}
-                >
-                  Reset
-                </button>
-              </div>
-            </div>
-            <div className="h-12 text-center">
-              <div
-                className="inline-block w-32 text-center border-2 px-6 py-2 bg-blue-900 text-white cursor-pointer text-2xl font-bold"
-                onClick={closeClickHandler}
-              >
-                Close
+                  Close
+                </div>
               </div>
             </div>
           </div>

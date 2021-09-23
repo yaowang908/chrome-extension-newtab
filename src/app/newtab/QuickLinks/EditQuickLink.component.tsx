@@ -190,12 +190,18 @@ const EditQuickLink = () => {
                 </div>
               </div>
               <div className="h-12 text-center">
-                <div
-                  className="inline-block w-32 text-center border-2 px-6 py-2 bg-red-600 text-white cursor-pointer text-2xl font-bold"
-                  onClick={deleteClickHandler}
-                >
-                  Delete
-                </div>
+                {
+                  mode === "new" 
+                  ? <></> 
+                  : (
+                    <div
+                      className="inline-block w-32 text-center border-2 px-6 py-2 bg-red-600 text-white cursor-pointer text-2xl font-bold"
+                      onClick={deleteClickHandler}
+                    >
+                      Delete
+                    </div>
+                  )
+                }
                 <div
                   className="inline-block w-32 text-center border-2 px-6 py-2 bg-blue-900 text-white cursor-pointer text-2xl font-bold"
                   onClick={closeClickHandler}

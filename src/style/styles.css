@@ -4,6 +4,13 @@
 
 html {
   font-size: 16px;
+  --darkerPanelColor: #111827;
+  --lighterPanelColor: #1E3A8A;
+  --quicklinks: #2A56B5;
+  --textColor: #fff;
+  --groupBoxBorderColor: #1f2937;
+  --quickLinksNewBgColor: #2a56b5; 
+  --cautionColor: #d82727;
 }
 
 button {
@@ -57,30 +64,27 @@ p {
 /* Layout.component */
 
 .bg {
-  --darkBlue: #111827;
-  --lighterBlue: #1E3A8A;
-  --quicklinks: #2A56B5;
-  background-color: var(--darkBlue);
+  background-color: var(--darkerPanelColor);
 }
 .bg .navigation {
   color: white;
 }
 .bg .navigation .nav-select {
-  background-color: var(--lighterBlue);
+  background-color: var(--lighterPanelColor);
 }
 .bg .navigation .nav-ele {
   writing-mode: vertical-rl;
   text-orientation: mixed;
 }
 .bg .layer {
-  background-color: var(--lighterBlue);
+  background-color: var(--lighterPanelColor);
   border-radius: 50px 0px 0px 50px;
   /* Shadow */
   box-shadow: -5px 4px 4px rgba(0, 0, 0, 0.25);
 }
 .bg .reserve {
   max-width: 700px;
-  background-color: var(--darkBlue);
+  background-color: var(--darkerPanelColor);
   border-radius: 50px 0px 0px 50px;
   /* Shadow */
   box-shadow: -5px 4px 4px rgba(0, 0, 0, 0.25);
@@ -100,4 +104,20 @@ p {
 
 .quickLinkBox {
   background-color: var(--quicklinks);
+}
+
+.cross {
+  background-color: var(--quickLinksNewBgColor)
+}
+
+.cross:hover {
+  background-color: var(--lighterPanelColor)
+}
+
+.cross-arm {
+  background-color: var(--textColor);
+}
+.cross:hover > div > .cross-arm {
+  background-color: var(--lighterPanelColor);
+  border: 1px solid var(--textColor)
 }

@@ -8,10 +8,8 @@ import {
 } from "../Recoil/color_theme.atom";
 import setting from '../setting/setting';
 import { visibleSelector } from '../Recoil/visible.atom';
-import ToggleSwitch from "../ToggleSwitch/ToggleSwitch.component";
 import { viewSelector, viewType } from "../Recoil/view.atom";
 import DashboardButtons from "./DashboardButtons";
-import BookmarkViewButtons from './BookmarkViewButtons';
 import QuickLinksButtons from './QuickLinksButtons';
 import { listViewLeftPanelVisibilitySelector } from "../Recoil/bookmarks.selector";
 import {settingSelector} from '../Recoil/setting.atom';
@@ -90,31 +88,31 @@ export const Header = () => {
 
   const renderButtons = () => {
     if(viewState === 'Dashboard') return <DashboardButtons />;
-    if(viewState === 'Bookmark') return <BookmarkViewButtons />;
     if(viewState === 'QuickLinks') return <QuickLinksButtons />;
   }
 
   return (
     <div
       className={`flex-initial w-full border-b-2 ${
-        setting.headBorder[colorTheme]
-      } ${
         visible ? "flex" : "hidden"
       } flex-col md:flex-row justify-between z-40`}
       onDoubleClick={headerDoubleClickHandler}
+      style={{
+        borderColor: `var(--textColor)`,
+      }}
       onClick={headerClickHandler}
     >
       <div
-        className={`text-4xl mb-4 ${setting.text[colorTheme]}`}
-        style={{ maxWidth: "26rem" }}
+        className={`text-4xl mb-4`}
+        style={{ color: `var(--textColor)`,  maxWidth: "26rem" }}
       >
-        <ToggleSwitch
+        {/* <ToggleSwitch
           defaultName="Dashboard"
           // optionName="Bookmark"
           optionName="QuickLinks"
           selectedPosition={viewState === "Dashboard" ? 0 : 1}
           onChange={viewClickHandler}
-        />
+        /> */}
       </div>
       {renderButtons()}
     </div>
