@@ -35,9 +35,32 @@ const Link: React.FC<DraggableLinkPropsInterface> = ({
     e.preventDefault();
     e.stopPropagation();
     chrome.tabs.create({
-      active: true,
+      active: false,
       url: link,
     });
+    removeCurrentLink();
+  };
+
+  const openClickHandlerInSameTab = (e: React.MouseEvent<HTMLElement>) => {
+    e.preventDefault();
+    e.stopPropagation();
+    // chrome.tabs.create({
+    //   active: true,
+    //   url: link,
+    // });
+    chrome.tabs.query(
+      {currentWindow: true, active : true},
+      function(tabArray){
+        tabArray.forEach(tab => {
+          if(tab?.id) {
+            chrome.tabs.update(tab?.id, {
+              url: link,
+            });
+          }
+
+        })
+      }
+    )
     removeCurrentLink();
   };
 
@@ -176,7 +199,7 @@ const Link: React.FC<DraggableLinkPropsInterface> = ({
         </div>
         <div className="col-span-12 group-hover:col-span-10 block whitespace-nowrap truncate">
           <div
-            onClick={openClickHandler}
+            onClick={openClickHandlerInSameTab}
             onBlur={linkTitleOnBlurHandler}
             onKeyDown={linkTitleOnKeyDownHandler}
             className="text-base"
