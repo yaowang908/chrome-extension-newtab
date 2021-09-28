@@ -15,8 +15,9 @@ const CustomBackground = () => {
   const customBgDoubleClickHandler = () => {
     console.log("Double Click!");
   };
-  // DONE: add credits
-  
+  //TODO: add like button
+  //TODO: add save button
+  //TODO: add random from saved button 
   return (
     <div
       className={`w-full h-screen fixed top-0 left-0 overflow-hidden bg-gray-100`}
