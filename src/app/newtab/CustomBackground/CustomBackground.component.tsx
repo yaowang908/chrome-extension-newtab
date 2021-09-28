@@ -2,38 +2,35 @@ import React from 'react'
 import { useRecoilState } from 'recoil'
 import parse from 'html-react-parser'
 
-import { visibleSelector } from '../Recoil/visible.atom'
-import images from '../../../assets/images'
+import { collapseAtom } from "../Recoil/collapse.atom";
 
 const CustomBackground = () => {
-  const [visible, setVisible] = useRecoilState(visibleSelector);
+  const [collapseState, setCollapseState] = useRecoilState(collapseAtom);
   
   const customBgClickHandler = () => {
-    // console.log("Single Click!");
-    setVisible(!visible);
+    console.log("Single Click!");
+    setCollapseState(false);
   };
 
   const customBgDoubleClickHandler = () => {
-    // console.log("Double Click!");
-    setVisible(!visible);
+    console.log("Double Click!");
   };
   // DONE: add credits
   
   return (
     <div
-      className={`w-full h-full absolute top-0 left-0 overflow-hidden z-10 bg-cover ${
-        visible ? "filter blur-lg" : ""
-      }`}
-      style={{ backgroundImage: `url(${images[0].url})` }}
+      className={`w-full h-screen fixed top-0 left-0 overflow-hidden bg-gray-100`}
+      style={{
+        backgroundColor: "white",
+        zIndex: -1,
+        backgroundImage: `url( "https://source.unsplash.com/random/1920x1080?dark,city" )`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+      }}
       onClick={customBgClickHandler}
       onDoubleClick={customBgDoubleClickHandler}
     >
-      {/* <div className="fixed w-full h-full z-30">
-
-      </div> */}
-      <div className={`absolute bottom-5 left-5 text-lg text-gray-500 z-20`}>
-        {parse(images[0].credit)}
-      </div>
+      BG
     </div>
   );
 }

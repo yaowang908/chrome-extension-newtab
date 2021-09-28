@@ -87,6 +87,7 @@ export const VerticalHeader = () => {
     if (target.classList.value.includes("nav-ele")) {
       setViewState(target.getAttribute("data-view") as "Dashboard" | "QuickLinks");
     }
+    setCollapseState(false);
   };
 
   //setting
@@ -97,19 +98,32 @@ export const VerticalHeader = () => {
 
   //toggle collapse
   const collapseClickHandler = (e: React.MouseEvent<HTMLDivElement>) => {
-    // console.log('toggle collapse')
+    console.log('toggle collapse')
     setCollapseState(!collapseState);
   };
 
   return (
-    <div className="navigation h-screen relative w-24 px-5 font-bold text-xl">
+    <div
+      className="bg navigation h-screen relative z-10 w-24 px-5 font-bold text-xl transition ease-in-out duration-700"
+      style={{
+        borderRadius: `${collapseState ? "2rem 0 0 2rem" : "0"}`,
+        transform: `${
+          collapseState
+            ? "translateX(calc(100vw - 6rem))"
+            : "translateX(0)"
+        }`,
+      }}
+    >
       <div
-        className="w-full h-24 pt-8 mx-auto cursor-pointer"
+        className="w-full h-24 pt-8 mx-auto pointer-events-auto cursor-pointer"
         onClick={collapseClickHandler}
       >
         <img
-          className="box-border mx-auto w-6 h-6 pointer-events-none"
+          className="box-border mx-auto w-6 h-6 transition ease-in-out duration-500"
           src={arrow}
+          style={{
+            transform: `${collapseState ? "rotate(180deg)" : "rotate(0)"}`,
+          }}
         />
       </div>
       <div className="w-6 h-auto mt-4 mx-auto flex flex-col justify-between">
