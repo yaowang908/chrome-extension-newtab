@@ -1,22 +1,9 @@
 import React from 'react'
-import { useRecoilState, useRecoilValue } from "recoil"
+import { useRecoilValue } from "recoil"
 
-import { Header } from "../header";
-import Section from "../section/section.component";
 import TabsSection from "../tabs";
-import { colorThemeSelector } from "../Recoil/color_theme.atom";
-import setting from "../setting/setting";
 import { Group } from "../Group/Group.component";
-import { visibleSelector } from "../Recoil/visible.atom";
-import CustomBackground from "../CustomBackground/CustomBackground.component";
-import Setting from "../setting/Setting.component";
-import {
-  settingDialogueVisibility,
-  settingSelector,
-} from "../Recoil/setting.atom";
 import { viewSelector } from "../Recoil/view.atom";
-import EditGroup from "../Group/EditGroup.component";
-import ErrorHandler from "../ErrorHandler/ErrorHandler.component";
 import QuickLinks from "../QuickLinks/QuickLinks.component";
 import { VerticalHeader } from '../header/VerticalHeader.component';
 import DashboardButtons from "../header/DashboardButtons";
