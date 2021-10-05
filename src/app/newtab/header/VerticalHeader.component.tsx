@@ -84,8 +84,10 @@ export const VerticalHeader = () => {
     e.preventDefault();
     const target = e.target as HTMLDivElement;
     // console.log(target.getAttribute("data-view"));
-    if (target.classList.value.includes("nav-ele")) {
-      setViewState(target.getAttribute("data-view") as "Dashboard" | "QuickLinks");
+    if (!collapseState && target.classList.value.includes("nav-ele")) {
+      setViewState(
+        target.getAttribute("data-view") as "Dashboard" | "QuickLinks"
+        );
     }
     setCollapseState(false);
   };
