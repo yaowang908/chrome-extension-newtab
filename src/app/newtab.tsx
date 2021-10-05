@@ -10,7 +10,7 @@ const Newtab: React.FC = () => {
   const keepDefaultNewTab = () => {
     chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
       const activeTab = tabs[0];
-      console.log(activeTab);
+      // console.log(activeTab);
       if (activeTab?.url && activeTab.url === "chrome://newtab/") {
         chrome.tabs.update({
           url: "chrome-search://local-ntp/local-ntp.html",

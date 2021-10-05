@@ -61,7 +61,7 @@ export const Header = () => {
         if ("setting" in result) {
           setSettingSelector(result.setting);
         }
-        if("quickLinks" in result) {
+        if ("quickLinks" in result) {
           setQuickLinksArr(result.quickLinks);
         }
       }
@@ -87,9 +87,9 @@ export const Header = () => {
   // DONE: hide buttons when in bookmark view
 
   const renderButtons = () => {
-    if(viewState === 'Dashboard') return <DashboardButtons />;
-    if(viewState === 'QuickLinks') return <QuickLinksButtons />;
-  }
+    if (viewState === "Dashboard") return <DashboardButtons />;
+    if (viewState === "QuickLinks") return <QuickLinksButtons />;
+  };
 
   return (
     <div
@@ -104,7 +104,7 @@ export const Header = () => {
     >
       <div
         className={`text-4xl mb-4`}
-        style={{ color: `var(--textColor)`,  maxWidth: "26rem" }}
+        style={{ color: `var(--textColor)`, maxWidth: "26rem" }}
       >
         {/* <ToggleSwitch
           defaultName="Dashboard"
