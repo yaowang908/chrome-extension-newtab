@@ -38,7 +38,16 @@ export const VerticalHeader = () => {
   // app init
   React.useEffect(() => {
     chrome.storage.sync.get(
-      ["tabs", "visible", "view", "LVLPVisibility", "colorTheme", "setting", "quickLinks",],
+      [
+        "tabs",
+        "visible",
+        "view",
+        "LVLPVisibility",
+        "colorTheme",
+        "setting",
+        "quickLinks",
+        "collapse",
+      ],
       function (result) {
         // console.log('get tabs from sync storage',result);
         if ("tabs" in result) {
@@ -64,6 +73,9 @@ export const VerticalHeader = () => {
         }
         if ("quickLinks" in result) {
           setQuickLinksArr(result.quickLinks);
+        }
+        if ("collapse" in result) {
+          setCollapseState(result.collapse);
         }
       }
     );
