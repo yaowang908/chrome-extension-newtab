@@ -1,6 +1,7 @@
 import React from 'react'
 import { useRecoilState } from 'recoil'
 import parse from 'html-react-parser'
+import ImageBuffer from './ImageBuffer.component'
 
 import { collapseSelector } from "../Recoil/collapse.atom";
 
@@ -14,9 +15,6 @@ const CustomBackground = () => {
     };
   };
 
-  const customBgDoubleClickHandler = () => {
-    console.log("Double Click!");
-  };
   React.useEffect(() => {
     // setCollapseState(true);
   }, [])
@@ -42,17 +40,8 @@ const CustomBackground = () => {
   };
 
   return (
-    <div
-      className={`w-full h-screen fixed top-0 left-0 overflow-hidden bg-gray-100`}
-      style={{
-        backgroundColor: "white",
-        zIndex: -1,
-        backgroundImage: `url( "https://source.unsplash.com/random/1920x1080?dark,city" )`,
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-      }}
+    <ImageBuffer
       onClick={customBgClickHandler}
-      onDoubleClick={customBgDoubleClickHandler}
     >
       <div className={`absolute bottom-6 left-6`}>
         <div className="w-full h-auto grid grid-cols-3 gap-3 place-items-center bg-opacity-50 bg-gray-100 z-10">
@@ -88,7 +77,7 @@ const CustomBackground = () => {
           </div>
         </div>
       </div>
-    </div>
+    </ImageBuffer>
   );
 }
 
