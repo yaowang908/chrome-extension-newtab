@@ -13,7 +13,7 @@ import { settingSelector } from "../Recoil/setting.atom";
 import arrow from "../../../assets/arrow.png";
 import { settingDialogueVisibility } from "../Recoil/setting.atom";
 import { QuickLinksSelector } from "../Recoil/quicklinks.atom";
-import { collapseAtom } from "../Recoil/collapse.atom";
+import { collapseSelector } from "../Recoil/collapse.atom";
 import delay from "../Helper/delay";
 
 export const VerticalHeader = () => {
@@ -31,7 +31,7 @@ export const VerticalHeader = () => {
     settingDialogueVisibility
   );
   const setQuickLinksArr = useSetRecoilState(QuickLinksSelector);
-  const [collapseState, setCollapseState] = useRecoilState(collapseAtom);
+  const [collapseState, setCollapseState] = useRecoilState(collapseSelector);
 
   const buttonHighlighter = React.useRef<HTMLDivElement>(null);
 
@@ -114,6 +114,34 @@ export const VerticalHeader = () => {
     console.log('toggle collapse')
     setCollapseState(!collapseState);
   };
+
+  // replace default tab
+  const keepDefaultNewTab = () => {
+    chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
+      const activeTab = tabs[0];
+      // console.log(activeTab);
+      if (activeTab?.url && activeTab.url === "chrome://newtab/") {
+        chrome.tabs.update({
+          url: "chrome-search://local-ntp/local-ntp.html",
+        });
+      }
+    });
+  };
+
+  React.useEffect(() => {
+    if('replaceTheDefaultNewTab' in settingState) {
+      if(settingState.replaceTheDefaultNewTab) {
+        // replace default new tab
+        // console.log('replace default new tab')
+      } else {
+        // console.log('keep default new tab')
+        keepDefaultNewTab();
+      }
+    } else {
+      // console.log('wrong')
+      keepDefaultNewTab();
+    }
+  }, [])
 
   return (
     <div

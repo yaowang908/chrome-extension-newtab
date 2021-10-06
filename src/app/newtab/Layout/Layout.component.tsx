@@ -9,11 +9,11 @@ import { VerticalHeader } from '../header/VerticalHeader.component';
 import DashboardButtons from "../header/DashboardButtons";
 import { Helmet } from "react-helmet";
 import CustomBackground from '../CustomBackground/CustomBackground.component';
-import { collapseAtom } from "../Recoil/collapse.atom";
+import { collapseSelector } from "../Recoil/collapse.atom";
 
 const Layout: React.FC = () => {
   const view = useRecoilValue(viewSelector);
-  const collapseState = useRecoilValue(collapseAtom);
+  const collapseState = useRecoilValue(collapseSelector);
 
   const dashboardView = () => {
     return (

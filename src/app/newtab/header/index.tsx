@@ -14,6 +14,7 @@ import QuickLinksButtons from './QuickLinksButtons';
 import { listViewLeftPanelVisibilitySelector } from "../Recoil/bookmarks.selector";
 import {settingSelector} from '../Recoil/setting.atom';
 import { QuickLinksSelector } from "../Recoil/quicklinks.atom";
+import {collapseSelector} from "../Recoil/collapse.atom";
 
 export const Header = () => {
   const [dataArr, setDataArr] = useRecoilState(linksSelector);
@@ -24,6 +25,7 @@ export const Header = () => {
   const setListViewLeftPanelVisibility = useSetRecoilState(
     listViewLeftPanelVisibilitySelector
   );
+  const setCollapseState = useSetRecoilState(collapseSelector);
   const [settingState, setSettingSelector] = useRecoilState(settingSelector);
   const setQuickLinksArr = useSetRecoilState(QuickLinksSelector);
 
@@ -37,6 +39,7 @@ export const Header = () => {
         "colorTheme",
         "setting",
         "quickLinks",
+        "collapse",
       ],
       function (result) {
         // console.log('get tabs from sync storage',result);
@@ -63,6 +66,9 @@ export const Header = () => {
         }
         if ("quickLinks" in result) {
           setQuickLinksArr(result.quickLinks);
+        }
+        if ("collapse" in result) {
+          setCollapseState(result.collapse);
         }
       }
     );
