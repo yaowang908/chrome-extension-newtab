@@ -18,9 +18,11 @@ const CustomBackground = () => {
     console.log("Double Click!");
   };
   React.useEffect(() => {
-    setCollapseState(true);
+    // setCollapseState(true);
   }, [])
   
+  //TODO: preload next random image
+
   const buttonsClickHandler = (e:React.MouseEvent<HTMLDivElement>) => {
     e.stopPropagation();
     // console.log(e.currentTarget.id);

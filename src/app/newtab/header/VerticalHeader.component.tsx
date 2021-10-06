@@ -14,6 +14,7 @@ import arrow from "../../../assets/arrow.png";
 import { settingDialogueVisibility } from "../Recoil/setting.atom";
 import { QuickLinksSelector } from "../Recoil/quicklinks.atom";
 import { collapseAtom } from "../Recoil/collapse.atom";
+import delay from "../Helper/delay";
 
 export const VerticalHeader = () => {
   const [dataArr, setDataArr] = useRecoilState(linksSelector);
@@ -84,12 +85,22 @@ export const VerticalHeader = () => {
     e.preventDefault();
     const target = e.target as HTMLDivElement;
     // console.log(target.getAttribute("data-view"));
-    if (!collapseState && target.classList.value.includes("nav-ele")) {
-      setViewState(
-        target.getAttribute("data-view") as "Dashboard" | "QuickLinks"
-        );
+    const switchView = () => {
+      if (target.classList.value.includes("nav-ele")) {
+        setViewState(
+          target.getAttribute("data-view") as "Dashboard" | "QuickLinks"
+          );
+      }
     }
-    setCollapseState(false);
+
+    if(collapseState) {
+      delay(700, switchView);
+      setCollapseState(false);
+      // DONE: wait for 700ms for animation duration
+    } else {
+      switchView();
+    }
+
   };
 
   //setting
