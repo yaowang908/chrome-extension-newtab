@@ -3,10 +3,22 @@ import { useRecoilState } from 'recoil'
 import parse from 'html-react-parser'
 import ImageBuffer from './ImageBuffer.component'
 
-import { collapseSelector } from "../Recoil/collapse.atom";
+import {
+  backgroundStatusSelector,
+  currentAndNextBucketSelector,
+  getImgUrl,
+} from "../Recoil/background.selector"
+import { collapseSelector } from "../Recoil/collapse.atom"
+import throttle from '../Helper/throttle'
 
 const CustomBackground = () => {
   const [collapseState, setCollapseState] = useRecoilState(collapseSelector);
+  const [curAndNextBucketState, setCurAndNextBucketState] = useRecoilState(
+    currentAndNextBucketSelector
+  );
+  const [backgroundStatusState, setBackgroundStatusState] = useRecoilState(
+    backgroundStatusSelector
+  );
   
   const customBgClickHandler = (e: React.MouseEvent<HTMLDivElement>) => {
     if(e.target === e.currentTarget) {
@@ -25,17 +37,45 @@ const CustomBackground = () => {
     e.stopPropagation();
     // console.log(e.currentTarget.id);
     const clickedId = e.currentTarget.id;
+
+    const funcRandom = () => {
+      setCurAndNextBucketState({
+        current: curAndNextBucketState.next,
+        next: "",
+      });
+      getImgUrl()
+        .then((url) => {
+          if (typeof url === "string") {
+            // return img url
+            // set bucket 1
+            setCurAndNextBucketState({
+              current: curAndNextBucketState.next,
+              next: url,
+            });
+            setBackgroundStatusState("idle");
+          }
+        })
+        .catch((err) => {
+          console.error(err);
+          setBackgroundStatusState("error");
+        });
+      console.log("random");
+    }
+
     if(clickedId === 'bg_random'){
       // 
-      //TODO: add random 
+      //DONE: add random 
+      // TODO: throttle
+      // throttle(funcRandom, 300);
+      funcRandom()
     }
     if(clickedId === 'bg_like'){
       //TODO: add like button
-      
+      console.log('like')
     }
     if(clickedId === 'bg_custom'){
       //TODO: put custom image url
-
+      console.log('custom')
     }
   };
 

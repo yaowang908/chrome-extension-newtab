@@ -1,79 +1,48 @@
 import React, { Children } from 'react'
+import { useRecoilState } from 'recoil'
+
+import {
+  backgroundStatusSelector,
+  currentAndNextBucketSelector,
+  getImgUrl,
+} from "../Recoil/background.selector";
 
 interface ImageBuffer {
   onClick: (e: React.MouseEvent<HTMLDivElement>) => void;
 }
 
 const ImageBuffer:React.FC<ImageBuffer> = ({onClick, ...props}) => {
-  const [imgUrl, setImgUrl] = React.useState('');
-
-  const saveNextImg = (nextBg: string) => {
-    chrome.storage.sync.set({ nextBg: nextBg }, function () {
-      console.log("collapse are saved");
-    });
-  };
-
-  interface getNextImgProps {
-    getCurrentUrlAndSetNextUrl: () => void;
-    useExistNextUrlAndUpdateNextUrl: (url:string) => void;
-  }
-
-  const getNextImg = ({
-    getCurrentUrlAndSetNextUrl,
-    useExistNextUrlAndUpdateNextUrl,
-  }: getNextImgProps) => {
-    chrome.storage.sync.get(["nextBg"], function (result) {
-      console.log("in sync storage fn");
-      if ("nextBg" in result) {
-        // setImgUrl(result.nextBg);
-        console.log("nextBg exist");
-        useExistNextUrlAndUpdateNextUrl(result.nextBg);
-      } else {
-        getCurrentUrlAndSetNextUrl(); 
-      }
-    });
-  };
-
-  const getImgUrl = () => {
-    return fetch("https://source.unsplash.com/random/1920x1080?dark,city")
-      .then((response) => {
-        return response.url
-      })
-      .catch((error)=> {
-        console.error('Fetching Error: ', error);
-      });
-  }
+  const [curAndNextBucketState, setCurAndNextBucketState] = useRecoilState(currentAndNextBucketSelector);
+  const [backgroundStatusState, setBackgroundStatusState] = useRecoilState(backgroundStatusSelector);
   
   React.useEffect(() => {
-    const getCurrentUrlAndSetNextUrl = () => {
-      getImgUrl()
-        .then((currentUrl) => {
-          // console.log('image url: ',url)
-          if (typeof currentUrl === "string") {
-            setImgUrl(currentUrl);
-          }
-          // prepare next img
-          getImgUrl().then((nextUrl) => {
-            if (typeof nextUrl === "string") {
-              saveNextImg(nextUrl);
-            }
+    chrome.storage.sync.get(["currentBgUrl", "nextBgUrl"], function (result) {
+        console.log("in sync storage fn");
+        if ("currentBgUrl" in result && "nextBgUrl" in result) {
+          // when currentBgUrl and nextBgUrl exist in Chrome storage, load these URLs
+          setCurAndNextBucketState({
+            current: result['currentBgUrl'],
+            next: result['nextBgUrl']
           });
-        })
-        .catch((err) => {
-          console.error("Error: ", err);
-        });
-    }
-    const useExistNextUrlAndUpdateNextUrl = (url: string) => {
-      setImgUrl(url);
-      getImgUrl().then((nextUrl) => {
-        if (typeof nextUrl === "string") {
-          saveNextImg(nextUrl);
+        } else {
+          setBackgroundStatusState("current");
+          getImgUrl().then((url) => {
+            if (typeof url === "string") {
+              // return img url
+              getImgUrl().then((r) => {
+                if (typeof r === "string") {
+                  // set bucket 1
+                  setCurAndNextBucketState({current: url, next: r});
+                  setBackgroundStatusState("idle");
+                }
+              });
+            }
+          }).catch((err) => {
+            console.error(err);
+            setBackgroundStatusState("error");
+          });
         }
-      });
-    }
-
-    getNextImg({ getCurrentUrlAndSetNextUrl, useExistNextUrlAndUpdateNextUrl });
-    
+      })
   }, []);
 
   return (
@@ -82,7 +51,7 @@ const ImageBuffer:React.FC<ImageBuffer> = ({onClick, ...props}) => {
       style={{
         backgroundColor: "white",
         zIndex: -1,
-        backgroundImage: `url( ${imgUrl} )`,
+        backgroundImage: `url( ${curAndNextBucketState.current} )`,
         backgroundSize: "cover",
         backgroundPosition: "center",
       }}
