@@ -77,26 +77,30 @@ const defaultCurrentAndNextBucket = {current: '', next: ''};
 const setCurrentAndNextBucketToChromeSync = (
   props: currentAndNextBucketTypeInterface
 ) => {
-  chromeSet({
-    name: "currentBgUrl",
-    value: props.current,
-    successFn: () => {
-      console.log("Successfully set currentBgUrl ", props.current);
-    },
-    failFn: () => {
-      console.error("Error when set currentBgUrl ", props.current);
-    },
-  });
-  chromeSet({
-    name: "nextBgUrl",
-    value: props.next,
-    successFn: () => {
-      console.log("Successfully set nextBgUrl ", props.next);
-    },
-    failFn: () => {
-      console.error("Error when set nextBgUrl ", props.next);
-    },
-  });
+  if(props.current) {
+    chromeSet({
+      name: "currentBgUrl",
+      value: props.current,
+      successFn: () => {
+        console.log("Successfully set currentBgUrl ");
+      },
+      failFn: () => {
+        console.error("Error when set currentBgUrl ", props.current);
+      },
+    });
+  }
+  if(props.next) {
+    chromeSet({
+      name: "nextBgUrl",
+      value: props.next,
+      successFn: () => {
+        console.log("Successfully set nextBgUrl ");
+      },
+      failFn: () => {
+        console.error("Error when set nextBgUrl ", props.next);
+      },
+    });
+  }
 };
 
 const currentAndNextBucketAtom = atom<currentAndNextBucketTypeInterface>({

@@ -7,7 +7,8 @@ import {
   backgroundStatusSelector,
   currentAndNextBucketSelector,
   getImgUrl,
-} from "../Recoil/background.selector"
+  likedURLsSelector,
+} from "../Recoil/background.selector";
 import { collapseSelector } from "../Recoil/collapse.atom"
 import throttle from '../Helper/throttle'
 
@@ -19,6 +20,7 @@ const CustomBackground = () => {
   const [backgroundStatusState, setBackgroundStatusState] = useRecoilState(
     backgroundStatusSelector
   );
+  const [likedURLsState, setLikedURLsState] = useRecoilState(likedURLsSelector);
   
   const customBgClickHandler = (e: React.MouseEvent<HTMLDivElement>) => {
     if(e.target === e.currentTarget) {
@@ -28,23 +30,29 @@ const CustomBackground = () => {
   };
 
   React.useEffect(() => {
-    // setCollapseState(true);
+    // init likedURLsState
+    chrome.storage.sync.get(["likedURLs"], function (result) {
+      if ("likedURLs" in result) {
+        setLikedURLsState(result['likedURLs']);
+      } else {
+        // do nothing
+      }
+    });
   }, [])
   
-  //TODO: preload next random image
+  //DONE: preload next random image
 
+  let isFetching = false;
   const buttonsClickHandler = (e:React.MouseEvent<HTMLDivElement>) => {
     e.stopPropagation();
     // console.log(e.currentTarget.id);
     const clickedId = e.currentTarget.id;
-
     const funcRandom = () => {
-      setCurAndNextBucketState({
-        current: curAndNextBucketState.next,
-        next: "",
-      });
+      // add fetching status, to enable pause function
+      isFetching = true;
       getImgUrl()
         .then((url) => {
+          isFetching = false;
           if (typeof url === "string") {
             // return img url
             // set bucket 1
@@ -59,19 +67,39 @@ const CustomBackground = () => {
           console.error(err);
           setBackgroundStatusState("error");
         });
-      console.log("random");
+      // console.log("random");
     }
 
     if(clickedId === 'bg_random'){
-      // 
-      //DONE: add random 
-      // TODO: throttle
-      // throttle(funcRandom, 300);
-      funcRandom()
+      //DONE: add random
+      // DONE: throttle
+      // console.log("bg_random")
+      
+      // disable click while fetching
+      if (isFetching) {
+        console.log("Too FAST!!!!");
+        return;
+      }
+      // throttle returns a funtion, need to call
+      throttle(funcRandom, 500)();
+      // funcRandom()
     }
+
+
+
     if(clickedId === 'bg_like'){
-      //TODO: add like button
-      console.log('like')
+      //DONE: add like button
+      // console.log('like')
+      if (curAndNextBucketState.current) {
+        // only unique URLs
+        const likedURLsNextSet = new Set([
+          ...likedURLsState,
+          curAndNextBucketState.current,
+        ]);
+        //  if no URL added, return
+        if(likedURLsNextSet.size === likedURLsState.length) return;
+        setLikedURLsState([...likedURLsNextSet]);
+      }
     }
     if(clickedId === 'bg_custom'){
       //TODO: put custom image url

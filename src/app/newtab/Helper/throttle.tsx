@@ -1,17 +1,25 @@
-const throttle = (func: (arg?:any)=>void, delay: number, ...args:any[]) => {
-  let timer: null | NodeJS.Timeout = null;
-  let startTime = Date.now();
-  return function() {
-    const curTime = Date.now();
-    const remaining = delay - (curTime - startTime);
-    if (timer) clearTimeout(timer);
-    if(remaining <= 0 ) {
-      func(args);
-      startTime = Date.now();
+const throttle = (fn: Function, wait: number = 300) => {
+  let inThrottle: boolean,
+    lastFn: ReturnType<typeof setTimeout>,
+    lastTime: number;
+  return function (this: any) {
+    const context = this,
+      args = arguments;
+    // console.log("throttle");
+    if (!inThrottle) {
+      fn.apply(context, args);
+      lastTime = Date.now();
+      inThrottle = true;
     } else {
-      timer = setTimeout(func, remaining);
+      clearTimeout(lastFn);
+      lastFn = setTimeout(() => {
+        if (Date.now() - lastTime >= wait) {
+          fn.apply(context, args);
+          lastTime = Date.now();
+        }
+      }, Math.max(wait - (Date.now() - lastTime), 0));
     }
-  }
-}
+  };
+};
 
 export default throttle;
