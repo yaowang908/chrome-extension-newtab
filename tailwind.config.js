@@ -17,7 +17,21 @@ module.exports = {
   },
   darkMode: false, // or 'media' or 'class'
   theme: {
-    extend: {},
+    extend: {
+      // that is animation class
+      animation: {
+        fade: "fadeOut 2s ease-in-out",
+      },
+
+      // that is actual animation
+      keyframes: () => ({
+        fadeOut: {
+          "0%":   { opacity: 0, top: '10%' },
+          "80%":  { opacity: 1, top: '20%' },
+          "100%": { opacity: 0, top: '25%' }
+        },
+      }),
+    },
   },
   variants: {
     extend: {

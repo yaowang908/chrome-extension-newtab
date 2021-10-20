@@ -1,5 +1,5 @@
 import React from 'react'
-import { useRecoilState } from 'recoil'
+import { useRecoilState, useSetRecoilState } from 'recoil'
 import parse from 'html-react-parser'
 import ImageBuffer from './ImageBuffer.component'
 
@@ -9,6 +9,7 @@ import {
   getImgUrl,
   likedURLsSelector,
 } from "../Recoil/background.selector";
+import { notificationVisibility, notificationMessageAtom } from '../Recoil/notification.atom';
 import { collapseSelector } from "../Recoil/collapse.atom"
 import throttle from '../Helper/throttle'
 
@@ -21,6 +22,8 @@ const CustomBackground = () => {
     backgroundStatusSelector
   );
   const [likedURLsState, setLikedURLsState] = useRecoilState(likedURLsSelector);
+  const setNotificationVisibility = useSetRecoilState(notificationVisibility);
+  const setNotificationMessage = useSetRecoilState(notificationMessageAtom);
   
   const customBgClickHandler = (e: React.MouseEvent<HTMLDivElement>) => {
     if(e.target === e.currentTarget) {
@@ -77,6 +80,8 @@ const CustomBackground = () => {
       
       // disable click while fetching
       if (isFetching) {
+        setNotificationVisibility(true);
+        setNotificationMessage("Too FAST!! Or Slow network responds.")
         console.log("Too FAST!!!!");
         return;
       }
