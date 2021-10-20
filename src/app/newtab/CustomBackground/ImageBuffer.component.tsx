@@ -47,12 +47,11 @@ const ImageBuffer:React.FC<ImageBuffer> = ({onClick, ...props}) => {
 
   return (
     <div
-      className={`w-full h-screen fixed top-0 left-0 overflow-hidden bg-gray-100`}
+      className={`w-full h-screen fixed top-0 left-0 overflow-hidden bg-blue-900`}
       style={{
-        backgroundColor: "white",
         zIndex: -1,
-        backgroundImage: `url( ${curAndNextBucketState.current} )`,
-        backgroundSize: "cover",
+        backgroundImage: `url( ${curAndNextBucketState.current} ), linear-gradient(270deg, #034eca, #1bbbd5)`,
+        backgroundSize: "cover, 400% 400%",
         backgroundPosition: "center",
       }}
       onClick={onClick}

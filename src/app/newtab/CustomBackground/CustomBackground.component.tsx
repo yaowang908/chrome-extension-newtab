@@ -109,11 +109,13 @@ const CustomBackground = () => {
         ]);
         //  if no URL added, return
         if (likedURLsNextSet.size === likedURLsState.length) return;
-        setLikedURLsState([...likedURLsNextSet]);
+        setLikedURLsState([...likedURLsNextSet]);        
+        setNotificationVisibility(true);
+        setNotificationMessage("Image Saved!");
       }
     }
     if(clickedId === 'bg_custom'){
-      //TODO: put custom image url
+      //TODO: put custom keyword
       console.log('custom')
     }
   };
@@ -121,34 +123,34 @@ const CustomBackground = () => {
   return (
     <ImageBuffer onClick={customBgClickHandler}>
       <div className={`absolute bottom-6 left-6`}>
-        <div className="w-full h-auto grid grid-cols-4 gap-3 place-items-center bg-opacity-50 bg-gray-100 z-10 px-5 py-2">
+        <div className="w-full h-auto grid grid-cols-4 gap-3 place-items-center bg-opacity-30 bg-gray-100 z-10 px-5 py-2">
           <div
             id="bg_random"
             className={`cursor-pointer transform scale-100 hover:scale-125 duration-300`}
             onClick={buttonsClickHandler}
           >
-            <img className="w-8 h-8" src={icon_random} />
+            <img className="w-5 h-5" src={icon_random} />
           </div>
           <div
             id="bg_loop"
             className={`cursor-pointer transform scale-100 hover:scale-125 duration-300`}
             onClick={buttonsClickHandler}
           >
-            <img className="w-8 h-8" src={icon_loopLiked} />
+            <img className="w-5 h-5" src={icon_loopLiked} />
           </div>
           <div
             id="bg_like"
             className={`cursor-pointer transform scale-100 hover:scale-125 duration-300`}
             onClick={buttonsClickHandler}
           >
-            <img className="w-8 h-8" src={icon_like} />
+            <img className="w-5 h-5" src={icon_like} />
           </div>
           <div
             id="bg_custom"
             className={`cursor-pointer transform scale-100 hover:scale-125 duration-300`}
             onClick={buttonsClickHandler}
           >
-            <img className="w-12 h-12" src={icon_search} />
+            <img className="w-8 h-8" src={icon_search} />
           </div>
         </div>
       </div>

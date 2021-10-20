@@ -115,6 +115,10 @@ const currentAndNextBucketSelector = selector({
     if (method instanceof DefaultValue) {
       set(currentAndNextBucketAtom, method);
     } else {
+      // preload images into cache
+      const images = { current: new Image(), next: new Image() };
+      images.current.src = method.current;
+      images.next.src = method.next;
       set(currentAndNextBucketAtom, method);
       setCurrentAndNextBucketToChromeSync({
         current: method.current,

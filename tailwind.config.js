@@ -21,6 +21,7 @@ module.exports = {
       // that is animation class
       animation: {
         fade: "fadeOut 2s ease-in-out",
+        gradient: "colorChange 30s ease infinite"
       },
 
       // that is actual animation
@@ -30,6 +31,11 @@ module.exports = {
           "80%":  { opacity: 1, top: '20%' },
           "100%": { opacity: 0, top: '25%' }
         },
+        colorChange: {
+          '0%': {backgroundPosition:'0% 50%'},
+          '50%': {backgroundPosition:'100% 50%'},
+          '100%': {backgroundPosition:'0% 50%'}
+        }
       }),
     },
   },
