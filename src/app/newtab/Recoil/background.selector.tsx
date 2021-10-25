@@ -267,6 +267,37 @@ const getLikedURLsFromChromeSync = (
   });
 };
 
+const keywordAtom = atom<string >({
+  key: "keywordAtom",
+  default: 'dark,city'
+})
+
+const setKeywordToChromeSync = (newState:string) => {
+  chromeSet({
+    name: "keyword",
+    value: newState,
+    successFn: () => {
+      console.log("Successfully set keyword ");
+    },
+    failFn: () => {
+      console.error("Error when set keyword ", newState);
+    },
+  });
+}
+
+const keywordSelector = selector({
+  key: "keywordSelector",
+  get: ({ get }) => get(keywordAtom),
+  set: ({ set, get }, method: string | DefaultValue) => {
+    if (method instanceof DefaultValue) {
+      set(keywordAtom, method);
+    } else {
+      set(keywordAtom, method);
+      setKeywordToChromeSync(method);
+    }
+  },
+});
+
 export {
   backgroundStatusSelector,
   backgroundModeAtom,
@@ -275,4 +306,5 @@ export {
   likedURLsSelector,
   getCurrentAndNextBucketFromChromeSync,
   getLikedURLsFromChromeSync,
+  keywordSelector,
 };

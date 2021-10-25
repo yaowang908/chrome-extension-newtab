@@ -22,6 +22,9 @@ const Link: React.FC<DraggableLinkPropsInterface> = ({
 
   const colorTheme = useRecoilValue(colorThemeSelector);
   const linkTitle = React.useRef<HTMLDivElement>(null);
+  const [iconUrl, setIconUrl] = React.useState(
+    "https://via.placeholder.com/16"
+  );
 
   const removeCurrentLink = () => {
     setDataArr(dataArr?.filter((x) => x?.id !== id));
@@ -111,6 +114,10 @@ const Link: React.FC<DraggableLinkPropsInterface> = ({
     }
   };
 
+  React.useEffect(() => {
+    if (imageUrl) setIconUrl(imageUrl);
+  }, [imageUrl]);
+
   return (
     <div
       className={`grid grid-cols-12 items-center group ${
@@ -128,7 +135,7 @@ const Link: React.FC<DraggableLinkPropsInterface> = ({
         }}
       ></div> */}
       <LazyImage
-        src={imageUrl ? imageUrl : "https://via.placeholder.com/16"}
+        src={iconUrl}
         className="col-span-1 w-3 h-3 sm:w-6 sm:h-6 bg-center bg-contain bg-no-repeat cursor-pointer mr-2"
       />
       <div

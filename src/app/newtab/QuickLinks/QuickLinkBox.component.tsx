@@ -13,6 +13,7 @@ const QuickLinkBox: React.FC<quickLinkInterface> = ({ title, url, index = false}
   const setVisibility = useSetRecoilState(QuickLinkEditorVisibility);
   const setMode = useSetRecoilState(QuickLinkEditorMode);
   const setSelectedQuickLinkIndexState = useSetRecoilState(SelectedQuickLinkIndex);
+  const [iconUrl, setIconUrl] = React.useState('');
 
   const onClickHandler = (e: React.MouseEvent<HTMLDivElement>) => {
     e.preventDefault();
@@ -35,6 +36,12 @@ const QuickLinkBox: React.FC<quickLinkInterface> = ({ title, url, index = false}
     }
   }
 
+  React.useEffect(() => {
+    setIconUrl(
+      `https://www.google.com/s2/favicons?domain=${protocolAutoPrefix(url)}`
+    );
+  }, [])
+
   return (
     <div
       className="relative pb-full box-border color-white cursor-pointer box-border group z-20 grid place-items-center hover:bg-white hover:bg-opacity-30 focus:bg-white focus:bg-opacity-30"
@@ -49,9 +56,7 @@ const QuickLinkBox: React.FC<quickLinkInterface> = ({ title, url, index = false}
         ...
       </div>
       <LazyImage
-        src={`https://www.google.com/s2/favicons?domain=${protocolAutoPrefix(
-          url
-        )}`}
+        src={iconUrl}
         alt={title}
         className="block pointer-events-none"
         style={{ width: "3vmin", height: "3vmin" }}

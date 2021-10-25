@@ -1,10 +1,11 @@
 import React, { Children } from 'react'
-import { useRecoilState } from 'recoil'
+import { useRecoilState, useRecoilValue } from 'recoil'
 
 import {
   backgroundStatusSelector,
   currentAndNextBucketSelector,
   getImgUrl,
+  keywordSelector,
 } from "../Recoil/background.selector";
 import LazyImage from '../LazyImage/LazyImage.component';
 
@@ -15,6 +16,7 @@ interface ImageBuffer {
 const ImageBuffer:React.FC<ImageBuffer> = ({onClick, ...props}) => {
   const [curAndNextBucketState, setCurAndNextBucketState] = useRecoilState(currentAndNextBucketSelector);
   const [backgroundStatusState, setBackgroundStatusState] = useRecoilState(backgroundStatusSelector);
+  const keywordState = useRecoilValue(keywordSelector);
   
   React.useEffect(() => {
     chrome.storage.sync.get(["currentBgUrl", "nextBgUrl"], function (result) {
@@ -27,21 +29,23 @@ const ImageBuffer:React.FC<ImageBuffer> = ({onClick, ...props}) => {
           });
         } else {
           setBackgroundStatusState("current");
-          getImgUrl().then((url) => {
-            if (typeof url === "string") {
-              // return img url
-              getImgUrl().then((r) => {
-                if (typeof r === "string") {
-                  // set bucket 1
-                  setCurAndNextBucketState({current: url, next: r});
-                  setBackgroundStatusState("idle");
-                }
-              });
-            }
-          }).catch((err) => {
-            console.error(err);
-            setBackgroundStatusState("error");
-          });
+          getImgUrl(keywordState)
+            .then((url) => {
+              if (typeof url === "string") {
+                // return img url
+                getImgUrl(keywordState).then((r) => {
+                  if (typeof r === "string") {
+                    // set bucket 1
+                    setCurAndNextBucketState({ current: url, next: r });
+                    setBackgroundStatusState("idle");
+                  }
+                });
+              }
+            })
+            .catch((err) => {
+              console.error(err);
+              setBackgroundStatusState("error");
+            });
         }
       })
   }, []);
