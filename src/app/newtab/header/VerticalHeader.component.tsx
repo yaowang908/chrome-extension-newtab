@@ -6,16 +6,15 @@ import {
   colorThemeSelector,
   colorThemeChangedSelector,
 } from "../Recoil/color_theme.atom";
-import setting from "../setting/setting";
 import { visibleSelector } from "../Recoil/visible.atom";
 import { viewSelector, viewType } from "../Recoil/view.atom";
-import DashboardButtons from "./DashboardButtons";
-import QuickLinksButtons from "./QuickLinksButtons";
 import { listViewLeftPanelVisibilitySelector } from "../Recoil/bookmarks.selector";
 import { settingSelector } from "../Recoil/setting.atom";
 import arrow from "../../../assets/arrow.png";
 import { settingDialogueVisibility } from "../Recoil/setting.atom";
 import { QuickLinksSelector } from "../Recoil/quicklinks.atom";
+import { collapseSelector } from "../Recoil/collapse.atom";
+import delay from "../Helper/delay";
 
 export const VerticalHeader = () => {
   const [dataArr, setDataArr] = useRecoilState(linksSelector);
@@ -32,13 +31,23 @@ export const VerticalHeader = () => {
     settingDialogueVisibility
   );
   const setQuickLinksArr = useSetRecoilState(QuickLinksSelector);
+  const [collapseState, setCollapseState] = useRecoilState(collapseSelector);
 
   const buttonHighlighter = React.useRef<HTMLDivElement>(null);
 
   // app init
   React.useEffect(() => {
     chrome.storage.sync.get(
-      ["tabs", "visible", "view", "LVLPVisibility", "colorTheme", "setting", "quickLinks",],
+      [
+        "tabs",
+        "visible",
+        "view",
+        "LVLPVisibility",
+        "colorTheme",
+        "setting",
+        "quickLinks",
+        "collapse",
+      ],
       function (result) {
         // console.log('get tabs from sync storage',result);
         if ("tabs" in result) {
@@ -65,6 +74,9 @@ export const VerticalHeader = () => {
         if ("quickLinks" in result) {
           setQuickLinksArr(result.quickLinks);
         }
+        if ("collapse" in result) {
+          setCollapseState(result.collapse);
+        }
       }
     );
   }, []);
@@ -85,9 +97,22 @@ export const VerticalHeader = () => {
     e.preventDefault();
     const target = e.target as HTMLDivElement;
     // console.log(target.getAttribute("data-view"));
-    if (target.classList.value.includes("nav-ele")) {
-      setViewState(target.getAttribute("data-view") as "Dashboard" | "QuickLinks");
+    const switchView = () => {
+      if (target.classList.value.includes("nav-ele")) {
+        setViewState(
+          target.getAttribute("data-view") as "Dashboard" | "QuickLinks"
+          );
+      }
     }
+
+    if(collapseState) {
+      delay(700, switchView);
+      setCollapseState(false);
+      // DONE: wait for 700ms for animation duration
+    } else {
+      switchView();
+    }
+
   };
 
   //setting
@@ -96,10 +121,63 @@ export const VerticalHeader = () => {
     setSettingVisibility(!settingVisibility);
   };
 
+  //toggle collapse
+  const collapseClickHandler = (e: React.MouseEvent<HTMLDivElement>) => {
+    console.log('toggle collapse')
+    setCollapseState(!collapseState);
+  };
+
+  // replace default tab
+  const keepDefaultNewTab = () => {
+    chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
+      const activeTab = tabs[0];
+      // console.log(activeTab);
+      if (activeTab?.url && activeTab.url === "chrome://newtab/") {
+        chrome.tabs.update({
+          url: "chrome-search://local-ntp/local-ntp.html",
+        });
+      }
+    });
+  };
+
+  React.useEffect(() => {
+    if('replaceTheDefaultNewTab' in settingState) {
+      if(settingState.replaceTheDefaultNewTab) {
+        // replace default new tab
+        // console.log('replace default new tab')
+      } else {
+        // console.log('keep default new tab')
+        keepDefaultNewTab();
+      }
+    } else {
+      // console.log('wrong')
+      keepDefaultNewTab();
+    }
+  }, [])
+
   return (
-    <div className="navigation h-screen relative w-24 px-5 font-bold text-xl">
-      <div className="w-full h-24 pt-8 mx-auto">
-        <img className="box-border mx-auto w-6 h-6 cursor-pointer" src="https://assets.codepen.io/390494/Vector+1.png" />
+    <div
+      className="bg navigation h-screen relative z-10 w-24 px-5 font-bold text-xl transition ease-in-out duration-700"
+      style={{
+        borderRadius: `${collapseState ? "2rem 0 0 2rem" : "0"}`,
+        transform: `${
+          collapseState
+            ? "translateX(calc(100vw - 6rem))"
+            : "translateX(0)"
+        }`,
+      }}
+    >
+      <div
+        className="w-full h-24 pt-8 mx-auto pointer-events-auto cursor-pointer"
+        onClick={collapseClickHandler}
+      >
+        <img
+          className="box-border mx-auto w-6 h-6 transition ease-in-out duration-500"
+          src={arrow}
+          style={{
+            transform: `${collapseState ? "rotate(180deg)" : "rotate(0)"}`,
+          }}
+        />
       </div>
       <div className="w-6 h-auto mt-4 mx-auto flex flex-col justify-between">
         <div
@@ -125,7 +203,10 @@ export const VerticalHeader = () => {
         </div>
       </div>
       <div className="w-14 h-auto absolute bottom-0">
-        <div className="nav-ele cursor-pointer mx-auto" onClick={settingClickHandler}>
+        <div
+          className="nav-ele cursor-pointer mx-auto"
+          onClick={settingClickHandler}
+        >
           Setting
         </div>
         <div className="w-full h-24"></div>

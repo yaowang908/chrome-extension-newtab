@@ -9,6 +9,8 @@ import EditGroup from "./Group/EditGroup.component";
 import ErrorHandler from "./ErrorHandler/ErrorHandler.component";
 import Layout from "./Layout/Layout.component";
 import EditQuickLink from "./QuickLinks/EditQuickLink.component";
+import Notification from "./Notification/Notification.component";
+import Loading from "./Loading/Loading.component";
 
 const App: React.FC = () => {
 
@@ -20,8 +22,10 @@ const App: React.FC = () => {
       <DndProvider backend={HTML5Backend}>
         <div
           className={`w-full h-screen relative p-0 overflow-hidden box-border`}
-        >
+        > 
+          <Notification />
           <ErrorHandler />
+          <Loading />
           <Setting />
           <EditGroup />
           <EditQuickLink />

@@ -10,6 +10,17 @@ import { settingDialogueVisibility } from "../Recoil/setting.atom";
 import handleDuplicates from "../Helper/duplicateLinks";
 import closeChromeTabs from '../Helper/chromeCloseTabs';
 
+
+export const getOrder = (
+  prevArr: LinkProps[] | undefined,
+  currentIndex: number
+) => {
+  if (prevArr) {
+    return prevArr.length + currentIndex;
+  }
+  return currentIndex;
+};
+
 const DashboardButtons = () => {
   const [dataArr, setDataArr] = useRecoilState(linksSelector);
   const colorTheme = useRecoilValue(colorThemeSelector);
@@ -17,20 +28,9 @@ const DashboardButtons = () => {
     settingDialogueVisibility
   );
   
-  
   const collectClickHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation();
     let queryOptions = {};
-
-    const getOrder = (
-      prevArr: LinkProps[] | undefined,
-      currentIndex: number
-    ) => {
-      if (prevArr) {
-        return prevArr.length + currentIndex;
-      }
-      return currentIndex;
-    };
 
     chrome.tabs.query(queryOptions).then((res) => {
       // console.log(res);
@@ -48,22 +48,10 @@ const DashboardButtons = () => {
       if (dataArr) {
         const newState = [...dataArr, ...formatData];
         setDataArr(handleDuplicates(newState));
-        // if (hasDuplicates(newState)) {
-        //   console.log("Removed duplicates!");
-        //   setDataArr(removeDuplicates(newState));
-        // } else {
-        //   setDataArr(newState);
-        // }
-        // setDataArr([...dataArr, ...formatData]);
       } else {
         setDataArr(formatData);
       }
     });
-    // chrome.runtime.sendMessage({
-    //   method: "allTabs"
-    // }, (response) => {
-    //   console.log(response)
-    // });
     closeClickHandler();
   };
 
@@ -106,6 +94,7 @@ const DashboardButtons = () => {
     e.stopPropagation();
     setSettingVisibility(!settingVisibility);
   };
+
 
   return (
     <div

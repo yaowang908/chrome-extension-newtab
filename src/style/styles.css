@@ -58,7 +58,7 @@ button {
 }
 
 p {
-  @apply pb-5
+  @apply pb-5;
 }
 
 /* Layout.component */
@@ -69,6 +69,18 @@ p {
 .bg .navigation {
   color: white;
 }
+
+.navigation:after {
+    content: '';
+    position: absolute;
+    background-color: var(--darkerPanelColor);
+    left: 5rem;
+    top: 0;
+    width: 20rem;
+    height: 100vh;
+    z-index: 10;
+}
+
 .bg .navigation .nav-select {
   background-color: var(--lighterPanelColor);
 }
@@ -120,4 +132,31 @@ p {
 .cross:hover > div > .cross-arm {
   background-color: var(--lighterPanelColor);
   border: 1px solid var(--textColor)
+}
+
+
+/* loading screen */
+.lds-dual-ring {
+  display: inline-block;
+  width: 80px;
+  height: 80px;
+}
+.lds-dual-ring:after {
+  content: " ";
+  display: block;
+  width: 64px;
+  height: 64px;
+  margin: 8px;
+  border-radius: 50%;
+  border: 6px solid #fff;
+  border-color: #fff transparent #fff transparent;
+  animation: lds-dual-ring 1.2s linear infinite;
+}
+@keyframes lds-dual-ring {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }

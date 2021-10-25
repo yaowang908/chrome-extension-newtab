@@ -17,7 +17,7 @@ const QuickLinksAtom = atom<quickLinkInterface[]>({
 
 const storeQuickLinks = (newArr: quickLinkInterface[] | undefined) => {
   chrome.storage.sync.set({ quickLinks: newArr }, function () {
-    console.log('QuickLinks are saved locally ');
+    // console.log('QuickLinks are saved locally ');
   });
 };
 

@@ -16,6 +16,7 @@ import {
   errorModuleVisibility,
   errorMessageAtom,
 } from "../Recoil/errorModule.atom";
+import { nanoid } from 'nanoid';
 
 const Setting = () => {
   const [colorTheme, setColorTheme] = useRecoilState(colorThemeSelector);
@@ -254,7 +255,7 @@ const Setting = () => {
                       {/* <option value="DEFAULT">--Please select theme--</option> */}
                       {["blackTheme", "whiteTheme"].map((x) => {
                         if(x!==colorTheme) {
-                          return <option value={x}>{getThemeName(x as ("blackTheme" | "whiteTheme"))}</option>;
+                          return <option value={x} key={nanoid()}>{getThemeName(x as ("blackTheme" | "whiteTheme"))}</option>;
                         }
                       })}
                     </select>

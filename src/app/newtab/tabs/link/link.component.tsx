@@ -6,6 +6,7 @@ import { linksSelector } from '../../Recoil/links_selector.atom';
 import { colorThemeSelector } from "../../Recoil/color_theme.atom";
 import setting from '../../setting/setting';
 import { DraggableLinkPropsInterface } from './draggableLink.component';
+import LazyImage from '../../LazyImage/LazyImage.component';
 
 const Link: React.FC<DraggableLinkPropsInterface> = ({
   id,
@@ -21,6 +22,9 @@ const Link: React.FC<DraggableLinkPropsInterface> = ({
 
   const colorTheme = useRecoilValue(colorThemeSelector);
   const linkTitle = React.useRef<HTMLDivElement>(null);
+  const [iconUrl, setIconUrl] = React.useState(
+    "https://via.placeholder.com/16"
+  );
 
   const removeCurrentLink = () => {
     setDataArr(dataArr?.filter((x) => x?.id !== id));
@@ -35,9 +39,32 @@ const Link: React.FC<DraggableLinkPropsInterface> = ({
     e.preventDefault();
     e.stopPropagation();
     chrome.tabs.create({
-      active: true,
+      active: false,
       url: link,
     });
+    removeCurrentLink();
+  };
+
+  const openClickHandlerInSameTab = (e: React.MouseEvent<HTMLElement>) => {
+    e.preventDefault();
+    e.stopPropagation();
+    // chrome.tabs.create({
+    //   active: true,
+    //   url: link,
+    // });
+    chrome.tabs.query(
+      {currentWindow: true, active : true},
+      function(tabArray){
+        tabArray.forEach(tab => {
+          if(tab?.id) {
+            chrome.tabs.update(tab?.id, {
+              url: link,
+            });
+          }
+
+        })
+      }
+    )
     removeCurrentLink();
   };
 
@@ -87,6 +114,10 @@ const Link: React.FC<DraggableLinkPropsInterface> = ({
     }
   };
 
+  React.useEffect(() => {
+    if (imageUrl) setIconUrl(imageUrl);
+  }, [imageUrl]);
+
   return (
     <div
       className={`grid grid-cols-12 items-center group ${
@@ -95,14 +126,18 @@ const Link: React.FC<DraggableLinkPropsInterface> = ({
           : "w-full  md:w-4/5 lg:w-3/5"
       }`}
     >
-      <div
+      {/* <div
         className="col-span-1 w-3 h-3 sm:w-6 sm:h-6 bg-center bg-contain bg-no-repeat cursor-pointer mr-2"
         style={{
           backgroundImage: `url(${
             imageUrl ? imageUrl : "https://via.placeholder.com/16"
           })`,
         }}
-      ></div>
+      ></div> */}
+      <LazyImage
+        src={iconUrl}
+        className="col-span-1 w-3 h-3 sm:w-6 sm:h-6 bg-center bg-contain bg-no-repeat cursor-pointer mr-2"
+      />
       <div
         className={`col-span-11 relative grid grid-cols-12 gap-1 cursor-pointer`}
         style={{
@@ -176,7 +211,7 @@ const Link: React.FC<DraggableLinkPropsInterface> = ({
         </div>
         <div className="col-span-12 group-hover:col-span-10 block whitespace-nowrap truncate">
           <div
-            onClick={openClickHandler}
+            onClick={openClickHandlerInSameTab}
             onBlur={linkTitleOnBlurHandler}
             onKeyDown={linkTitleOnKeyDownHandler}
             className="text-base"
