@@ -16,6 +16,7 @@ import icon_like from "../../../assets/like.png";
 import icon_loopLiked from "../../../assets/loop liked.png";
 import icon_random from "../../../assets/random.png";
 import icon_search from "../../../assets/search.png";
+import LazyImage from '../LazyImage/LazyImage.component';
 
 const CustomBackground = () => {
   const [collapseState, setCollapseState] = useRecoilState(collapseSelector);
@@ -56,6 +57,7 @@ const CustomBackground = () => {
     const clickedId = e.currentTarget.id;
     const funcRandom = () => {
       // add fetching status, to enable pause function
+      // TODO: when keyword changes, update both at first run
       isFetching = true;
       getImgUrl()
         .then((url) => {
@@ -96,6 +98,8 @@ const CustomBackground = () => {
 
     if (clickedId === "bg_loop") {
       // TODO: loop liked
+      // every 30 minutes change image
+      // or every time collapse the content
     }
 
     if (clickedId === "bg_like") {
@@ -129,28 +133,28 @@ const CustomBackground = () => {
             className={`cursor-pointer transform scale-100 hover:scale-125 duration-300`}
             onClick={buttonsClickHandler}
           >
-            <img className="w-5 h-5" src={icon_random} />
+            <LazyImage className="w-5 h-5" src={icon_random} />
           </div>
           <div
             id="bg_loop"
             className={`cursor-pointer transform scale-100 hover:scale-125 duration-300`}
             onClick={buttonsClickHandler}
           >
-            <img className="w-5 h-5" src={icon_loopLiked} />
+            <LazyImage className="w-5 h-5" src={icon_loopLiked} />
           </div>
           <div
             id="bg_like"
             className={`cursor-pointer transform scale-100 hover:scale-125 duration-300`}
             onClick={buttonsClickHandler}
           >
-            <img className="w-5 h-5" src={icon_like} />
+            <LazyImage className="w-5 h-5" src={icon_like} />
           </div>
           <div
             id="bg_custom"
             className={`cursor-pointer transform scale-100 hover:scale-125 duration-300`}
             onClick={buttonsClickHandler}
           >
-            <img className="w-8 h-8" src={icon_search} />
+            <LazyImage className="w-8 h-8" src={icon_search} />
           </div>
         </div>
       </div>

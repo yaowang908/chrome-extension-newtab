@@ -6,6 +6,7 @@ import { linksSelector } from '../../Recoil/links_selector.atom';
 import { colorThemeSelector } from "../../Recoil/color_theme.atom";
 import setting from '../../setting/setting';
 import { DraggableLinkPropsInterface } from './draggableLink.component';
+import LazyImage from '../../LazyImage/LazyImage.component';
 
 const Link: React.FC<DraggableLinkPropsInterface> = ({
   id,
@@ -118,14 +119,18 @@ const Link: React.FC<DraggableLinkPropsInterface> = ({
           : "w-full  md:w-4/5 lg:w-3/5"
       }`}
     >
-      <div
+      {/* <div
         className="col-span-1 w-3 h-3 sm:w-6 sm:h-6 bg-center bg-contain bg-no-repeat cursor-pointer mr-2"
         style={{
           backgroundImage: `url(${
             imageUrl ? imageUrl : "https://via.placeholder.com/16"
           })`,
         }}
-      ></div>
+      ></div> */}
+      <LazyImage
+        src={imageUrl ? imageUrl : "https://via.placeholder.com/16"}
+        className="col-span-1 w-3 h-3 sm:w-6 sm:h-6 bg-center bg-contain bg-no-repeat cursor-pointer mr-2"
+      />
       <div
         className={`col-span-11 relative grid grid-cols-12 gap-1 cursor-pointer`}
         style={{

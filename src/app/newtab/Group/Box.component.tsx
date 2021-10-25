@@ -15,6 +15,7 @@ import {
 } from "../Recoil/groupEditor.atom";
 import handleDuplicates from "../Helper/duplicateLinks";
 import closeChromeTabs from "../Helper/chromeCloseTabs";
+import LazyImage from "../LazyImage/LazyImage.component";
 
 interface BoxProps {
   groupName?: string;
@@ -114,7 +115,7 @@ export const Box: React.FC<BoxProps> = ({
         {data
           ? data.map((el) => {
               return (
-                <img
+                <LazyImage
                   className="h-6 w-6 cursor-pointer"
                   key={el.id}
                   src={

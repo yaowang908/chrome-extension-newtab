@@ -6,6 +6,7 @@ import {
   currentAndNextBucketSelector,
   getImgUrl,
 } from "../Recoil/background.selector";
+import LazyImage from '../LazyImage/LazyImage.component';
 
 interface ImageBuffer {
   onClick: (e: React.MouseEvent<HTMLDivElement>) => void;
@@ -46,17 +47,16 @@ const ImageBuffer:React.FC<ImageBuffer> = ({onClick, ...props}) => {
   }, []);
 
   return (
-    <div
-      className={`w-full h-screen fixed top-0 left-0 overflow-hidden bg-blue-900`}
-      style={{
-        zIndex: -1,
-        backgroundImage: `url( ${curAndNextBucketState.current} ), linear-gradient(270deg, #034eca, #1bbbd5)`,
-        backgroundSize: "cover, 400% 400%",
-        backgroundPosition: "center",
-      }}
-      onClick={onClick}
-    >
+    <div className={`w-full h-screen fixed top-0 left-0 overflow-hidden`} >
       {props.children}
+      <LazyImage
+        src={curAndNextBucketState.current}
+        className="w-full h-screen fixed top-0 left-0 object-cover"
+        style={{
+          zIndex: -1,
+        }}
+        onClick={onClick}
+      />
     </div>
   );
 }

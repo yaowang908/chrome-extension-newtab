@@ -38,8 +38,8 @@ const backgroundStatusSelector = selector({
   },
 });
 
-const getImgUrl = () => {
-  return fetch("https://source.unsplash.com/random/1920x1080?dark,city")
+const getImgUrl = (keyword:string = "dark, city") => {
+  return fetch(`https://source.unsplash.com/random/1920x1080?${keyword}`)
     .then((response) => {
       return response.url;
     })

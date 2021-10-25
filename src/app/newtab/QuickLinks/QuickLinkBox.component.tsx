@@ -7,6 +7,7 @@ import {
   SelectedQuickLinkIndex,
 } from "../Recoil/quicklinks.atom";
 import protocolAutoPrefix from "../Helper/protocolAutoPrefix";
+import LazyImage from '../LazyImage/LazyImage.component';
 
 const QuickLinkBox: React.FC<quickLinkInterface> = ({ title, url, index = false}) => {
   const setVisibility = useSetRecoilState(QuickLinkEditorVisibility);
@@ -47,7 +48,7 @@ const QuickLinkBox: React.FC<quickLinkInterface> = ({ title, url, index = false}
       >
         ...
       </div>
-      <img
+      <LazyImage
         src={`https://www.google.com/s2/favicons?domain=${protocolAutoPrefix(
           url
         )}`}
