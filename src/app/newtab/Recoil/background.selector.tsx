@@ -82,7 +82,7 @@ const setCurrentAndNextBucketToChromeSync = (
       name: "currentBgUrl",
       value: props.current,
       successFn: () => {
-        console.log("Successfully set currentBgUrl ");
+        // console.log("Successfully set currentBgUrl ");
       },
       failFn: () => {
         console.error("Error when set currentBgUrl ", props.current);
@@ -94,7 +94,7 @@ const setCurrentAndNextBucketToChromeSync = (
       name: "nextBgUrl",
       value: props.next,
       successFn: () => {
-        console.log("Successfully set nextBgUrl ");
+        // console.log("Successfully set nextBgUrl ");
       },
       failFn: () => {
         console.error("Error when set nextBgUrl ", props.next);
@@ -143,7 +143,7 @@ const setLikedURLsToChromeSync = (props: likedURLsInterface) => {
     name: "likedURLs",
     value: props,
     successFn: () => {
-      console.log("Successfully set likedURLs ", props);
+      // console.log("Successfully set likedURLs ", props);
     },
     failFn: () => {
       console.error("Error when set likedURLs ", props);
@@ -277,7 +277,7 @@ const setKeywordToChromeSync = (newState:string) => {
     name: "keyword",
     value: newState,
     successFn: () => {
-      console.log("Successfully set keyword ");
+      // console.log("Successfully set keyword ");
     },
     failFn: () => {
       console.error("Error when set keyword ", newState);

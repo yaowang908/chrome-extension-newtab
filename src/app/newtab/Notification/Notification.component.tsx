@@ -9,7 +9,7 @@ const Notification = () => {
 
   const animationEndHandler = () => {
     setVisibility(false);
-    console.log('fade out ends')
+    // console.log('fade out ends')
   }
 
   return (

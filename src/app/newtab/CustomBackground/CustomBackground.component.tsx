@@ -122,7 +122,7 @@ const CustomBackground = () => {
     if (clickedId === "bg_loop") {
       // DONE: loop liked
       // change when click
-      console.log('likedIndex: ', startingIndex);
+      // console.log('likedIndex: ', startingIndex);
       if (likedURLsState.length === 0) {
         // if length = 1 or 0
         setNotificationVisibility(true);
