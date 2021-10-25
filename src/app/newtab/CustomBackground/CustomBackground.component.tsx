@@ -35,6 +35,8 @@ const CustomBackground = () => {
   const [keywordState, setKeywordState] = useRecoilState(keywordSelector);
   const [searchInputVisibility, setSearchInputVisibility] = React.useState(false);
   const [loadingModuleVisibilityState, setLoadingModuleVisibilityState] = useRecoilState(loadingModuleVisibility);
+  const [startingIndex, setStartingIndex] = React.useState(0);
+  // let isFetching = false;
 
   const keywordInputRef = React.useRef<HTMLInputElement>(null)
   
@@ -69,15 +71,14 @@ const CustomBackground = () => {
   
   //DONE: preload next random image
 
-  let isFetching = false;
   const funcRandom = () => {
     // add fetching status, to enable pause function
-    // TODO: when keyword changes, update both at first run
-    isFetching = true;
+    // DONE: when keyword changes, update both at first run
+    // isFetching = true;
     setLoadingModuleVisibilityState(true);
     getImgUrl(keywordState)
       .then((url) => {
-        isFetching = false;
+        // isFetching = false;
         if (typeof url === "string") {
           // return img url
           // set bucket 1
@@ -107,21 +108,43 @@ const CustomBackground = () => {
       // console.log("bg_random")
       
       // disable click while fetching
-      if (isFetching) {
-        setNotificationVisibility(true);
-        setNotificationMessage("Too FAST!! Or Slow network responds.")
-        console.log("Too FAST!!!!");
-        return;
-      }
+      // if (isFetching) {
+      //   setNotificationVisibility(true);
+      //   setNotificationMessage("Too FAST!! Or Slow network responds.")
+      //   console.log("Too FAST!!!!");
+      //   return;
+      // }
       // throttle returns a function, need to call
       throttle(funcRandom, 500)();
       // funcRandom()
     }
 
     if (clickedId === "bg_loop") {
-      // TODO: loop liked
-      // every 30 minutes change image
-      // or every time collapse the content
+      // DONE: loop liked
+      // change when click
+      console.log('likedIndex: ', startingIndex);
+      if (likedURLsState.length === 0) {
+        // if length = 1 or 0
+        setNotificationVisibility(true);
+        setNotificationMessage("No liked images");
+        
+      } 
+      if(likedURLsState.length === 1) {
+        setNotificationVisibility(true);
+        setNotificationMessage("Only one liked images");
+      }
+
+      setCurAndNextBucketState({
+        current: likedURLsState[startingIndex],
+        next: likedURLsState[startingIndex+1],
+      });
+
+      if(startingIndex < (likedURLsState.length - 2)) {
+        // console.log('!!')
+        setStartingIndex(startingIndex + 1);
+      } else {
+        setStartingIndex(0);
+      }
     }
 
     if (clickedId === "bg_like") {
@@ -134,7 +157,11 @@ const CustomBackground = () => {
           curAndNextBucketState.current,
         ]);
         //  if no URL added, return
-        if (likedURLsNextSet.size === likedURLsState.length) return;
+        if (likedURLsNextSet.size === likedURLsState.length) {
+          setNotificationVisibility(true);
+          setNotificationMessage("You already liked this one!");
+          return;
+        }
         setLikedURLsState([...likedURLsNextSet]);        
         setNotificationVisibility(true);
         setNotificationMessage("Image Saved!");
